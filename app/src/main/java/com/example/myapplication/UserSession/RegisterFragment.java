@@ -153,7 +153,7 @@ public class RegisterFragment extends Fragment {
             public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
                 if (task.isSuccessful()) {
                         if (task.getResult().getSignInMethods().isEmpty()) {
-                            ((UserSessionActivity)getActivity()).setFragment(new OTPFragment());
+                            ((UserSessionActivity)getActivity()).setFragment(new OTPFragment(username.getText().toString(),phone.getText().toString(),password.getText().toString()));
                         }
                         else {
                             username.setError("Username already exists!");
