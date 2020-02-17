@@ -1,19 +1,205 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/text_send"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<androidx.constraintlayout.widget.ConstraintLayout-->
+<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent">-->
+
+<!--   <RelativeLayout-->
+<!--android:id="@+id/relativeLayout"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="200dp"-->
+<!--android:background="@drawable/login_shape_bk"-->
+<!--android:orientation="horizontal"-->
+<!--app:layout_constraintEnd_toEndOf="parent"-->
+<!--app:layout_constraintHorizontal_bias="0.0"-->
+<!--app:layout_constraintStart_toStartOf="parent"-->
+<!--app:layout_constraintTop_toTopOf="parent">-->
+
+<!--<ImageView-->
+<!--    android:id="@+id/imageView7"-->
+<!--    android:layout_width="wrap_content"-->
+<!--    android:layout_height="130dp"-->
+<!--    android:layout_weight="1"-->
+<!--    android:background="@drawable/ic_login_bk"-->
+<!--    android:rotation="180" />-->
+
+<!--<ImageView-->
+<!--    android:id="@+id/imageView23"-->
+<!--    android:layout_width="100dp"-->
+<!--    android:layout_height="80dp"-->
+
+<!--    android:layout_alignParentStart="true"-->
+<!--    android:layout_alignParentTop="true"-->
+<!--    android:layout_alignParentEnd="true"-->
+<!--    android:layout_alignParentBottom="true"-->
+<!--    android:layout_marginStart="146dp"-->
+<!--    android:layout_marginTop="70dp"-->
+<!--    android:layout_marginEnd="165dp"-->
+<!--    android:layout_marginBottom="50dp"-->
+<!--    android:src="@drawable/logo3" />-->
+
+<!--</RelativeLayout>-->
+
+<!--<androidx.cardview.widget.CardView-->
+<!--android:id="@+id/cardView2"-->
+<!--android:layout_width="360dp"-->
+<!--android:layout_height="300dp"-->
+<!--android:layout_marginTop="160dp"-->
+<!--app:cardCornerRadius="20dp"-->
+<!--app:layout_constraintEnd_toEndOf="parent"-->
+<!--app:layout_constraintStart_toStartOf="parent"-->
+<!--app:layout_constraintTop_toTopOf="@+id/relativeLayout">-->
+
+<!--<LinearLayout-->
+<!--    android:id="@+id/card"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:orientation="vertical"-->
+<!--    android:paddingStart="25dp"-->
+<!--    android:paddingEnd="25dp"-->
+<!--    android:paddingTop="15dp">-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/textView41"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:fontFamily="sans-serif-smallcaps"-->
+<!--        android:gravity="center"-->
+<!--        android:letterSpacing="0.25"-->
+<!--        android:text="Puran Singh Verma"-->
+<!--        android:textSize="20sp" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/textView42"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Plastic Works"-->
+<!--        android:fontFamily="sans-serif-smallcaps"-->
+<!--        android:gravity="center"-->
+<!--        android:layout_marginTop="4dp"/>-->
+
+<!--    &lt;!&ndash;            <View&ndash;&gt;-->
+<!--    &lt;!&ndash;                android:layout_width="300dp"&ndash;&gt;-->
+<!--    &lt;!&ndash;                android:layout_gravity="center"&ndash;&gt;-->
+<!--    &lt;!&ndash;                android:layout_height="0.4dp"&ndash;&gt;-->
+<!--    &lt;!&ndash;                android:layout_marginTop="12dp"&ndash;&gt;-->
+<!--    &lt;!&ndash;                android:background="@android:color/darker_gray" />&ndash;&gt;-->
+
+
+<!--    <TextView-->
+<!--        android:id="@+id/textView39"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:paddingStart="3dp"-->
+<!--        android:text="Username"-->
+<!--        android:textColor="#B88279"-->
+<!--        android:textSize="16sp" />-->
+
+<!--    <EditText-->
+<!--        android:id="@+id/editText2"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="20dp"-->
+<!--        android:inputType="textPersonName"-->
+<!--        android:paddingTop="5dp"-->
+<!--        android:textSize="14sp"-->
+<!--        android:textColorLink="#6D6A6A"-->
+<!--        android:textColorHighlight="#464444"-->
+
+<!--        />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/textView40"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:paddingStart="3dp"-->
+<!--        android:text="Password"-->
+<!--        android:textColor="#B88279"-->
+<!--        android:textSize="16sp" />-->
+
+<!--    <EditText-->
+<!--        android:id="@+id/editText"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="20dp"-->
+<!--        android:inputType="textPassword"-->
+<!--        android:paddingTop="5dp"-->
+<!--        android:textSize="14sp" />-->
+
+<!--</LinearLayout>-->
+<!--</androidx.cardview.widget.CardView>-->
+
+
+<!--<TextView-->
+<!--android:id="@+id/textView38"-->
+<!--android:layout_width="206dp"-->
+<!--android:layout_height="25dp"-->
+<!--android:layout_marginTop="332dp"-->
+<!--android:text="Don't have an account? Sign Up"-->
+<!--app:layout_constraintEnd_toEndOf="parent"-->
+<!--app:layout_constraintHorizontal_bias="0.531"-->
+<!--app:layout_constraintStart_toStartOf="parent"-->
+<!--app:layout_constraintTop_toTopOf="@+id/cardView2" />-->
+
+<!--<LinearLayout-->
+<!--android:id="@+id/linearLayout2"-->
+<!--android:layout_width="220dp"-->
+<!--android:layout_height="45dp"-->
+<!--android:layout_marginStart="20dp"-->
+<!--android:layout_marginTop="276dp"-->
+<!--android:background="@drawable/login_shape_bk_2"-->
+<!--android:elevation="10dp"-->
+<!--app:layout_constraintEnd_toEndOf="parent"-->
+<!--app:layout_constraintHorizontal_bias="0.438"-->
+<!--app:layout_constraintStart_toStartOf="parent"-->
+<!--app:layout_constraintTop_toTopOf="@+id/cardView2">-->
+
+<!--<TextView-->
+<!--    android:id="@+id/textView37"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:layout_weight="1"-->
+<!--    android:fontFamily="sans-serif-smallcaps"-->
+<!--    android:gravity="center"-->
+<!--    android:text="Login"-->
+<!--    android:textColor="#fff"-->
+<!--    android:textSize="20sp" />-->
+
+<!--</LinearLayout>-->
+
+<!--<ImageView-->
+<!--android:id="@+id/imageView24"-->
+<!--android:layout_width="0dp"-->
+<!--android:layout_height="110dp"-->
+<!--android:background="@drawable/ic_login_bk_2"-->
+<!--app:layout_constraintBottom_toBottomOf="parent"-->
+<!--app:layout_constraintEnd_toEndOf="parent"-->
+<!--app:layout_constraintStart_toStartOf="parent" />-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/text_send"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="8dp"-->
+    <!--        android:layout_marginTop="8dp"-->
+    <!--        android:layout_marginEnd="8dp"-->
+    <!--        android:textAlignment="center"-->
+    <!--        android:textSize="20sp"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <!--</androidx.constraintlayout.widget.ConstraintLayout>-->

@@ -41,8 +41,8 @@ public class ProductFragment extends Fragment {
     String[] initialPrice={"₹200","₹160","₹200","₹160","₹200","₹160","₹200"};
 
 
-    int img1[]= {R.drawable.ic_tupperware,R.drawable.ic_box_svgrepo_com,R.drawable.ic_vegetables,R.drawable.ic_plate,R.drawable.ic_macaroni,R.drawable.ic_water,R.drawable.ic_jug,R.drawable.ic_soup,R.drawable.ic_bucket_svgrepo_com,R.drawable.ic_mug_coffee_svgrepo_com,R.drawable.ic_laundry,R.drawable.ic_sponge,R.drawable.ic_dustpan};
-    String t1[]= {"LockBoxes","Containers","Baskets","Plates","Bowls","Glasses","Jugs","Soup Bowls","Buckets","Mugs","Tub","Soap Dishes","Dustbins & Dust-Pan"};
+    int img1[]= {R.drawable.ic_001_instagram_highlight_stories,R.drawable.ic_002_pinwheel,R.drawable.ic_003_soup,R.drawable.ic_004_teapot,R.drawable.ic_005_hot_tub,R.drawable.ic_006_soap,R.drawable.ic_008_goddess,R.drawable.ic_007_dustpan,R.drawable.ic_canned_food};
+    String t1[]= {"Baskets","Kids' Toys","Soup Bowls","Mugs","Tub","Soap Dishes","Navratri Special","Dustbins & Dust-Pan","Multipurpose Boxes"};
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

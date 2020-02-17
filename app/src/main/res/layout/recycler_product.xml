@@ -69,11 +69,11 @@
 
                     <ImageView
                         android:id="@+id/imageView21"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:layout_marginEnd="10dp"
-                        app:srcCompat="@drawable/ic_like" />
+                        app:srcCompat="@drawable/ic_favorite_black_24_dp_two" />
 
                 </LinearLayout>
 
