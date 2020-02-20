@@ -36,8 +36,12 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.sql.Time;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
@@ -114,7 +118,7 @@ public class OTPFragment extends Fragment {
                             resend.setAlpha(1f);
                         }
                         else {
-                            resend.setText("Resend In"+count);
+                            resend.setText("Resend In "+count);
                             count--;
                         }
                     }
@@ -127,13 +131,17 @@ public class OTPFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 enter_otp.setError(null);
+                if (enter_otp.getText()== null || enter_otp.getText().toString().isEmpty()){
+                    enter_otp.setError("Required!");
+                    return;
+                }
+
                 String code =enter_otp.getText().toString();
                 PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, code);
                 signInWithPhoneAuthCredential(credential);
+
                 progressBar.setVisibility(View.VISIBLE);
-                if (enter_otp.getText()== null || enter_otp.getText().toString().isEmpty()){
-                    return;
-                }
+
 
             }
         });
@@ -208,6 +216,7 @@ public class OTPFragment extends Fragment {
                 // ...
             }
         };
+
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 "+91"+phone,        // Phone number to verify
                 60,                 // Timeout duration
@@ -237,16 +246,34 @@ public class OTPFragment extends Fragment {
                             // Sign in success, update UI with the signed-in user's information
 //                            Log.d(TAG, "signInWithCredential:success");
 
-                            FirebaseUser user = task.getResult().getUser();
+                            final FirebaseUser user = task.getResult().getUser();
                             AuthCredential credential= EmailAuthProvider.getCredential(username,password);
                             user.linkWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if(task.isSuccessful()){
-                                        Intent mainintent = new Intent (getContext(), MainActivity.class);
-                                        startActivity(mainintent);
-                                        getActivity().finish();
+                                        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+                                        Map<String, Object> map = new HashMap<>();
+                                        map.put("username",username);
+                                        map.put("phone", phone);
 
+                                        firebaseFirestore.collection("users").add(map).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<DocumentReference> task) {
+                                                if (task.isSuccessful()){
+                                                    Intent mainIntent = new Intent (getContext(), MainActivity.class);
+                                                    startActivity(mainIntent);
+                                                    getActivity().finish();
+
+
+                                                }else{
+                                                    String error = task.getException().getMessage();
+                                                    Toast.makeText(getContext(),error , Toast.LENGTH_SHORT).show();
+                                                    progressBar.setVisibility(View.INVISIBLE);
+
+                                                    }
+                                            }
+                                        });
 
                                     }
                                     else {
@@ -261,7 +288,7 @@ public class OTPFragment extends Fragment {
                             // Sign in failed, display a message and update the UI
 //                            Log.w(TAG, "signInWithCredential:failure", task.getException());
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                otp_sent_txt.setError("Invalid OTP  ");// The verification code entered was invalid
+                                enter_otp.setError("Invalid OTP ");// The verification code entered was invalid
                             }
                            progressBar.setVisibility(View.INVISIBLE);
                         }

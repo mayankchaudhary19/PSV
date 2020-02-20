@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/splash_gradient3">
+
+            <ImageView
+                android:id="@+id/imageView23"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="371dp"
+                android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/img_logout"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/ic_logout_sign"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!--        <TextView-->
+            <!--        android:id="@+id/textView56"-->
+            <!--        android:layout_width="wrap_content"-->
+            <!--        android:layout_height="wrap_content"-->
+            <!--        android:layout_marginTop="50dp"-->
+            <!--        android:text="Hello Mayank!"-->
+            <!--        android:textColor="#AEFAFAFA"-->
+            <!--        android:textSize="33sp"-->
+            <!--        android:textStyle="normal|bold"-->
+            <!--        app:layout_constraintEnd_toEndOf="parent"-->
+            <!--        app:layout_constraintHorizontal_bias="0.497"-->
+            <!--        app:layout_constraintStart_toStartOf="parent"-->
+            <!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/profile_image"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    app:civ_border_width="3dp"
+                    android:layout_marginTop="40dp"
+                    android:src="@drawable/ic_user"
+                    app:civ_border_color="#D5D5D5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.498"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+
+                    />
+
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/user_profile_img"-->
+<!--                    android:layout_width="71dp"-->
+<!--                    android:layout_height="66dp"-->
+<!--                    android:layout_alignParentEnd="true"-->
+<!--                    android:layout_alignParentBottom="true"-->
+<!--                    android:layout_marginEnd="11dp"-->
+<!--                    android:layout_marginBottom="16dp"-->
+<!--                    android:src="@drawable/ic_user_4"-->
+<!--                    android:visibility="visible" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/imageView32"-->
+<!--                    android:layout_width="100dp"-->
+<!--                    android:layout_height="100dp"-->
+<!--                    android:src="@drawable/ic_account_circle_black_24dp"-->
+<!--                    android:visibility="invisible" />-->
+
+<!--            </RelativeLayout>-->
+
+            <LinearLayout
+                android:id="@+id/linearlay"
+                android:layout_width="350dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profile_image">>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="#2CFFFFFF"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="0dp">
+
+
+                    <EditText
+                        android:id="@+id/first_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="20dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="start|center_vertical"
+                        android:hint="First Name"
+                        android:inputType="text"
+                        android:paddingEnd="10dp"
+                        android:textColor="#DAFDFDFD"
+                        android:textColorHint="#C1FDFDFD"
+                        android:textSize="16sp" />
+
+                    <!--                <EditText-->
+                    <!--                    android:id="@+id/username_or_phone"-->
+                    <!--                    android:layout_width="match_parent"-->
+                    <!--                    android:layout_height="match_parent"-->
+                    <!--                    android:layout_marginStart="10dp"-->
+                    <!--                    android:layout_marginEnd="10dp"-->
+                    <!--                    android:layout_weight="1"-->
+                    <!--                    android:background="@null"-->
+                    <!--                    android:gravity="start|center_vertical"-->
+                    <!--                    android:hint="Last Name"-->
+                    <!--                    android:paddingEnd="10dp"-->
+                    <!--                    android:textColor="#DAFDFDFD"-->
+                    <!--                    android:textColorHint="#C1FDFDFD"-->
+                    <!--                    android:textSize="16sp" />-->
+
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView6"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="#2CFFFFFF"
+                    app:cardCornerRadius="5dp"
+                    app:cardElevation="0dp">
+
+                    <EditText
+                        android:id="@+id/last_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:background="@null"
+                        android:gravity="start|center_vertical"
+                        android:hint="Last Name"
+                        android:inputType="text"
+                        android:paddingEnd="10dp"
+                        android:textColor="#DAFDFDFD"
+                        android:textColorHint="#C1FDFDFD"
+                        android:textSize="18sp" />
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView2"
+                android:layout_width="350dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                app:cardBackgroundColor="#2CFFFFFF"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearlay">
+
+                <EditText
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="20dp"
+                    android:background="@null"
+                    android:gravity="start|center_vertical"
+                    android:hint="E-mail "
+                    android:inputType="textEmailAddress"
+                    android:paddingEnd="10dp"
+                    android:textColor="#DAFDFDFD"
+                    android:textColorHint="#C1FDFDFD"
+                    android:textSize="17sp" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView3"
+                android:layout_width="350dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                app:cardBackgroundColor="#2CFFFFFF"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView2">
+
+                <EditText
+                    android:id="@+id/phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="20dp"
+                    android:background="@null"
+                    android:gravity="start|center_vertical"
+                    android:hint="Phone"
+                    android:inputType="phone"
+                    android:paddingEnd="10dp"
+                    android:textColor="#DAFDFDFD"
+                    android:textColorHint="#C1FDFDFD"
+                    android:textSize="18sp" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView4"
+                android:layout_width="350dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                app:cardBackgroundColor="#2CFFFFFF"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView3">
+
+                <EditText
+                    android:id="@+id/company_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="20dp"
+                    android:background="@null"
+                    android:gravity="start|center_vertical"
+                    android:hint="Company Name"
+                    android:paddingEnd="10dp"
+                    android:inputType="text"
+                    android:textColor="#DAFDFDFD"
+                    android:textColorHint="#C1FDFDFD"
+                    android:textSize="18sp" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView5"
+                android:layout_width="350dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                app:cardBackgroundColor="#2CFFFFFF"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView4">
+
+                <EditText
+                    android:id="@+id/office_adde"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="20dp"
+                    android:background="@null"
+                    android:inputType="text"
+                    android:gravity="start|center_vertical"
+                    android:hint="Office Address"
+                    android:paddingEnd="10dp"
+                    android:textColor="#DAFDFDFD"
+                    android:textColorHint="#C1FDFDFD"
+                    android:textSize="18sp" />
+            </androidx.cardview.widget.CardView>
+
+            <Button
+                android:id="@+id/btn_update_changes"
+                android:layout_width="170dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/btn_bg"
+                android:text="Update Changes"
+                android:textAllCaps="false"
+                android:textColor="#C1FDFDFD"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.128"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView5" />
+
+            <Button
+                android:id="@+id/btn_change_pass"
+                android:layout_width="170dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/btn_bg"
+                android:text="Change Password"
+                android:textAllCaps="false"
+                android:textColor="#C1FDFDFD"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.875"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardView5" />
+
+            <Button
+                android:id="@+id/btn_logout"
+                android:layout_width="350dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/btn_bg"
+                android:text="Logout"
+                android:textAllCaps="false"
+                android:textColor="#C1FDFDFD"
+                android:layout_marginBottom="30dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.508"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_change_pass"/>
+
+
+
+            <TextView
+                android:id="@+id/textView40"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="173dp"
+
+                android:text="Change the color of action/status bar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profile_image" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+</LinearLayout>

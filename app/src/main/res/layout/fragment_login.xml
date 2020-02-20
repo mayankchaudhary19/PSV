@@ -56,7 +56,7 @@
         android:layout_marginStart="20dp"
         android:background="@null"
         android:gravity="start|center_vertical"
-        android:hint="Username/Phone"
+        android:hint="Email/Phone"
         android:paddingEnd="10dp"
         android:textColor="#DAFDFDFD"
         android:textColorHint="#C1FDFDFD"
@@ -84,6 +84,7 @@
         android:background="@null"
         android:gravity="start|center_vertical"
         android:hint="Password"
+        android:inputType="textPassword"
         android:paddingEnd="10dp"
         android:textColor="#DAFDFDFD"
         android:textColorHint="#C1FDFDFD"
@@ -103,10 +104,10 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintHorizontal_bias="0.508"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/forgot_password" />
+    app:layout_constraintTop_toBottomOf="@+id/forgot_password_txt" />
 
 <TextView
-    android:id="@+id/forgot_password"
+    android:id="@+id/forgot_password_txt"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginTop="20dp"
@@ -144,5 +145,20 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintHorizontal_bias="0.0"
     app:layout_constraintStart_toStartOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="150dp"
+        android:layout_height="10dp"
+        android:layout_marginBottom="25dp"
+        android:layout_marginTop="50dp"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        android:indeterminateTint="#DFDEDE"
+        android:indeterminateTintMode="src_in"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_login" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

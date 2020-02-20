@@ -66,9 +66,9 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="15sp"
                     android:background="@null"
-                    android:paddingEnd="10dp"
                     android:gravity="center_vertical"
-                    android:hint="Username/Mail"
+                    android:hint="E-Mail"
+                    android:paddingEnd="10dp"
                     android:textColor="#68000000"
                     android:textColorHint="#85858383"
                     android:textSize="18sp" />
@@ -110,9 +110,9 @@
                     android:layout_marginStart="15sp"
                     android:background="@null"
                     android:gravity="center_vertical"
+                    android:hint="Phone No."
                     android:inputType="phone"
                     android:paddingEnd="10dp"
-                    android:hint="Phone Number"
                     android:textColor="#68000000"
                     android:textColorHint="#85858383"
                     android:textSize="18sp" />

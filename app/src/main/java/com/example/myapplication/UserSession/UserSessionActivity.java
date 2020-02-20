@@ -14,6 +14,7 @@ import com.example.myapplication.R;
 
 public class UserSessionActivity extends AppCompatActivity {
 
+    private static final String TAG_FRAGMENT = "tag";
     private FrameLayout frameLayout;
 
     @Override
@@ -41,8 +42,18 @@ public class UserSessionActivity extends AppCompatActivity {
             fragmentTransaction.addToBackStack(null);
         }
 
+        else if (fragment instanceof RegisterFragment){
+//            final LoginFragment fragment = new LoginFragment();
+            final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.framelayout, fragment, TAG_FRAGMENT);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
+
         fragmentTransaction.replace(frameLayout.getId(),fragment);
         fragmentTransaction.commit();
 
+
     }
+
 }

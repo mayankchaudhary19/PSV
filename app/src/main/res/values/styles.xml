@@ -8,6 +8,14 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="CropTheme" parent="Theme.AppCompat.Light">
+        <!-- Customize your theme here. -->
+        <item name="android:windowBackground">@color/white</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryCropper</item>
+        <item name="colorAccent">@color/colorPrimaryCropper</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

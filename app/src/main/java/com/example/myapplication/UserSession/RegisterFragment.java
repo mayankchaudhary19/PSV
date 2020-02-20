@@ -41,6 +41,7 @@ public class RegisterFragment extends Fragment {
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
+
     private TextView companyName,login_txt;
     private EditText username,phone,password,confirm_password;
     private ProgressBar progressbar;
@@ -121,6 +122,10 @@ public class RegisterFragment extends Fragment {
                     phone.setError("Invalid Phone Number");
                     return;
                 }
+                if (password.getText().toString().length()<6){
+                    password.setError("Password should be at least 6 characters");
+                    return;
+                }
                 if (!password.getText().toString().equals(confirm_password.getText().toString())){
                     confirm_password.setError("Password Mismatched!");
                     return;
@@ -131,7 +136,9 @@ public class RegisterFragment extends Fragment {
 
         });
 
+
     }
+
 
     private void init(View view)
     {
@@ -169,7 +176,6 @@ public class RegisterFragment extends Fragment {
             }
         });
     }
-
 
 
 

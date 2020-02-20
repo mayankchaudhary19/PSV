@@ -1,7 +1,9 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.myapplication.UserSession.UserSessionActivity;
 import com.example.myapplication.ui.account.AccountFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -92,7 +94,12 @@ public class MainActivity extends AppCompatActivity {
         img_acc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getBaseContext(), "account", Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(MainActivity.this,EditAccountActivity.class);
+
+                intent.putExtra("color","#F5977A");
+                startActivity(intent);
+
+//                Toast.makeText(getBaseContext(), "account", Toast.LENGTH_SHORT).show();
 
 ////                FragmentManager fm = getSupportFragmentManager();
 ////                Fragment fragment = new AccountFragment();
@@ -111,7 +118,10 @@ public class MainActivity extends AppCompatActivity {
         img_wish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getBaseContext(), "Wish", Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(MainActivity.this,EditAccountActivity.class);
+                startActivity(intent);
+                finish();
+//                Toast.makeText(getBaseContext(), "Wish", Toast.LENGTH_SHORT).show();
             }
         });
 

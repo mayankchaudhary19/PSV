@@ -18,8 +18,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myapplication.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.regex.Pattern;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,6 +41,9 @@ public class ForgotPasswordFragment extends Fragment {
     private EditText reg_mail_or_phone;
     private ProgressBar progressbar;
     private Button reset_btn;
+    private FirebaseAuth firebaseAuth;
+    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,7 +58,9 @@ public class ForgotPasswordFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ((UserSessionActivity)getActivity()).updateStatusBarColor("#20000000");
+
         init(view);
+
         TextPaint paint = forgot_pass_heading.getPaint();
         float width = paint.measureText("Verification");
 
@@ -61,19 +72,46 @@ public class ForgotPasswordFragment extends Fragment {
         forgot_pass_heading.setTextColor(Color.parseColor("#8242F8"));
         forgot_pass_heading.getPaint().setShader(textShader);
 
-//        login_txt.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                ((UserSessionActivity)getActivity()).setFragment(new LoginFragment());
-//            }
-//        });
+        firebaseAuth=FirebaseAuth.getInstance();
+
+        reset_btn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                reg_mail_or_phone.setError(null);
+                if (VALID_EMAIL_ADDRESS_REGEX.matcher(reg_mail_or_phone.getText().toString()).find()) {
+                    progressbar.setVisibility(View.VISIBLE);
+                    reset_btn.setEnabled(false);
+                    firebaseAuth.sendPasswordResetEmail(reg_mail_or_phone.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()){
+                                progressbar.setVisibility(View.VISIBLE);
+                                Toast.makeText(getContext(), "E-mail sent to reset password successfully", Toast.LENGTH_LONG).show();
+                                getActivity().onBackPressed();
+                            }
+                            else {
+                                String error = task.getException().getMessage();
+                                Toast.makeText(getContext(),error, Toast.LENGTH_SHORT).show();
+                                progressbar.setVisibility(View.INVISIBLE);
+                            }
+                            reset_btn.setEnabled(true);
+                        }
+
+                    });
+                }else{
+                    reg_mail_or_phone.setError("Invalid E-mail");
+                }
+             }
+        });
 
     }
+
     private void init(View view){
         forgot_pass_heading=view.findViewById(R.id.forgot_pass_heading);
         reg_mail_or_phone=view.findViewById(R.id.registered_mail_or_phone);
         progressbar=view.findViewById(R.id.progressBar);
-        reset_btn=view.findViewById(R.id.resend_btn);
+        reset_btn=view.findViewById(R.id.reset_pass_btn);
 
 
     }
