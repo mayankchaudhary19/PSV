@@ -112,7 +112,16 @@ public class MainActivity extends AppCompatActivity {
 ////                transaction.commit();
             }
         });
+        txt_acc= headerview.findViewById(R.id.account);
+        txt_acc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this,EditAccountActivity.class);
 
+                intent.putExtra("color","#F5977A");
+                startActivity(intent);
+            }
+        });
 
         img_wish= headerview.findViewById(R.id.wishlist2);
         img_wish.setOnClickListener(new View.OnClickListener() {
@@ -142,13 +151,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        txt_acc= headerview.findViewById(R.id.account);
-        txt_acc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getBaseContext(), "acc", Toast.LENGTH_SHORT).show();
-            }
-        });
+
         txt_order= headerview.findViewById(R.id.order_history);
         txt_order.setOnClickListener(new View.OnClickListener() {
             @Override

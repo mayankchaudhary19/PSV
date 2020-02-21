@@ -155,6 +155,7 @@ public class RegisterFragment extends Fragment {
 
     private void createAccount(){
         progressbar.setVisibility(View.VISIBLE);
+
         mAuth.fetchSignInMethodsForEmail(username.getText().toString()).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
             @Override
             public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {

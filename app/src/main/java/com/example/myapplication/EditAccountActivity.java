@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
@@ -8,7 +10,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -19,6 +23,23 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.UserSession.UserSessionActivity;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -27,20 +48,30 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import org.w3c.dom.Document;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EditAccountActivity extends AppCompatActivity {
+    private static final String TAG ="EditAccountActivity__" ;
     CircleImageView profileImg;
     Button updateChanges,changePassword,logout,removePhoto;
     ImageView imgBack,imgLogout;
     EditText firstName,lastName,email,phone,companyName,officeAddress;
     private Uri photoUri;
+    private String url;
+private ConstraintLayout progress_layout;
+    private StorageReference storage;
+    private FirebaseAuth firebaseAuth;
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
     private static Pattern usrNamePtrn = Pattern.compile("^[a-z_-]{6,14}$");
+    //private static String emaill="null";
 //    public static final Pattern VALID_FIRST_AND_LAST_NAME_REGEX =
 //            Pattern.compile("^\\p{L}+[\\p{L}\\p{Z}\\p{P}]{0,}", Pattern.CASE_INSENSITIVE);
 
@@ -60,18 +91,82 @@ public class EditAccountActivity extends AppCompatActivity {
         updateStatusBarColor(color);
 
         init();
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        storage=FirebaseStorage.getInstance().getReference();
+        firebaseAuth=FirebaseAuth.getInstance();
+        progress_layout.setVisibility(View.VISIBLE);
+        db.collection( "users/"+FirebaseAuth.getInstance().getUid()+"/details").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for (DocumentSnapshot documentSnapshot: queryDocumentSnapshots.getDocuments()) {
+                    phone.setText(documentSnapshot.getString("phone"));
+                    email.setText(documentSnapshot.getString("username"));
+                    companyName.setText(documentSnapshot.getString("companyName"));
+                    officeAddress.setText(documentSnapshot.getString("officeAddress"));
+                    firstName.setText(documentSnapshot.getString("firstName"));
+                    lastName.setText(documentSnapshot.getString("lastName"));
+                    progress_layout.setVisibility(View.INVISIBLE);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(EditAccountActivity.this, "Failed to Update Changes!", Toast.LENGTH_SHORT).show();
+
+
+            }
+        });
+
+
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent=new Intent(EditAccountActivity.this,MainActivity.class);
+                startActivity(intent);
+                finishAffinity();
+            }
+        });
+
+        imgLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                finish();
+                Intent intent=new Intent(EditAccountActivity.this,UserSessionActivity.class);
+                startActivity(intent);
+                finishAffinity();
+            }
+        });
+
+        removePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                photoUri= null;
+                profileImg.setImageResource(R.drawable.ic_user_profile);
+
 
             }
         });
-        imgLogout.setOnClickListener(new View.OnClickListener() {
+
+        changePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
         });
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                finish();
+                Intent intent=new Intent(EditAccountActivity.this,UserSessionActivity.class);
+                startActivity(intent);
+                finishAffinity();
+            }
+        });
+
 
         profileImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,17 +188,6 @@ public class EditAccountActivity extends AppCompatActivity {
                 }).check();
             }
         });
-
-        removePhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                photoUri= null;
-                profileImg.setImageResource(R.drawable.ic_user_profile);
-
-
-            }
-        });
-
 
 
         updateChanges.setOnClickListener(new View.OnClickListener() {
@@ -128,25 +212,14 @@ public class EditAccountActivity extends AppCompatActivity {
                     phone.setError("Invalid Phone Number");
                     return;
                 }
-
+updateDetails();
+                updateChanges();
             }
         });
-        changePassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-
-
     }
+
+//
+
 //    Context context;
 
 //    public Context getContext() {
@@ -163,6 +236,67 @@ public class EditAccountActivity extends AppCompatActivity {
                 .start(this);
 
     }
+
+    private void updateChanges() {
+
+        if (photoUri != null) {
+            final StorageReference ref = storage.child("profiles/" + firebaseAuth.getCurrentUser().getUid() + ".jpg");
+            UploadTask uploadTask = ref.putFile(photoUri);
+
+            Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+                    // Continue with the task to get the download URL
+                    return ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            url = uri.toString();
+                        }
+                    });
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+//                        Uri downloadUri = task.getResult();
+
+//                        url = ref.getDownloadUrl().toString();
+//upladeDetails()
+                    } else {
+                        String error = task.getException().getMessage();
+                        Toast.makeText(EditAccountActivity.this, error, Toast.LENGTH_SHORT).show();
+                        // Handle failures
+                        // ...
+                    }
+                }
+            });
+
+
+        }
+
+    }
+
+//        if (!firstName.getText().toString().isEmpty()) {
+//            Map<String, Object> map = new HashMap<>();
+//            map.put("firstName", firstName);
+//            FirebaseFirestore.getInstance().collection("users/" + FirebaseAuth.getInstance().getUid() + "/details").add(map).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+//                @Override
+//                public void onComplete(@NonNull Task<DocumentReference> task) {
+//                    Toast.makeText(EditAccountActivity.this, "Done", Toast.LENGTH_SHORT).show();
+//                }
+//            }).addOnFailureListener(new OnFailureListener() {
+//                @Override
+//                public void onFailure(@NonNull Exception e) {
+//                    Toast.makeText(EditAccountActivity.this, "BHOOO", Toast.LENGTH_SHORT).show();
+//                }
+//            });
+//
+//        }
+
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
@@ -199,6 +333,7 @@ public class EditAccountActivity extends AppCompatActivity {
         officeAddress=findViewById(R.id.office_address);
         imgBack=findViewById(R.id.img_back);
         imgLogout=findViewById(R.id.img_logout);
+        progress_layout=findViewById(R.id.progress_layout);
 
     }
 
@@ -207,6 +342,58 @@ public class EditAccountActivity extends AppCompatActivity {
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(Color.parseColor(color));
+    }
+
+
+
+    private void updateDetails(){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        progress_layout.setVisibility(View.VISIBLE);
+        DocumentReference ref_doc = db.document("users/" + FirebaseAuth.getInstance().getUid() + "/details");
+        ref_doc.update("phone",phone);
+        ref_doc.update("email",email);
+        ref_doc.update("firstName",firstName);
+        ref_doc.update("lastName",lastName);
+        ref_doc.update("companyName",companyName);
+        ref_doc.update("officeAddress",officeAddress).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+//                    progress_layout.setVisibility(View.VISIBLE);
+//                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+//                    db.collection( "users/"+FirebaseAuth.getInstance().getUid()+"/details").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                        @Override
+//                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//                            for (DocumentSnapshot documentSnapshot: queryDocumentSnapshots.getDocuments()) {
+//                                phone.setText(documentSnapshot.getString("phone"));
+//                                email.setText(documentSnapshot.getString("username"));
+//                                companyName.setText(documentSnapshot.getString("companyName"));
+//                                officeAddress.setText(documentSnapshot.getString("officeAddress"));
+//                                firstName.setText(documentSnapshot.getString("firstName"));
+//                                lastName.setText(documentSnapshot.getString("lastName"));
+//                                progress_layout.setVisibility(View.INVISIBLE);
+//                            }
+//                        }
+//                    }).addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//                            Toast.makeText(EditAccountActivity.this, "Failed to Update Changes!", Toast.LENGTH_SHORT).show();
+//
+//
+//                        }
+//                    });
+                    Toast.makeText(getApplicationContext(), "Data Added", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "There was some problem", Toast.LENGTH_SHORT).show();
+                }
+            }
+        })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
     }
 
 //    @Override

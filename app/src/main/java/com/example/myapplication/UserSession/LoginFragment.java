@@ -101,13 +101,15 @@ public class LoginFragment extends Fragment {
                     login(username_or_phone.getText().toString());
 
                 } else if (username_or_phone.getText().toString().matches("\\d{10}")) {
-                    FirebaseFirestore.getInstance().collection("users").whereEqualTo("phone", username_or_phone.getText().toString())
+                    FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+                    firebaseFirestore.collection("users/"+FirebaseAuth.getInstance().getUid()+"/details").whereEqualTo("phone", username_or_phone.getText().toString())
                             .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
                                 List<DocumentSnapshot> document =task.getResult().getDocuments();
                                 if(document.isEmpty()){
+                                    Toast.makeText(getContext(),FirebaseAuth.getInstance().getUid() , Toast.LENGTH_SHORT).show();
                                     username_or_phone.setError("Phone no. not registered!");
                                     return;
 

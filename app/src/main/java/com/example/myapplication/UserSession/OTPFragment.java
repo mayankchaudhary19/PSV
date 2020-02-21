@@ -1,6 +1,7 @@
 package com.example.myapplication.UserSession;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
@@ -225,7 +226,13 @@ public class OTPFragment extends Fragment {
                 mcallback);        // OnVerificationStateChangedCallbacks
     }
 
-
+//    private Context context;
+//
+//    @Nullable
+//    @Override
+//    public Context getContext() {
+//        return context;
+//    }
 
     private  void  resendotp(){
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
@@ -256,8 +263,14 @@ public class OTPFragment extends Fragment {
                                         Map<String, Object> map = new HashMap<>();
                                         map.put("username",username);
                                         map.put("phone", phone);
+                                        map.put("firstName", "");
+                                        map.put("lastName", "");
+                                        map.put("companyName", "");
+                                        map.put("officeAddress", "");
 
-                                        firebaseFirestore.collection("users").add(map).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+
+
+                                        firebaseFirestore.collection("users/"+FirebaseAuth.getInstance().getUid()+"/details").add(map).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                                             @Override
                                             public void onComplete(@NonNull Task<DocumentReference> task) {
                                                 if (task.isSuccessful()){
