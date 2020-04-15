@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
@@ -22,7 +23,6 @@ public class UserSessionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_session);
         getSupportActionBar().hide();
-
         frameLayout =findViewById(R.id.framelayout);
         setFragment(new LoginFragment());
     }

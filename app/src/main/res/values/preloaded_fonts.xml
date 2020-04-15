@@ -3,7 +3,10 @@
     <array name="preloaded_fonts" translatable="false">
         <item>@font/acme</item>
         <item>@font/allerta_stencil</item>
+        <item>@font/candal</item>
+        <item>@font/dosis_extralight</item>
         <item>@font/emilys_candy</item>
+        <item>@font/exo_2_extralight</item>
         <item>@font/lobster</item>
         <item>@font/nova_round</item>
     </array>

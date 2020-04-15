@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,15 +21,14 @@ import android.widget.Toast;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.List;
 import java.util.regex.Pattern;
 
 /**
@@ -37,6 +37,7 @@ import java.util.regex.Pattern;
 public class LoginFragment extends Fragment {
 
 
+    private static final String TAG = "usernname";
 
     public LoginFragment() {
         // Required empty public constructor
@@ -55,7 +56,7 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         ((UserSessionActivity)getActivity()).updateStatusBarColor("#F5977A");
-        return inflater.inflate(R.layout.fragment_login, container, false);
+        return inflater.inflate(R.layout.fragment_user_session_login, container, false);
 
     }
 
@@ -102,29 +103,25 @@ public class LoginFragment extends Fragment {
 
                 } else if (username_or_phone.getText().toString().matches("\\d{10}")) {
                     FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-                    firebaseFirestore.collection("users/"+FirebaseAuth.getInstance().getUid()+"/details").whereEqualTo("phone", username_or_phone.getText().toString())
-                            .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                List<DocumentSnapshot> document =task.getResult().getDocuments();
-                                if(document.isEmpty()){
-                                    Toast.makeText(getContext(),FirebaseAuth.getInstance().getUid() , Toast.LENGTH_SHORT).show();
-                                    username_or_phone.setError("Phone no. not registered!");
-                                    return;
+                    firebaseAuth=FirebaseAuth.getInstance();
 
-                                }else{
-                                    String username =document.get(0).get("username").toString();
-                                    login(username);
+                    firebaseFirestore.collection("users").
+                            whereEqualTo("phone", username_or_phone.getText().toString())
+                            .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                @Override
+                                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                    login(queryDocumentSnapshots.getDocuments().get(0).get("username").toString());
 
+                                    Log.d(TAG,queryDocumentSnapshots.getDocuments().get(0).toString());
+//                                    Toast.makeText(getContext(), "success : "+queryDocumentSnapshots.getDocuments().get(0).toString(), Toast.LENGTH_SHORT).show();
                                 }
-                            } else {
-                                String error = task.getException().getMessage();
-                                Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d(TAG,"error : "+e.getMessage());
+                                }
+                            });
                 } else {
                     username_or_phone.setError("Invalid Email or Phone");
 

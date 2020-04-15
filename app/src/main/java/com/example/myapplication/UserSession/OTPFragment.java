@@ -1,7 +1,6 @@
 package com.example.myapplication.UserSession;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
@@ -30,17 +29,14 @@ import com.google.firebase.FirebaseException;
 import com.google.firebase.FirebaseTooManyRequestsException;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.EmailAuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.sql.Time;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -80,7 +76,7 @@ public class OTPFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_otp, container, false);
+        return inflater.inflate(R.layout.fragment_user_session_otp, container, false);
     }
 
 
@@ -226,13 +222,6 @@ public class OTPFragment extends Fragment {
                 mcallback);        // OnVerificationStateChangedCallbacks
     }
 
-//    private Context context;
-//
-//    @Nullable
-//    @Override
-//    public Context getContext() {
-//        return context;
-//    }
 
     private  void  resendotp(){
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
@@ -261,18 +250,12 @@ public class OTPFragment extends Fragment {
                                     if(task.isSuccessful()){
                                         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
                                         Map<String, Object> map = new HashMap<>();
-                                        map.put("username",username);
+                                        map.put("email",username);
                                         map.put("phone", phone);
-                                        map.put("firstName", "");
-                                        map.put("lastName", "");
-                                        map.put("companyName", "");
-                                        map.put("officeAddress", "");
 
-
-
-                                        firebaseFirestore.collection("users/"+FirebaseAuth.getInstance().getUid()+"/details").add(map).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                                        firebaseFirestore.collection("users").document(firebaseAuth.getCurrentUser().getUid()).set(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
-                                            public void onComplete(@NonNull Task<DocumentReference> task) {
+                                            public void onComplete(@NonNull Task<Void> task) {
                                                 if (task.isSuccessful()){
                                                     Intent mainIntent = new Intent (getContext(), MainActivity.class);
                                                     startActivity(mainIntent);
@@ -308,6 +291,9 @@ public class OTPFragment extends Fragment {
                     }
                 });
     }
+
+
+
     private void init(View view){
         verification_txt=view.findViewById(R.id.verification_txt);
         otp_sent_txt=view.findViewById(R.id.otp_sent_txt);
@@ -317,4 +303,5 @@ public class OTPFragment extends Fragment {
         progressBar=view.findViewById(R.id.progressBar);
 
     }
+
 }

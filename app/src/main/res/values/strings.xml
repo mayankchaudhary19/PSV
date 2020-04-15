@@ -30,7 +30,7 @@
     <string name="menu_contact_us">Contact Us</string>
     <string name="menu_store">PSV Store</string>
     <string name="menu_franchise">Become Franchise</string>
-    <string name="menu_about_us">About Us</string>
+    <string name="menu_about_us">About Us        |        Contact Us</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

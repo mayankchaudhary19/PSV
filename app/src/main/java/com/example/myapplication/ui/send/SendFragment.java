@@ -24,7 +24,7 @@ public class SendFragment extends Fragment {
 
         sendViewModel =
                 ViewModelProviders.of(this).get(SendViewModel.class);
-        View root = inflater.inflate(R.layout.activity_sample_edit_account, container, false);
+//        View root = inflater.inflate(R.layout.activity_se, container, false);
 //        final TextView textView = root.findViewById(R.id.text_send);
         sendViewModel.getText().observe(this, new Observer<String>() {
             @Override
@@ -33,7 +33,7 @@ public class SendFragment extends Fragment {
 
             }
         });
-        return root;
+        return null;
     }
     @Override
     public void onResume() {

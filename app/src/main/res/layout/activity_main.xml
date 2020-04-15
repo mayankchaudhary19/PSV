@@ -20,6 +20,79 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="false"
         app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/activity_main_drawer" />
+        app:itemIconPadding="@dimen/nav_drawer_icon_margin"
+        android:theme="@style/NavigationTheme"
+        app:itemTextAppearance="@style/TextAppearance.AppCompat.Small"
+        app:menu="@menu/activity_main_drawer">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:id="@+id/nav_rate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:clickable="true"
+                android:layout_marginStart="25dp"
+                android:text="Rate"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/nav_share"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:layout_marginStart="25dp"
+                android:clickable="true"
+                android:text="Share"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"/>
+
+            <LinearLayout
+                android:id="@+id/nav_about_us_contact_us"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="25dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:clickable="true"
+                android:paddingEnd="25dp"
+                android:layout_gravity="center|bottom">
+                <TextView
+                    android:id="@+id/about"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="About Us"
+                    android:layout_weight="1"
+                    tools:ignore="NestedWeights" />
+                <TextView
+                    android:id="@+id/nav_dash"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="|"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/ontact_us"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Contact Us"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+<!--            <TextView-->
+<!--                android:id="@+id/AboutUsandContactUs"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:gravity="center"-->
+<!--                android:text="   About Us              |             Contact Us" />-->
+    </LinearLayout>
+    </com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>

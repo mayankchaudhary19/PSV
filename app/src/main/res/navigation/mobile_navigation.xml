@@ -12,34 +12,37 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
+        android:id="@+id/nav_products"
         android:name="com.example.myapplication.ui.products.ProductFragment"
 
         tools:layout="@layout/fragment_product" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.myapplication.ui.slideshow.SlideshowFragment"
-
-        tools:layout="@layout/fragment_slideshow" />
-
-    <fragment
-        android:id="@+id/nav_tools"
-        android:name="com.example.myapplication.ui.tools.ToolsFragment"
-        tools:layout="@layout/fragment_tools" />
+        android:id="@+id/nav_offer_zone"
+        android:name="com.example.myapplication.ui.offer_zone.OfferZoneFragment"
+        tools:layout="@layout/fragment_offer_zone" />
 
     <fragment
-        android:id="@+id/nav_share"
-        android:name="com.example.myapplication.ui.share.ShareFragment"
-        tools:layout="@layout/fragment_share" />
-
-    <fragment
-        android:id="@+id/nav_send"
-        android:name="com.example.myapplication.ui.send.SendFragment"
-        tools:layout="@layout/fragment_send" />
+        android:id="@+id/nav_psv_store"
+        android:name="com.example.myapplication.ui.psvStore.PSVStoreFragment"
+        tools:layout="@layout/fragment_psv_store" />
 
     <fragment
         android:id="@+id/nav_we_care"
         android:name="com.example.myapplication.ui.care.WeCareFragment"
         tools:layout="@layout/fragment_we_care" />
+
+<!--    <fragment-->
+<!--        android:id="@+id/nav_rate"-->
+<!--        android:name="com.example.myapplication.ui.send.SendFragment"-->
+<!--        tools:layout="@layout/fragment_send" />-->
+
+<!--    <fragment-->
+<!--        android:id="@+id/nav_share"-->
+<!--        android:name="com.example.myapplication.ui.share.ShareFragment"-->
+<!--        tools:layout="@layout/fragment_share" />-->
+
+
+
+
 </navigation>

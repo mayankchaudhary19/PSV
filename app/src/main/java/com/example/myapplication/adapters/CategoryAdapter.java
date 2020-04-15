@@ -1,97 +1,126 @@
 package com.example.myapplication.adapters;
 
-import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapplication.Pojos.Categories;
+import com.example.myapplication.CategoryActivity;
+import com.example.myapplication.Models.CategoryModel;
 import com.example.myapplication.R;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.viewHolder>{
-    Context context;
-    ArrayList<Categories> arrayList;
+public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 
-    public CategoryAdapter(Context context, ArrayList<Categories> arrayList) {
-        this.context = context;
-        this.arrayList = arrayList;
+    private List<CategoryModel> categoryModelList;
+
+    public CategoryAdapter(List<CategoryModel> categoryModelList) {
+        this.categoryModelList = categoryModelList;
     }
 
-
+    @NonNull
     @Override
-    public  CategoryAdapter.viewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(context).inflate(R.layout.recycler_category_item, viewGroup, false);
-        return new viewHolder(view);
+    public CategoryAdapter.ViewHolder  onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_home_category_item,viewGroup, false);
+        return new ViewHolder(view);
     }
 
     @Override
-    public  void onBindViewHolder(CategoryAdapter.viewHolder viewHolder,int position) {
-        viewHolder.t1.setText(arrayList.get(position).getTitle());
-        viewHolder.img.setImageResource(arrayList.get(position).getImg());
+    public void onBindViewHolder(@NonNull CategoryAdapter.ViewHolder viewHolder , int position) {
+        String name = categoryModelList.get(position).getCategoryName();
+        String icon = categoryModelList.get(position).getCategoryIconLink();
+        viewHolder.setCategory(name);
+//        ViewHolder.setCategoryIcon(icon);
     }
 
     @Override
     public int getItemCount() {
-        return arrayList.size();
+        return categoryModelList.size();
     }
 
-    public class viewHolder extends RecyclerView.ViewHolder {
-        TextView t1;
-        ImageView img;
+    public class ViewHolder extends RecyclerView.ViewHolder{
 
-        public viewHolder(View itemView) {
+        private ImageView  categoryIcon;
+        private TextView categoryName;
+
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            img = (ImageView) itemView.findViewById(R.id.categ_imageView);
-            t1 = (TextView) itemView.findViewById(R.id.title);
+            categoryName  = itemView.findViewById(R.id.categoryName);
+            categoryIcon = itemView.findViewById(R.id.categoryIcon);
+        }
+        private void setCategoryIcon(String iconUrl){
+           // todo: set category names from database
+        //            Glide.with(itemView.getContext()).load(iconUrl).apply(new RequestOptions().placeholder(R.drawable.shape)).into(categoryIcon);
+        }
+
+        private void setCategory(final String name){
+            categoryName.setText(name);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent categoryIntent =new Intent(itemView.getContext() , CategoryActivity.class);
+                    categoryIntent.putExtra("CategoryName",name);
+                    itemView.getContext().startActivity(categoryIntent);
+                }
+            });
+
         }
     }
 }
 
-
-
-
-
+//    Context context;
+//    private List<Categories> categoriesList;
+//
+//    public CategoryAdapter(Context context,List<Categories> categoriesList) {
+//
+//        this.context = context;
+//        this.categoriesList = categoriesList;
+//    }
+//
 //    @Override
-//    public MainActivity.MyAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//        View view = LayoutInflater.from(context).inflate(R.layout.category_item, ViewGroup, false);
+//    public  CategoryAdapter.viewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
+//        View view = LayoutInflater.from(context).inflate(R.layout.recycler_home_category_item, viewGroup, false);
 //        return new viewHolder(view);
-//
-//    }
-//    public class ViewHolder extends RecyclerView.ViewHolder {
-//        TextView t1;
-//        ImageView img;
-//        public ViewHolder(@NonNull View itemView) {
-//            super(itemView);
-//            t1 = itemView.findViewById(R.id.title);
-//            img = itemView.findViewById(R.id.categ_imageView);
-//        }
-//    }
-//
-//    @NonNull
-//    @Override
-//    public MainActivity.MyAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//        View v = LayoutInflater().inflate(R.layout.category_item,parent,false);
-//        return new MainActivity.MyAdapter.ViewHolder(v);
-//
 //    }
 //
 //    @Override
-//    public void onBindViewHolder(@NonNull MainActivity.MyAdapter.ViewHolder holder, int position) {
-//        Categories data = list.get(position);
-//        holder.t1.setText(data.getTitle());
-//        holder.img.setImageDrawable(getDrawable(data.getImg()));
+//    public  void onBindViewHolder(CategoryAdapter.viewHolder viewHolder,int position) {
+//        String name = categoriesList.get(position).getCategoryName();
+//        String icon = categoriesList.get(position).getCategoryIconLink();
+//        viewHolder.setCategoryName(name);
+//        viewHolder.setCategoryIcon(icon);
+//
 //    }
 //
 //    @Override
 //    public int getItemCount() {
-//        return list.size();
+//        return categoriesList.size();
 //    }
 //
+//    public class viewHolder extends RecyclerView.ViewHolder {
+//        private TextView categoryName;
+//        private ImageView categoryIcon;
 //
+//        public viewHolder(View itemView) {
+//            super(itemView);
+//            categoryName  = itemView.findViewById(R.id.categoryName);
+//            categoryIcon = itemView.findViewById(R.id.categoryIcon);
+//        }
+//
+//        private void setCategoryIcon(String iconUrl){
+//            //todo: set category names from database
+////            Glide.with(itemView.getContext()).load(iconUrl).apply(new RequestOptions().placeholder(R.drawable.shape)).into(categoryIcon);
+//        }
+//
+//        private void setCategoryName(String name){
+//            categoryName.setText(name);
+//
+//        }
+//    }
 //}

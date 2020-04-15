@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#D88065</color>
+    <color name="colorPrimary">#C1C0C0</color>
+    <color name="colorPrimaryTwo">#D88065</color>
     <color name="colorPrimaryDark">#8D8D8D</color>
     <color name="colorAccent">#C4BFBF</color>
     <color name="white">#FFFFFF</color>
     <color name="colorPrimaryLogin">#F5977A</color>
+    <color name="sea_green">#C94DB6AC</color>
+    <color name="lightOrange">#F3B396</color>
     <color name="colorPrimaryRegister">#20000000</color>
     <color name="colorPrimaryCropper">#F5977A</color>
     <color name="black_overlay">#66000000</color>
