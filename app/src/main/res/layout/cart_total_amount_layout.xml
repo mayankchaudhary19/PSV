@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout3"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -21,31 +21,29 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="Price Details"
-            android:textAllCaps="false"
-            android:textColor="#000000"
-            android:textSize="16sp"
+            android:textColor="#111111"
+            android:textSize="15sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:id="@+id/divider7"
             android:layout_width="409dp"
-            android:layout_height="2dp"
-            android:layout_marginStart="1dp"
+            android:layout_height="1dp"
             android:layout_marginTop="14dp"
-            android:layout_marginEnd="1dp"
             android:background="?android:attr/listDivider"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView40" />
 
         <TextView
-            android:id="@+id/textView41"
+            android:id="@+id/total_items"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="13dp"
             android:text="Price ( 1 item )"
+            android:textSize="15sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divider7" />
 
@@ -53,49 +51,215 @@
             android:id="@+id/textView42"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:text="Discount ( - )"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView41" />
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="@+id/total_items"
+            app:layout_constraintTop_toBottomOf="@+id/total_items" />
 
         <TextView
-            android:id="@+id/textView44"
+            android:id="@+id/total_items_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:text="₹150"
+            android:text="₹160"
+            android:textColor="#D9000000"
+            android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:layout_editor_absoluteY="69dp" />
+            app:layout_constraintTop_toTopOf="@+id/total_items" />
 
         <TextView
-            android:id="@+id/textView50"
+            android:id="@+id/saved_or_discount_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
             android:text="₹10"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView44" />
+            android:textColor="@color/colorPrimaryCropper"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="@+id/total_items_price"
+            app:layout_constraintTop_toBottomOf="@+id/total_items_price" />
 
         <TextView
             android:id="@+id/textView51"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:text="Shipping"
+            android:layout_marginTop="8dp"
+            android:text="Delivery Charges"
+            android:textSize="15sp"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView69" />
+
+        <TextView
+            android:id="@+id/shipping_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Extra*"
+            android:textColor="#D9000000"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView51"
+            app:layout_constraintEnd_toEndOf="@+id/saved_or_discount_price"
+            app:layout_constraintTop_toTopOf="@+id/textView51" />
+
+        <TextView
+            android:id="@+id/textView53"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:text="Sub Total"
+            android:textColor="#383838"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textView42"
+            app:layout_constraintTop_toBottomOf="@+id/imageView23" />
+
+        <TextView
+            android:id="@+id/total_or_subTotal_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="₹150"
+            android:textColor="#383838 "
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/shipping_price"
+            app:layout_constraintTop_toBottomOf="@+id/imageView23" />
+
+        <ImageView
+            android:id="@+id/imageView23"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="16dp"
+            android:layerType="software"
+            android:paddingStart="3dp"
+            android:src="@drawable/dotted_line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView51" />
+
+        <TextView
+            android:id="@+id/textView55"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:gravity="top"
+            android:text="Excluding Tax"
+            android:textColor="@color/colorPrimaryCropper"
+            android:textSize="10sp"
+            android:textStyle="bold|italic"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/total_or_subTotal_price"
+            app:layout_constraintTop_toBottomOf="@+id/total_or_subTotal_price"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/textView69"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Coupon Discount ( - )"
+            app:layout_constraintStart_toStartOf="@+id/textView42"
             app:layout_constraintTop_toBottomOf="@+id/textView42" />
+
+        <TextView
+            android:id="@+id/coupon_discount_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Apply Coupon"
+            android:textColor="#4DB6AC"
+            app:layout_constraintBottom_toBottomOf="@+id/textView69"
+            app:layout_constraintEnd_toEndOf="@+id/saved_or_discount_price"
+            app:layout_constraintTop_toTopOf="@+id/textView69" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/paymentModeConstraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="#ffffff"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/textView58"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
 
         <TextView
             android:id="@+id/textView52"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:text="TextView"
+            android:text="Payment Mode"
+            android:textColor="#111111"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/divider12"
+            android:layout_width="409dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="14dp"
+            android:background="?android:attr/listDivider"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView50" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView52" />
+
+        <TextView
+            android:id="@+id/payment_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="17dp"
+            android:text="Cash on Delivery ( ₹150 )"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider12" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/textView58"
+        android:layout_width="0dp"
+        android:layout_height="26dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center"
+        android:letterSpacing="0.6"
+        android:text="PURAN SINGH VERMA"
+        android:textColor="#63000000"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/paymentModeConstraintLayout" />
+
+    <TextView
+        android:id="@+id/textView59"
+        android:layout_width="412dp"
+        android:layout_height="17dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:text="100% Authentic Products · Pay using GooglePay/ Paytm/ PhonePay · Order on WhatsApp"
+        android:textColor="#57000000"
+        android:textSize="9.5sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView58"
+        tools:ignore="SmallSp" />
+
+    <View
+        android:id="@+id/divider8"
+        android:layout_width="409dp"
+        android:layout_height="0.5dp"
+        android:background="?android:attr/listDivider"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/paymentModeConstraintLayout" />
 </androidx.constraintlayout.widget.ConstraintLayout>

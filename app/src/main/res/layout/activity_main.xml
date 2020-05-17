@@ -7,12 +7,10 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
-
     <include
         layout="@layout/app_bar_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
@@ -50,39 +48,53 @@
                 android:layout_marginTop="20dp"
                 android:layout_weight="1"/>
 
+            <View
+                android:id="@+id/divider19"
+                android:layout_width="match_parent"
+                android:layout_height="0.8dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:background="?android:attr/listDivider" />
+
             <LinearLayout
                 android:id="@+id/nav_about_us_contact_us"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center|bottom"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_weight="1"
-                android:paddingStart="25dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
                 android:clickable="true"
-                android:paddingEnd="25dp"
-                android:layout_gravity="center|bottom">
+                android:paddingStart="25dp"
+                android:paddingEnd="25dp">
+
                 <TextView
                     android:id="@+id/about"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:gravity="left"
                     android:text="About Us"
-                    android:layout_weight="1"
-                    tools:ignore="NestedWeights" />
-                <TextView
-                    android:id="@+id/nav_dash"
+                    />
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="|"
-                    android:layout_weight="1"/>
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_weight="1">
+                    <View
+                        android:id="@+id/divider20"
+                        android:layout_width="1dp"
+                        android:layout_marginStart="35dp"
+                        android:layout_height="match_parent"
+                        android:background="?android:attr/listDivider" />
+                </LinearLayout>
                 <TextView
                     android:id="@+id/ontact_us"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Contact Us"
-                    android:layout_weight="1"/>
+                    android:text="Contact Us" />
 
             </LinearLayout>
 

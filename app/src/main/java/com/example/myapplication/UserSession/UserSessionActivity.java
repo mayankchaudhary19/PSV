@@ -17,6 +17,7 @@ public class UserSessionActivity extends AppCompatActivity {
 
     private static final String TAG_FRAGMENT = "tag";
     private FrameLayout frameLayout;
+    public static boolean registerFrag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +25,17 @@ public class UserSessionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_session);
         getSupportActionBar().hide();
         frameLayout =findViewById(R.id.framelayout);
-        setFragment(new LoginFragment());
+//        setFragment(new LoginFragment());
+//        RegisterFragment =getIntent().getBooleanExtra("Register",false);
+        if(registerFrag){
+            setFragment(new RegisterFragment());
+            registerFrag=false;
+
+        }else{
+            setFragment(new LoginFragment());
+            FragmentTransaction fragmentTransaction= getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out,android.R.anim.fade_in,android.R.anim.fade_out);
+        }
     }
 
     public void updateStatusBarColor(String color){
@@ -46,13 +57,14 @@ public class UserSessionActivity extends AppCompatActivity {
 //            final LoginFragment fragment = new LoginFragment();
             final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.framelayout, fragment, TAG_FRAGMENT);
-            transaction.addToBackStack(null);
+            if (!registerFrag){
+                transaction.addToBackStack(null);
+            }
             transaction.commit();
         }
 
         fragmentTransaction.replace(frameLayout.getId(),fragment);
         fragmentTransaction.commit();
-
 
     }
 

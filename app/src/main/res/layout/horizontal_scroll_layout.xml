@@ -25,16 +25,18 @@
         <TextView
             android:id="@+id/horizontal_scroll_layout_viewAll_btn"
             android:layout_width="wrap_content"
-            android:layout_height="22dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:layout_weight="1"
-            android:background="@drawable/bg_view_all_outline_box"
             android:gravity="center"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
-            android:textColor="#D08873"
-            android:text="View All" />
+            android:paddingStart="10dp"
+            android:text="View All"
+            android:textColor="@color/colorPrimaryTwo" />
+
+<!-- android:background="@drawable/bg_view_all_outline_box"
+-->
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

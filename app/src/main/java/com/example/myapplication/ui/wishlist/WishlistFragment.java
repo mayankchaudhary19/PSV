@@ -9,6 +9,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -16,7 +18,6 @@ import com.example.myapplication.R;
 
 public class WishlistFragment extends Fragment {
 
-    private WishlistViewModel mViewModel;
 
     public static WishlistFragment newInstance() {
         return new WishlistFragment();
@@ -25,14 +26,20 @@ public class WishlistFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_nav_header_wishlist, container, false);
+        View root =inflater.inflate(R.layout.fragment_nav_header_wishlist, container, false);
+        setHasOptionsMenu(true);
+
+        return root;
     }
 
+
+
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(WishlistViewModel.class);
-        // TODO: Use the ViewModel
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.wishlist_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
+
 
 }

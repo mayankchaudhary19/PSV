@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_bottom_dialog_box">
+
+    <TextView
+        android:id="@+id/textView71"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="18dp"
+        android:text="Add Shipping Address"
+        android:textColor="#232323"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/divider7"
+        android:layout_width="409dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="8dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView71" />
+
+    <ImageView
+        android:id="@+id/imageView35"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider7"
+        app:srcCompat="@drawable/ic_location" />
+
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:ems="10"
+        android:hint="Name*"
+        android:inputType="textPersonName"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView35"
+        app:layout_constraintTop_toBottomOf="@+id/divider7" />
+
+    <EditText
+        android:id="@+id/mobile_number"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="2dp"
+        android:ems="10"
+        android:hint="Mobile No.*"
+        android:inputType="phone"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="@+id/name"
+        app:layout_constraintStart_toStartOf="@+id/name"
+        app:layout_constraintTop_toBottomOf="@+id/name" />
+
+    <EditText
+        android:id="@+id/address_line_1"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="4dp"
+        android:ems="10"
+        android:hint="Address Line 1*"
+        android:inputType="textPostalAddress"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="@+id/mobile_number"
+        app:layout_constraintStart_toStartOf="@+id/imageView35"
+        app:layout_constraintTop_toBottomOf="@+id/mobile_number" />
+
+    <EditText
+        android:id="@+id/address_line_2"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="3dp"
+        android:ems="10"
+        android:hint="Address Line 2*"
+        android:inputType="textPostalAddress"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="@+id/address_line_1"
+        app:layout_constraintStart_toStartOf="@+id/address_line_1"
+        app:layout_constraintTop_toBottomOf="@+id/address_line_1" />
+
+    <EditText
+        android:id="@+id/landmark"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="3dp"
+        android:ems="10"
+        android:hint="Landmark (Optional)"
+        android:inputType="textPostalAddress"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="@+id/address_line_2"
+        app:layout_constraintStart_toStartOf="@+id/address_line_2"
+        app:layout_constraintTop_toBottomOf="@+id/address_line_2" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout9"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="24dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/landmark">
+
+        <EditText
+            android:id="@+id/state"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="State*"
+            android:inputType="textPostalAddress"
+            android:textSize="13sp" />
+
+        <EditText
+            android:id="@+id/pincode"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Pincode*"
+            android:inputType="number"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/alternate_mobile_number"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="3dp"
+        android:ems="10"
+        android:hint="Alterate Mobile No. (Optional)"
+        android:inputType="phone"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout9"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout9"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout9" />
+
+    <Button
+        android:id="@+id/save_new_address"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_black_outline_btn"
+        android:paddingStart="40dp"
+        android:paddingEnd="40dp"
+        android:text="Save Changes"
+        android:textAllCaps="true"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/alternate_mobile_number" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

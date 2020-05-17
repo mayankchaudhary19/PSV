@@ -3,9 +3,9 @@ package com.example.myapplication;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -17,14 +17,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.myapplication.adapters.ProductDetailsAdapter;
-import com.example.myapplication.adapters.ProductImagesAdapter;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.myapplication.Adapters.ProductDescriptionAdapter;
+import com.example.myapplication.Adapters.ProductImagesAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -43,26 +45,32 @@ import java.util.List;
     //////////////////// rating layout
 
     private boolean ALREADY_ADDED_TO_WISHLIST=false;
-    private FloatingActionButton addToWishListButton;
     private ImageView wishlist_btn;
-    @Override
+
+     //////////////////// buy Now layout
+     private LinearLayout shipping_details_layout,shipping_details_layout_background,address_container;
+     private TextView butNowBtn;
+     private int count=0;
+     //////////////////// buy Now layout
+
+     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_details);
+
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        final Drawable upArrow = getResources().getDrawable(R.drawable.ic_arrow_back_black_24dp);
-        upArrow.setColorFilter(getResources().getColor(R.color.black_overlay), PorterDuff.Mode.SRC_ATOP);
+        final Drawable upArrow = getResources().getDrawable(R.drawable.ic_keyboard_arrow_left_black_24dp);
+        upArrow.setColorFilter(getResources().getColor(R.color.black_overlay2), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
 
 
         productImagesViewPager=findViewById(R.id.product_images_view_pager);
         viewPagerIndicator=findViewById(R.id.viewPager_indicator);
-        addToWishListButton=findViewById(R.id.floatingActionButton2);
         wishlist_btn=findViewById(R.id.wishlist_btn);
 
         productDetailsViewPager=findViewById(R.id.product_details_viewPager);
@@ -92,7 +100,7 @@ import java.util.List;
             public void onClick(View v) {
                 if (ALREADY_ADDED_TO_WISHLIST){
                     ALREADY_ADDED_TO_WISHLIST =false;
-                    wishlist_btn.setImageTintList(ColorStateList.valueOf(Color.parseColor("#BEBDBD")));
+                    wishlist_btn.setImageTintList(ColorStateList.valueOf(Color.parseColor("#14000000")));
 //                    Toast.makeText(ProductDetailsActivity.this, "Removed from Wishlist", Toast.LENGTH_SHORT).show();
                 }else{
                     ALREADY_ADDED_TO_WISHLIST =true;
@@ -116,7 +124,7 @@ import java.util.List;
             }
         });
 
-        productDetailsViewPager.setAdapter(new ProductDetailsAdapter(getSupportFragmentManager() ,productDetailsTabLayout.getTabCount()));
+        productDetailsViewPager.setAdapter(new ProductDescriptionAdapter(getSupportFragmentManager() ,productDetailsTabLayout.getTabCount()));
         productDetailsViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(productDetailsTabLayout));
         productDetailsTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -147,10 +155,66 @@ import java.util.List;
                     setRating(starPosition);
                 }
             });
-
         }
         //////////////////// rating layout
 
+
+        //////////////////// buy Now layout
+
+
+        butNowBtn= findViewById(R.id.buy_now_text_btn);
+        shipping_details_layout=findViewById(R.id.layout_shipping_address);
+        shipping_details_layout_background=findViewById(R.id.layout_shipping_background);
+        address_container=findViewById(R.id.address_container);
+
+        shipping_details_layout.setVisibility(View.INVISIBLE);
+        shipping_details_layout_background.setVisibility(View.INVISIBLE);
+//        isUp = false;
+         butNowBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                count++;
+                if (count == 1) {
+                    Animation anim_in = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_in);
+                    shipping_details_layout_background.startAnimation(anim_in);
+                    shipping_details_layout_background.setVisibility(View.VISIBLE);
+                    slideUp(shipping_details_layout);
+
+                }
+                else{
+                    count=0;
+                    shipping_details_layout.setVisibility(View.INVISIBLE);
+                    shipping_details_layout_background.setVisibility(View.INVISIBLE);
+                    Intent intent=new Intent(ProductDetailsActivity.this,MainActivity.class);
+                    startActivity(intent);
+                }
+
+//                onSlideViewButtonClick(shipping_details_layout);
+
+            }
+        });
+
+        address_container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                count=0;
+                shipping_details_layout.setVisibility(View.INVISIBLE);
+                shipping_details_layout_background.setVisibility(View.INVISIBLE);
+                Intent intent=new Intent(ProductDetailsActivity.this,MainActivity.class);
+                startActivity(intent);
+            }
+        });
+        shipping_details_layout_background.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                count=0;
+                Animation anim_out = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_out);
+                shipping_details_layout_background.startAnimation(anim_out);
+                shipping_details_layout_background.setVisibility(View.INVISIBLE);
+                slideDown(shipping_details_layout);
+            }
+        });
+        //////////////////// buy Now layout
 
 
     }
@@ -185,10 +249,35 @@ import java.util.List;
         }
     }
 
+
+     public void slideUp(View view){
+         view.setVisibility(View.VISIBLE);
+         TranslateAnimation animate = new TranslateAnimation(
+                 0,                 // fromXDelta
+                 0,                 // toXDelta
+                 view.getHeight(),  // fromYDelta
+                 0);                // toYDelta
+         animate.setDuration(500);
+         animate.setFillAfter(true);
+         view.startAnimation(animate);
+     }
+
+     // slide the view from its current position to below itself
+     public void slideDown(View view){
+         TranslateAnimation animate = new TranslateAnimation(
+                 0,                 // fromXDelta
+                 0,                 // toXDelta
+                 0,                 // fromYDelta
+                 view.getHeight()); // toYDelta
+         animate.setDuration(500);
+         animate.setFillAfter(true);
+         view.startAnimation(animate);
+     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.search_icon, menu);
+        getMenuInflater().inflate(R.menu.without_cotification_menu, menu);
         return true;
     }
 
@@ -199,13 +288,20 @@ import java.util.List;
             return true;
         }
         if (id == R.id.main_wishlist) {
+            Intent wishlistIntent=new Intent(ProductDetailsActivity.this,WishlistActivity.class);
+            startActivity(wishlistIntent);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             return true;
         }
         if (id == R.id.main_shopping_cart) {
+            Intent cartIntent=new Intent(ProductDetailsActivity.this,MyCartActivity.class);
+            startActivity(cartIntent);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             return true;
         }
         else if (id == android.R.id.home) {
             finish();
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             return true;
         }
 

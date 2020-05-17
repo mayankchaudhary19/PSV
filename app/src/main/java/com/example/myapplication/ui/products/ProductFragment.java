@@ -1,10 +1,13 @@
 package com.example.myapplication.ui.products;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -12,12 +15,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.MainActivity;
 import com.example.myapplication.Pojos.Categories;
 import com.example.myapplication.Models.CategoryModel;
 import com.example.myapplication.Pojos.Products;
 import com.example.myapplication.R;
 import com.example.myapplication.OtherAdapters.AllProductsAdapter;
-import com.example.myapplication.adapters.CategoryAdapter;
+import com.example.myapplication.Adapters.CategoryAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +52,11 @@ public class ProductFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_product, container, false);
+        Window window = ((MainActivity) getActivity()).getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(Color.parseColor("#ffffff"));
+        ((MainActivity) getActivity()).getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        ((MainActivity) getActivity()).getSupportActionBar().show();
 
         categoryRecyclerView = root.findViewById(R.id.categoryProducts_recyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());

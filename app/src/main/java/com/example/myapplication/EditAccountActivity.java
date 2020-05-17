@@ -3,6 +3,7 @@ package com.example.myapplication;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
@@ -56,34 +57,73 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EditAccountActivity extends AppCompatActivity {
     private static final String TAG ="EditAccountActivity__" ;
-    CircleImageView profileImg;
-    Button updateChanges,changePassword,logout,removePhoto;
-    ImageView imgBack,imgLogout;
-    TextView email,phone;
-    EditText firstName,lastName,companyName,officeAddress;
+    private CircleImageView profileImg;
+    private CardView changePassword;
+    private ConstraintLayout updatePersonalDetailsCL,updateCompanyProfileCL, addShippingAddressCL,progress_layout;
+    private Button saveChangesPersonalDetails,saveChangesCompanyProfile,logout,viewAllAddressBtn,addNewAddressBtn;
+    private ImageView imgBack,imgLogout,removeCircle,removeCross;
+    private TextView email,phone,profileUserName,updatePersonalDetailsText,updateCompanyProfileText,addShippingAddressText;
+    private EditText firstName,lastName,secondaryPhoneNumber,postalAddress,companyName,officeAddress,officeContactNumber;
+    private Boolean UPDATE_PERSONAL_DETAILS_OPEN=false;
+    private Boolean UPDATE_COMPANY_PROFILE_OPEN=false;
+    private Boolean ADD_SHIPPING_ADDRESS_OPEN=false;
+    public static final int MANAGE_ADDRESS=1;
+
     private Uri photoUri;
     private String url="";
-    private ConstraintLayout progress_layout;
     private StorageReference storage;
     private FirebaseAuth firebaseAuth;
-    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
-            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
-    private static Pattern usrNamePtrn = Pattern.compile("^[a-z_-]{6,14}$");
-    //private static String emaill="null";
-//    public static final Pattern VALID_FIRST_AND_LAST_NAME_REGEX =
-//            Pattern.compile("^\\p{L}+[\\p{L}\\p{Z}\\p{P}]{0,}", Pattern.CASE_INSENSITIVE);
+
+
+//    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+//            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+//    private static Pattern usrNamePtrn = Pattern.compile("^[a-z_-]{6,14}$");
+
     AlertDialog.Builder builder;
-    public EditAccountActivity(){
+
+    private void init(){
+
+        profileImg=findViewById(R.id.profile_image);
+        removeCircle=findViewById(R.id.imageViewCross);
+        removeCross=findViewById(R.id.imageViewColorCross);
+        profileUserName=findViewById(R.id.profile_title_name);
+        email=findViewById(R.id.email);
+        phone=findViewById(R.id.phone);
+        updatePersonalDetailsText=findViewById(R.id.updatePersonalDetailsText);
+        updateCompanyProfileText=findViewById(R.id.updateCompanyProfileText);
+        updatePersonalDetailsCL=findViewById(R.id.updatePersonalDetailsConstraintLayout);
+        updateCompanyProfileCL=findViewById(R.id.updateCompanyProfileConstraintLayout);
+        firstName=findViewById(R.id.firstName);
+        lastName=findViewById(R.id.lastName);
+        secondaryPhoneNumber=findViewById(R.id.secondaryPhoneNumber);
+        postalAddress=findViewById(R.id.postalAddress);
+        saveChangesPersonalDetails=findViewById(R.id.btn_save_changesPersonalDetails);
+        saveChangesCompanyProfile=findViewById(R.id.btn_save_changesCompanyProfile);
+        changePassword=findViewById(R.id.changePassword);
+        logout=findViewById(R.id.btn_logout);
+        companyName=findViewById(R.id.companyName);
+        officeAddress=findViewById(R.id.officeAddress);
+        officeContactNumber=findViewById(R.id.officeContactNumber);
+        imgBack=findViewById(R.id.img_back);
+        imgLogout=findViewById(R.id.img_logout);
+        progress_layout=findViewById(R.id.progress_layout);
+        viewAllAddressBtn=findViewById(R.id.viewAllAddressBtn);
+        addNewAddressBtn =findViewById(R.id.addNewAddressBtn);
+        addShippingAddressText=findViewById(R.id.addShippingAddressText);
+        addShippingAddressCL=findViewById(R.id.addShippingAddressConstraintLayout);
+//        removePhoto=findViewById(R.id.btn_removePhoto);
 
     }
 
-//    public EditAccountActivity(String email,)
+    public EditAccountActivity(){
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nav_header_edit_account);
-        getSupportActionBar().hide();
+//        getSupportActionBar().hide();
         Intent mIntent = getIntent();
         String color = mIntent.getStringExtra("color");
         updateStatusBarColor(color);
@@ -97,19 +137,103 @@ public class EditAccountActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
 //        Toast.makeText(this, get, Toast.LENGTH_SHORT).show();
         progress_layout.setVisibility(View.VISIBLE);
+        updateCompanyProfileCL.setVisibility(View.GONE);
+        updatePersonalDetailsCL.setVisibility(View.GONE);
+        addShippingAddressCL.setVisibility(View.GONE);
+//////////////updatePersonalDetailsText to open card to edit personal Details
+        updatePersonalDetailsText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (UPDATE_PERSONAL_DETAILS_OPEN) {
+                    UPDATE_PERSONAL_DETAILS_OPEN = false;
+                    updatePersonalDetailsText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_keyboard_arrow_down_black_24dp, 0);
+                    updatePersonalDetailsCL.setVisibility(View.GONE);
+                } else {
+                    UPDATE_PERSONAL_DETAILS_OPEN = true;
+                    updatePersonalDetailsText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_keyboard_arrow_up_black_24dp, 0);
+                    updatePersonalDetailsCL.setVisibility(View.VISIBLE);
+
+                }
+            }
+        });
+//////////////updatePersonalDetailsText to open card to edit personal Details
+
+//////////////updateCompanyProfileText to open card to edit company Details
+
+        updateCompanyProfileText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (UPDATE_COMPANY_PROFILE_OPEN) {
+                    UPDATE_COMPANY_PROFILE_OPEN = false;
+                    updateCompanyProfileText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_keyboard_arrow_down_black_24dp, 0);
+                    updateCompanyProfileCL.setVisibility(View.GONE);
+                } else {
+                    UPDATE_COMPANY_PROFILE_OPEN = true;
+                    updateCompanyProfileText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_keyboard_arrow_up_black_24dp, 0);
+                    updateCompanyProfileCL.setVisibility(View.VISIBLE);
+                }
+
+            }
+        });
+//////////////updateCompanyProfileText to open card to edit company Details
+
+//////////////AddShippingAddressText to open card to ShippingAddress Details
+        addShippingAddressText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ADD_SHIPPING_ADDRESS_OPEN) {
+                    ADD_SHIPPING_ADDRESS_OPEN = false;
+                    addShippingAddressText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_keyboard_arrow_down_black_24dp, 0);
+                    addShippingAddressCL.setVisibility(View.GONE);
+                } else {
+                    ADD_SHIPPING_ADDRESS_OPEN = true;
+                    addShippingAddressText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_keyboard_arrow_up_black_24dp, 0);
+                    addShippingAddressCL.setVisibility(View.VISIBLE);
+                }
+
+            }
+        });
+
+//////////////AddShippingAddressText to open card to ShippingAddress Details
+
 
 
         db.collection("users").document(firebaseAuth.getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(final DocumentSnapshot documentSnapshot) {
+////////UpdateProfileTitle
 
+                if (documentSnapshot.getString("firstName" ) != null ) {
+                    String firstNameString=documentSnapshot.getString("firstName");
+                    String lastNameString=documentSnapshot.getString("lastName");
+                    String fullNameString= firstNameString + " " + lastNameString;
+                    profileUserName.setText(fullNameString);
 
+                } else {
+                    String str = documentSnapshot.getString("email");
+                    String[] arrOfStr = str.split("@", 2);
+
+                    for (String a : arrOfStr)
+                        profileUserName.setText(arrOfStr[0]);
+                }
                 phone.setText(documentSnapshot.getString("phone"));
                 email.setText(documentSnapshot.getString("email"));
-                companyName.setText(documentSnapshot.getString("companyName"));
-                officeAddress.setText(documentSnapshot.getString("officeAddress"));
+////////UpdateProfileTitle
+
+////////UpdatePersonalDetails
                 firstName.setText(documentSnapshot.getString("firstName"));
                 lastName.setText(documentSnapshot.getString("lastName"));
+                postalAddress.setText(documentSnapshot.getString("postalAddress"));
+                secondaryPhoneNumber.setText(documentSnapshot.getString("secondaryPhoneNumber"));
+////////UpdatePersonalDetails
+
+////////UpdateCompanyProfile
+                companyName.setText(documentSnapshot.getString("companyName"));
+                officeAddress.setText(documentSnapshot.getString("officeAddress"));
+                officeContactNumber.setText(documentSnapshot.getString("officeContactNumber"));
+////////UpdateCompanyProfile
+
+////////SetProfilePicture
 
                 final StorageReference ref = storage.child("profiles/" + firebaseAuth.getCurrentUser().getUid() + ".jpg");
                 ref.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
@@ -123,6 +247,8 @@ public class EditAccountActivity extends AppCompatActivity {
                                     .centerCrop()
                                     .placeholder(R.drawable.ic_user_profile)
                                     .into(profileImg);
+                            removeCircle.setVisibility(View.VISIBLE);
+                            removeCross.setVisibility(View.VISIBLE);
 //                            Toast.makeText(EditAccountActivity.this, "set", Toast.LENGTH_SHORT).show();
                             progress_layout.setVisibility(View.INVISIBLE);
                         } else {
@@ -133,10 +259,6 @@ public class EditAccountActivity extends AppCompatActivity {
                     }
                 });
 
-
-//                String profile_url = (String) documentSnapshot.get("profile_url");
-
-//                progress_layout.setVisibility(View.INVISIBLE);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -146,137 +268,24 @@ public class EditAccountActivity extends AppCompatActivity {
 
             }
         });
+////////SetProfilePicture
 
 
-        email.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                builder.setMessage("                                                                                Do you want to change email address? ")
-                        .setCancelable(false)
-        //                        .setIcon(R.drawable.ic_delete_forever_black_24dp)
-                        .setPositiveButton(Html.fromHtml("<font color='#FF7F27'>Yes</font>"), new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-
-                                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-//                                 Get auth credentials from the user for re-authentication. The example below shows
-//                                 email and password credentials but there are multiple possible providers,
-//                                 such as GoogleAuthProvider or FacebookAuthProvider.
-//                                AuthCredential credential = EmailAuthProvider
-//                                        .getCredential(firebaseAuth.getCurrentUser().getEmail(),pass);
-//
-//                                 Prompt the user to re-provide their sign-in credentials
-//                                user.reauthenticate(credential)
-//                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                                            @Override
-//                                            public void onComplete(@NonNull Task<Void> task) {
-//
-//                                                if (task.isSuccessful()) {
-//                                                    Log.d(TAG, "User re-authenticated.");
-//                                                    firebaseAuth.fetchSignInMethodsForEmail(new_email.getText().toString()).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
-//                                                        @Override
-//                                                        public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
-//
-//                                                            if (task.isSuccessful()) {
-//
-//                                                                try {
-//                                                                    if (task.getResult().getSignInMethods().size() == 1) {
-//                                                                        Log.d(TAG, "onComplete: This will return the signin methods");
-//                                                                        Toast.makeText(EditAccountActivity.this, "The email is already exist", Toast.LENGTH_SHORT).show();
-//
-//
-//                                                                    }else{
-//                                                                        Log.d(TAG, "onComplete: Email is not present. User can change it");
-//                                                                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//
-//                                                                        user.updateEmail(email.getText().toString())
-//                                                                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                                                                                    @Override
-//                                                                                    public void onComplete(@NonNull Task<Void> task) {
-//                                                                                        if (task.isSuccessful()) {
-//                                                                                            Log.d(TAG, "User email address updated.");
-//                                                                                            Toast.makeText(EditAccountActivity.this, "The email updated.", Toast.LENGTH_SHORT).show();
-//
-//                                                                                        }
-//                                                                                    }
-//                                                                                });
-//
-//                                                                    }
-//                                                                }catch(NullPointerException e) {
-//                                                                    Log.e(TAG, "onComplete: NullPointerException" + e.getMessage());
-//                                                                }
-//                                                            }
-//
-//                                                        }
-//
-//
-//                                                    });
-//
-//
-//                                                } else {
-//                                                    Log.d(TAG, "onComplete: User re-authentication failed.");
-//                                                }
-//
-//
-//                                            }
-//                                        });
-//
-
-                                                                }
-                        })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                //  Action for 'NO' Button
-                                dialog.cancel();
-
-                            }
-                        });
-                //Creating dialog box
-                AlertDialog alert = builder.create();
-                //Setting the title manually
-                alert.setTitle(" Alert!");
-                alert.show();
-                return false;
-            }
-        });
-
-        phone.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                builder.setMessage("                                                                                Do you want to change phone number? ")
-                        .setCancelable(false)
-                        //                        .setIcon(R.drawable.ic_delete_forever_black_24dp)
-                        .setPositiveButton(Html.fromHtml("<font color='#FF7F27'>Yes</font>"), new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                //
-
-                            }
-                        })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                //  Action for 'NO' Button
-                                dialog.cancel();
-
-                            }
-                        });
-                //Creating dialog box
-                AlertDialog alert = builder.create();
-                //Setting the title manually
-                alert.setTitle(" Alert!");
-                alert.show();
-                return false;
-            }
-        });
-
+////////BackButton
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(EditAccountActivity.this, MainActivity.class);
                 startActivity(intent);
                 finishAffinity();
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
+
             }
         });
+////////BackButton
 
+////////LogoutButton&Image
         imgLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -285,10 +294,29 @@ public class EditAccountActivity extends AppCompatActivity {
                 Intent intent = new Intent(EditAccountActivity.this, UserSessionActivity.class);
                 startActivity(intent);
                 finishAffinity();
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
+
             }
         });
 
-        removePhoto.setOnClickListener(new View.OnClickListener() {
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                finish();
+                Intent intent = new Intent(EditAccountActivity.this, UserSessionActivity.class);
+                startActivity(intent);
+                finishAffinity();
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
+
+            }
+        });
+////////LogoutButton&Image
+
+/////////RemoveProfilePicture
+        removeCircle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -308,6 +336,8 @@ public class EditAccountActivity extends AppCompatActivity {
                                         map.put("profile_url", url);
                                         db.collection("users").document(firebaseAuth.getCurrentUser().getUid()).update(map);
                                         Toast.makeText(EditAccountActivity.this, "Successfully Deleted", Toast.LENGTH_SHORT).show();
+                                        removeCircle.setVisibility(View.INVISIBLE);
+                                        removeCross.setVisibility(View.INVISIBLE);
                                         // File deleted successfully
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
@@ -336,153 +366,12 @@ public class EditAccountActivity extends AppCompatActivity {
                 //Setting the title manually
                 alert.setTitle(" Alert!");
                 alert.show();
-                }
-        });
-//        removePhoto.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                builder.setMessage("                                                                                Do you want to delete profile picture?")
-//                        .setCancelable(false)
-////                        .setIcon(R.drawable.ic_delete_forever_black_24dp)
-//                        .setPositiveButton(Html.fromHtml("<font color='#FF7F27'>Yes</font>"), new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int id) {
-//                                Toast.makeText(getApplicationContext(), "you choose yes action for alertbox",
-//                                        Toast.LENGTH_SHORT).show();
-//                                StorageReference ref = storage.child("profiles/" + firebaseAuth.getCurrentUser().getUid() + ".jpg");
-//                                ref.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                    @Override
-//                                    public void onSuccess(Void aVoid) {
-//                                        url = null;
-//                                        photoUri = null;
-//                                        profileImg.setImageResource(R.drawable.ic_user_profile);
-//                                        Map<String, Object> map = new HashMap<>();
-//                                        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//                                        map.put("profile_url", url);
-//                                        db.collection("users").document(firebaseAuth.getCurrentUser().getUid()).update(map);
-//                                        Toast.makeText(EditAccountActivity.this, "Successfully Removed", Toast.LENGTH_SHORT).show();
-//                                        // File deleted successfully
-//                                    }
-//                                }).addOnFailureListener(new OnFailureListener() {
-//                                    @Override
-//                                    public void onFailure(@NonNull Exception e) {
-//                                       if (photoUri == null) {
-//                                            Toast.makeText(EditAccountActivity.this, "Already Removed", Toast.LENGTH_SHORT).show();
-//                                        } else {
-//                                            Toast.makeText(EditAccountActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-//                                            // Uh-oh, an error occurred!
-//                                        }
-//                                    }
-//                                });
-//
-//                            }
-//                        })
-//                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int id) {
-//                                //  Action for 'NO' Button
-//                                dialog.cancel();
-//                                Toast.makeText(getApplicationContext(), "you choose no action for alertbox",
-//                                        Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
-//                //Creating dialog box
-//                AlertDialog alert = builder.create();
-//                //Setting the title manually
-//                alert.setTitle(" Alert!");
-//                alert.show();
-//            return false;}
-//        });
-
-
-        changePassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-//                Some security-sensitive actions—such as deleting an account, setting a primary email address, and changing a password—require that the user has recently signed in.
-//                If you perform one of these actions, and the user signed in too long ago, the action fails and throws FirebaseAuthRecentLoginRequiredException. When this happens,
-//                re-authenticate the user by getting new sign-in credentials from the user and passing the credentials to reauthenticate. For example:
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-// Get auth credentials from the user for re-authentication. The example below shows
-// email and password credentials but there are multiple possible providers,
-// such as GoogleAuthProvider or FacebookAuthProvider.
-                AuthCredential credential = EmailAuthProvider
-                        .getCredential("user@example.com", "password1234");
-
-//// Prompt the user to re-provide their sign-in credentials
-//                user.reauthenticate(credential)
-//                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                            @Override
-//                            public void onComplete(@NonNull Task<Void> task) {
-//                                if (task.isSuccessful()) {
-//                                    user.updatePassword(newPass).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                                        @Override
-//                                        public void onComplete(@NonNull Task<Void> task) {
-//                                            if (task.isSuccessful()) {
-//                                                Log.d(TAG, "Password updated");
-//                                            } else {
-//                                                Log.d(TAG, "Error password not updated")
-//                                            }
-//                                        }
-//                                    });
-//                                } else {
-//                                    Log.d(TAG, "Error auth failed");
-//                                }
-//                            }
-//                        });
-
-
             }
         });
-
-//        Changing password in firebase is bit tricky. it's not like what we usually do for changing password in server side scripting and database. to implement change password functionality in your app, first you need to get the user's email from FirebaseAuth or prompt user to input email and after that prompt the user to input old password because you can't retrieve user's password as Frank van Puffelen said. After that you need to reauthenticate that. Once reauthentication is done, if successful, you can use updatePassword(). I have added a sample below that i used for my own app. Hope, it will help you.
-
+/////////RemoveProfilePicture
 
 
-
-
-//        private FirebaseUser user;
-//        user = FirebaseAuth.getInstance().getCurrentUser();
-//        final String email = user.getEmail();
-//        AuthCredential credential = EmailAuthProvider.getCredential(email,oldpass);
-//
-//        user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
-//            @Override
-//            public void onComplete(@NonNull Task<Void> task) {
-//                if(task.isSuccessful()){
-//                    user.updatePassword(newPass).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<Void> task) {
-//                            if(!task.isSuccessful()){
-//                                Snackbar snackbar_fail = Snackbar
-//                                        .make(coordinatorLayout, "Something went wrong. Please try again later", Snackbar.LENGTH_LONG);
-//                                snackbar_fail.show();
-//                            }else {
-//                                Snackbar snackbar_su = Snackbar
-//                                        .make(coordinatorLayout, "Password Successfully Modified", Snackbar.LENGTH_LONG);
-//                                snackbar_su.show();
-//                            }
-//                        }
-//                    });
-//                }else {
-//                    Snackbar snackbar_su = Snackbar
-//                            .make(coordinatorLayout, "Authentication Failed", Snackbar.LENGTH_LONG);
-//                    snackbar_su.show();
-//                }
-//            }
-//        });
-
-
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                finish();
-                Intent intent=new Intent(EditAccountActivity.this,UserSessionActivity.class);
-                startActivity(intent);
-                finishAffinity();
-            }
-        });
-
+/////////ProfileImagePermissions
 
         profileImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -494,54 +383,43 @@ public class EditAccountActivity extends AppCompatActivity {
                                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                                 Manifest.permission.READ_EXTERNAL_STORAGE
                         ).withListener(new MultiplePermissionsListener() {
-                    @Override public void onPermissionsChecked(MultiplePermissionsReport report) {
-                        if(report.areAllPermissionsGranted()){
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        if (report.areAllPermissionsGranted()) {
                             selectImage();
 
-                        }else{
+                        } else {
                             Toast.makeText(EditAccountActivity.this, "Please allow Permissions!", Toast.LENGTH_SHORT).show();
                         }
                     }
-                    @Override public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {/* ... */}
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {/* ... */}
                 }).check();
             }
         });
+/////////ProfileImagePermissions
 
 
-        updateChanges.setOnClickListener(new View.OnClickListener() {
+/////////saveChangesPersonalDetails Button
+        saveChangesPersonalDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                email.setError(null);
-                phone.setError(null);
-                if (email.getText().toString().isEmpty()) {
-                    email.setError("Required!");
-                    return;
+                if(!secondaryPhoneNumber.getText().toString().isEmpty()) {
+                    secondaryPhoneNumber.setError(null);
+                    if (secondaryPhoneNumber.getText().toString().length() != 10) {
+                        secondaryPhoneNumber.setError("Invalid Phone Number");
+                        return;
+                    }
                 }
-                if (phone.getText().toString().isEmpty()) {
-                    phone.setError("Required!");
-                    return;
-                }
-
-                if (!VALID_EMAIL_ADDRESS_REGEX.matcher(email.getText().toString()).find()) {
-                    email.setError("Invalid  E-mail");
-                    return;
-                }
-                if (phone.getText().toString().length() != 10) {
-                    phone.setError("Invalid Phone Number");
-                    return;
-                }
-
                 progress_layout.setVisibility(View.VISIBLE);
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-//                FirebaseUser.getIdToken()
-
                 Map<String, Object> map = new HashMap<>();
-//                map.put("email",email.getText().toString());
-//                map.put("phone", phone.getText().toString());
-                map.put("firstName",firstName.getText().toString());
+                map.put("firstName", firstName.getText().toString());
                 map.put("lastName", lastName.getText().toString());
-                map.put("companyName", companyName.getText().toString());
-                map.put("officeAddress", officeAddress.getText().toString());
+                map.put("secondaryPhoneNumber", secondaryPhoneNumber.getText().toString());
+                map.put("postalAddress", postalAddress.getText().toString());
+
                 db.collection("users").document(firebaseAuth.getCurrentUser().getUid()).update(map)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -554,13 +432,137 @@ public class EditAccountActivity extends AppCompatActivity {
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "Error updating document : "+ e.getMessage());
-                                Toast.makeText(EditAccountActivity.this, "error : "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                Log.w(TAG, "Error updating document : " + e.getMessage());
+                                Toast.makeText(EditAccountActivity.this, "error : " + e.getMessage(), Toast.LENGTH_SHORT).show();
                                 progress_layout.setVisibility(View.GONE);
                             }
                         });
 
- //
+            }
+        });
+/////////saveChangesPersonalDetails Button
+
+/////////saveChangesCompanyProfile Button
+
+        saveChangesCompanyProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!secondaryPhoneNumber.getText().toString().isEmpty()) {
+                    officeContactNumber.setError(null);
+                    if (officeContactNumber.getText().toString().length() != 10) {
+                        officeContactNumber.setError("Invalid Phone Number");
+                        return;
+                    }
+                }
+                progress_layout.setVisibility(View.VISIBLE);
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                Map<String, Object> map = new HashMap<>();
+                map.put("companyName", companyName.getText().toString());
+                map.put("officeAddress", officeAddress.getText().toString());
+                map.put("officeContactNumber", officeContactNumber.getText().toString());
+
+                db.collection("users").document(firebaseAuth.getCurrentUser().getUid()).update(map)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+//                                Toast.makeText(EditAccountActivity.this, url, Toast.LENGTH_SHORT).show();
+                                Log.d(TAG, "DocumentSnapshot successfully updated!");
+                                progress_layout.setVisibility(View.GONE);
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w(TAG, "Error updating document : " + e.getMessage());
+                                Toast.makeText(EditAccountActivity.this, "error : " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                progress_layout.setVisibility(View.GONE);
+                            }
+                        });
+
+            }
+        });
+/////////saveChangesCompanyProfile Button
+
+/////////viewAllAddress Button
+        viewAllAddressBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent= new Intent(EditAccountActivity.this,MyAddressActivity.class);
+                intent.putExtra("MODE",MANAGE_ADDRESS);
+                startActivity(intent);
+            }
+        });
+/////////viewAllAddress Button
+
+/////////AddNewAddress Button
+        addNewAddressBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent= new Intent(EditAccountActivity.this,AddAddressActivity.class);
+                startActivity(intent);
+            }
+        });
+/////////AddNewAddress Button
+
+
+    }
+
+
+//        saveChangesPersonalDetails.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                email.setError(null);
+//                secondaryPhoneNumber.setError(null);
+////                if (email.getText().toString().isEmpty()) {
+////                    email.setError("Required!");
+////                    return;
+////                }
+////                if (phone.getText().toString().isEmpty()) {
+////                    phone.setError("Required!");
+////                    return;
+////                }
+//
+//                if (!VALID_EMAIL_ADDRESS_REGEX.matcher(email.getText().toString()).find()) {
+//                    email.setError("Invalid  E-mail");
+//                    return;
+//                }
+//                if (phone.getText().toString().length() != 10) {
+//                    phone.setError("Invalid Phone Number");
+//                    return;
+//                }
+//
+//                progress_layout.setVisibility(View.VISIBLE);
+//                FirebaseFirestore db = FirebaseFirestore.getInstance();
+////                FirebaseUser.getIdToken()
+//
+//                Map<String, Object> map = new HashMap<>();
+////                map.put("email",email.getText().toString());
+////                map.put("phone", phone.getText().toString());
+//                map.put("firstName",firstName.getText().toString());
+//                map.put("lastName", lastName.getText().toString());
+//                map.put("companyName", companyName.getText().toString());
+//                map.put("officeAddress", officeAddress.getText().toString());
+//                db.collection("users").document(firebaseAuth.getCurrentUser().getUid()).update(map)
+//                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                            @Override
+//                            public void onSuccess(Void aVoid) {
+////                                Toast.makeText(EditAccountActivity.this, url, Toast.LENGTH_SHORT).show();
+//                                Log.d(TAG, "DocumentSnapshot successfully updated!");
+//                                progress_layout.setVisibility(View.GONE);
+//                            }
+//                        })
+//                        .addOnFailureListener(new OnFailureListener() {
+//                            @Override
+//                            public void onFailure(@NonNull Exception e) {
+//                                Log.w(TAG, "Error updating document : "+ e.getMessage());
+//                                Toast.makeText(EditAccountActivity.this, "error : "+e.getMessage(), Toast.LENGTH_SHORT).show();
+//                                progress_layout.setVisibility(View.GONE);
+//                            }
+//                        });
+
+
+
+
 //                FirebaseFirestore db = FirebaseFirestore.getInstance();
 //                progress_layout.setVisibility(View.VISIBLE);
 //                DocumentReference ref_doc = db.document("users");
@@ -583,9 +585,11 @@ public class EditAccountActivity extends AppCompatActivity {
 //                });
 //                updateDetails();
 
-            }
-        });
-    }
+
+
+
+//            }
+//        });
 
 
     private void updateChanges() {
@@ -627,7 +631,7 @@ public class EditAccountActivity extends AppCompatActivity {
                         Uri downloadUri = task.getResult();
                         progress_layout.setVisibility(View.GONE);
 
-//upladeDetails()
+//uplDetails()
                     } else {
                         String error = task.getException().getMessage();
                         Toast.makeText(EditAccountActivity.this, error, Toast.LENGTH_SHORT).show();
@@ -685,7 +689,8 @@ public class EditAccountActivity extends AppCompatActivity {
                         .centerCrop()
                         .placeholder(R.drawable.ic_user_profile)
                         .into(profileImg);
-
+                removeCircle.setVisibility(View.VISIBLE);
+                removeCross.setVisibility(View.VISIBLE);
 
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
@@ -695,30 +700,13 @@ public class EditAccountActivity extends AppCompatActivity {
             }
         }
     }
-    private void init(){
-        profileImg=findViewById(R.id.profile_image);
-        updateChanges=findViewById(R.id.btn_update_changes);
-        changePassword=findViewById(R.id.btn_change_pass);
-        logout=findViewById(R.id.btn_logout);
-        removePhoto=findViewById(R.id.btn_removePhoto);
-        firstName=findViewById(R.id.first_name);
-        lastName=findViewById(R.id.last_name);
-        email=findViewById(R.id.email);
-        phone=findViewById(R.id.phone);
-        companyName=findViewById(R.id.company_name);
-        officeAddress=findViewById(R.id.office_address);
-        imgBack=findViewById(R.id.img_back);
-        imgLogout=findViewById(R.id.img_logout);
-        progress_layout=findViewById(R.id.progress_layout);
-
-    }
-
 
     public void updateStatusBarColor(String color){
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(Color.parseColor(color));
     }
+
 
 
 //

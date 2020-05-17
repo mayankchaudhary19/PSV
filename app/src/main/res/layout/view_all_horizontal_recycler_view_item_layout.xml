@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    android:background="#FFFFFF">
+
+    <ImageView
+        android:id="@+id/product_image"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="14dp"
+        android:background="@drawable/bg_cart_product_outline_box"
+        android:padding="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/sampleproductthree" />
+
+    <TextView
+        android:id="@+id/product_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="13dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Square Bowl [small size]"
+        android:textColor="#272727"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/imageView36"
+        app:layout_constraintStart_toEndOf="@+id/product_image"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/product_subtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="13dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="Transparent color, with dotted texture"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/product_title"
+        app:layout_constraintTop_toBottomOf="@+id/product_title" />
+
+    <TextView
+        android:id="@+id/product_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="₹150"
+        android:textColor="#A6000000"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/product_image"
+        app:layout_constraintStart_toStartOf="@+id/t_v_coupon_applied" />
+
+    <TextView
+        android:id="@+id/product_initial_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="₹160"
+        android:textColor="#9F000000"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/product_price"
+        app:layout_constraintStart_toEndOf="@+id/product_price" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="#65000000"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/product_initial_price"
+        app:layout_constraintEnd_toEndOf="@+id/product_initial_price"
+        app:layout_constraintStart_toStartOf="@+id/product_initial_price"
+        app:layout_constraintTop_toTopOf="@+id/product_initial_price" />
+
+
+    <TextView
+        android:id="@+id/product_discount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="(20% off)"
+        android:textSize="14sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/product_price"
+        app:layout_constraintStart_toEndOf="@+id/product_initial_price" />
+
+    <TextView
+        android:id="@+id/t_v_coupon_applied"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="2dp"
+        android:drawableStart="@drawable/ic_local_offer_black_24dp"
+        android:drawablePadding="5dp"
+        android:drawableTint="#1EAEA1"
+        android:includeFontPadding="false"
+        android:paddingTop="3dp"
+        android:paddingEnd="3dp"
+        android:paddingBottom="3dp"
+        android:text="Free Coupons Available"
+        android:textColor="#4DB6AC"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/product_image"
+        app:layout_constraintTop_toBottomOf="@+id/product_subtitle" />
+
+    <ImageView
+        android:id="@+id/imageView36"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="14dp"
+        android:tint="#1A000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_favorite_black_24_dp_two" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#FFAB91"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="0dp"
+        app:layout_constraintStart_toStartOf="@+id/t_v_coupon_applied"
+        app:layout_constraintTop_toBottomOf="@+id/t_v_coupon_applied">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:id="@+id/imageView22"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_gravity="center"
+                android:paddingStart="4dp"
+                android:paddingTop="2.5dp"
+                android:paddingBottom="3dp"
+                android:src="@drawable/ic_star_2"
+                android:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_product_rating_miniView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="2dp"
+                android:gravity="center"
+                android:paddingTop="1dp"
+                android:paddingBottom="1dp"
+                android:text=" 3.5"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/total_no_of_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="(12 ratings)"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="@+id/cardView11"
+        app:layout_constraintStart_toEndOf="@+id/cardView11"
+        app:layout_constraintTop_toTopOf="@+id/cardView11" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

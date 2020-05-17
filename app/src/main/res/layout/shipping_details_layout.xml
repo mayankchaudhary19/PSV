@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:layout_marginBottom="12dp">
+
+    <TextView
+        android:id="@+id/textView40"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Shipping Address"
+        android:textColor="#232323"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/divider7"
+        android:layout_width="409dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="15dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView40" />
+
+    <TextView
+        android:id="@+id/address_full_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="13dp"
+        android:text="Mr.Mukesh Kumar"
+        android:textColor="#383838 "
+        android:textSize="15sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider7" />
+
+    <TextView
+        android:id="@+id/address_line1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="H.No. 9577, Library Road, Azad Market"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/address_full_name" />
+
+    <TextView
+        android:id="@+id/address_line2_with_pincode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="Near Sanatan Dharam Mandir, New Delhi-110006"
+        app:layout_constraintStart_toStartOf="@+id/address_line1"
+        app:layout_constraintTop_toBottomOf="@+id/address_line1" />
+
+    <TextView
+        android:id="@+id/textView60"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="16dp"
+        android:text="Mob.:"
+        android:textColor="#3C3C3C"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/address_line2_with_pincode"
+        app:layout_constraintTop_toBottomOf="@+id/address_line2_with_pincode" />
+
+    <TextView
+        android:id="@+id/address_mobile_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="+91 9968887670"
+        android:textColor="#3C3C3C"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView60"
+        app:layout_constraintStart_toEndOf="@+id/textView60"
+        app:layout_constraintTop_toTopOf="@+id/textView60" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

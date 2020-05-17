@@ -9,7 +9,7 @@
 
     <item>
         <shape>
-            <stroke android:color="@color/login_form_details_light" android:width="3dp"/>
+            <stroke android:color="#86DEDEDE" android:width="3dp"/>
             <corners android:radius="5dp" />
         </shape>
     </item>

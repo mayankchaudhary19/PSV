@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/address_item_CL"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    android:background="@drawable/bg_horizontal_scroll_product_outline_box"
+    android:foreground="?attr/selectableItemBackground">
+
+    <TextView
+        android:id="@+id/full_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="7dp"
+        android:text="Mayank Chaudhary"
+        android:textSize="15sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toStartOf="@+id/textView79"
+        app:layout_constraintStart_toEndOf="@+id/view"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/address_line1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="16dp"
+        android:text="H.No.-9577, Library Road, Azad Market,"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/full_name"
+        app:layout_constraintTop_toBottomOf="@+id/full_name" />
+
+    <TextView
+        android:id="@+id/address_line2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="Near Sanatan Dharam Mandir"
+        app:layout_constraintEnd_toEndOf="@+id/address_line1"
+        app:layout_constraintStart_toStartOf="@+id/address_line1"
+        app:layout_constraintTop_toBottomOf="@+id/address_line1" />
+
+    <TextView
+        android:id="@+id/state"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="10dp"
+        android:text="New Delhi"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/address_line2"
+        app:layout_constraintTop_toBottomOf="@+id/address_line2" />
+
+    <TextView
+        android:id="@+id/mobile_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="9968887670"
+        android:textSize="15sp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="@+id/full_name"
+        app:layout_constraintStart_toEndOf="@+id/textView79" />
+
+    <TextView
+        android:id="@+id/pincode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="110006"
+        app:layout_constraintStart_toEndOf="@+id/textView78"
+        app:layout_constraintTop_toTopOf="@+id/state" />
+
+    <TextView
+        android:id="@+id/textView78"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="-"
+        app:layout_constraintStart_toEndOf="@+id/state"
+        app:layout_constraintTop_toTopOf="@+id/state" />
+
+    <TextView
+        android:id="@+id/textView79"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:text=","
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/full_name"
+        app:layout_constraintStart_toEndOf="@+id/full_name" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="7dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/icon_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_check_black_24dp" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/option_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/bg_adress_options"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView80"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="1dp"
+            android:gravity="center"
+            android:text="Edit"
+            android:textColor="#73000000"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/divider22"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView82"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="3dp"
+            android:gravity="center"
+            android:text="Remove"
+            android:textColor="#73000000"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView80" />
+
+        <View
+            android:id="@+id/divider22"
+            android:layout_width="0dp"
+            android:layout_height="0.9dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintBottom_toTopOf="@+id/textView82"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView80" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

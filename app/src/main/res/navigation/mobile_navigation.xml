@@ -8,19 +8,22 @@
     <fragment
         android:id="@+id/nav_home"
         android:name="com.example.myapplication.ui.home.HomeFragment"
-
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+<!--        <action-->
+<!--            android:id="@+id/action_nav_home_to_nav_wishlist"-->
+<!--            app:destination="@id/nav_wishlist" />-->
+    </fragment>
 
     <fragment
         android:id="@+id/nav_products"
         android:name="com.example.myapplication.ui.products.ProductFragment"
-
         tools:layout="@layout/fragment_product" />
 
     <fragment
         android:id="@+id/nav_offer_zone"
         android:name="com.example.myapplication.ui.offer_zone.OfferZoneFragment"
-        tools:layout="@layout/fragment_offer_zone" />
+        tools:layout="@layout/fragment_offer_zone"
+        />
 
     <fragment
         android:id="@+id/nav_psv_store"
@@ -32,10 +35,10 @@
         android:name="com.example.myapplication.ui.care.WeCareFragment"
         tools:layout="@layout/fragment_we_care" />
 
-<!--    <fragment-->
-<!--        android:id="@+id/nav_rate"-->
-<!--        android:name="com.example.myapplication.ui.send.SendFragment"-->
-<!--        tools:layout="@layout/fragment_send" />-->
+<!--        <fragment-->
+<!--        android:id="@+id/nav_wishlist"-->
+<!--        android:name="com.example.myapplication.ui.wishlist.WishlistFragment"-->
+<!--        tools:layout="@layout/fragment_nav_header_wishlist" />-->
 
 <!--    <fragment-->
 <!--        android:id="@+id/nav_share"-->

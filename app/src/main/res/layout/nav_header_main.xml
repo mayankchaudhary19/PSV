@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
     android:background="@drawable/gradient"
@@ -25,13 +26,13 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/user_img"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="false"
         android:layout_alignParentBottom="false"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
         android:clickable="true"
         android:src="@drawable/ic_account"
@@ -53,142 +54,172 @@
     <TextView
         android:id="@+id/username"
         android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/user_img"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="false"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="64dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="50dp"
-        android:autoSizeMaxTextSize="20sp"
+        android:layout_marginBottom="6dp"
         android:fontFamily="sans-serif"
-        android:gravity="left"
+        android:gravity="left|bottom"
+        android:text="Hello User!"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:textStyle="italic" />
+        android:textSize="19sp"
+        android:textStyle="italic|bold" />
 
     <LinearLayout
+        android:id="@+id/headerItemLayout"
         android:layout_width="match_parent"
         android:layout_height="58dp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="62dp"
         android:background="#fff"
-        android:orientation="vertical"
-        android:paddingTop="10dp"
-        android:elevation="15dp">
+        android:elevation="15dp"
+        android:orientation="horizontal"
+        android:paddingTop="10dp">
 
-        <LinearLayout
-            android:id="@+id/img_layout"
-            android:layout_width="match_parent"
-            android:layout_height="23dp"
-            android:orientation="horizontal">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/accountConstraintLayout"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
             <ImageView
                 android:id="@+id/account2"
-                android:layout_width="70dp"
-                android:layout_height="17dp"
-
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="3dp"
-                android:layout_weight="1"
-                android:clickable="true"
+                android:layout_width="0dp"
+                android:layout_height="18dp"
                 android:src="@drawable/ic_user"
-
-                />
-
-            <ImageView
-                android:id="@+id/wishlist2"
-                android:layout_width="70dp"
-                android:layout_height="17dp"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="3dp"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:src="@drawable/ic_heart" />
-
-            <ImageView
-                android:id="@+id/order_history2"
-                android:layout_width="70dp"
-                android:layout_height="17dp"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="3dp"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_order_history" />
-
-            <ImageView
-                android:id="@+id/cart2"
-                android:layout_width="70dp"
-                android:layout_height="17dp"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="3dp"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:src="@drawable/ic_shopping_cart" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="9dp"
-            >
+                android:tint="#2F000000"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/account"
-                android:layout_width="70dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_marginBottom="3dp"
                 android:clickable="true"
-                android:gravity="center"
                 android:text="Account"
                 android:textColor="@color/cardview_dark_background"
-                android:textSize="11sp" />
+                android:textSize="11sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/account2"
+                app:layout_constraintTop_toBottomOf="@+id/account2" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/wishlistConstraintLayout"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/wishlist2"
+                android:layout_width="0dp"
+                android:layout_height="17dp"
+                android:src="@drawable/ic_heart"
+                android:tint="#00000000"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/wishlist"
-                android:layout_width="80dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:gravity="center"
+                android:layout_marginBottom="3dp"
                 android:text="Wishlist"
                 android:textColor="@color/cardview_dark_background"
-                android:textSize="11sp" />
+                android:textSize="11sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/wishlist2"
+                app:layout_constraintStart_toStartOf="@+id/wishlist2"
+                app:layout_constraintTop_toBottomOf="@+id/wishlist2" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ordersConstraintLayout"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/order_history2"
+                android:layout_width="0dp"
+                android:layout_height="17dp"
+                android:src="@drawable/ic_order_history"
+                android:tint="#000000"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/order_history"
-                android:layout_width="75dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:gravity="right"
+                android:layout_marginBottom="3dp"
                 android:text="Order History"
                 android:textColor="@color/cardview_dark_background"
-                android:textSize="11sp" />
+                android:textSize="11sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/order_history2"
+                app:layout_constraintTop_toBottomOf="@+id/order_history2" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cartConstraintLayout"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/cart2"
+                android:layout_width="0dp"
+                android:layout_height="17dp"
+                android:layout_alignParentTop="true"
+                android:layout_weight="1"
+                android:src="@drawable/ic_shopping_cart_2"
+                android:tint="#000000"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/cart"
-                android:layout_width="70dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp"
                 android:layout_weight="1"
-                android:clickable="true"
                 android:gravity="center"
                 android:text="Cart"
                 android:textColor="@color/cardview_dark_background"
-                android:textSize="11sp" />
-        </LinearLayout>
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="6dp"
-            android:paddingTop="12dp"
-            app:cardBackgroundColor="#F1F1F1"/>
+                android:textSize="11sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/cart2"
+                app:layout_constraintTop_toBottomOf="@+id/cart2" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
+
+<!--    <androidx.cardview.widget.CardView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="6dp"-->
+<!--        android:layout_below="@+id/itemLayout"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_marginTop="0dp"-->
+<!--        android:paddingTop="12dp"-->
+<!--        android:visibility="gone"-->
+<!--        app:cardBackgroundColor="#F1F1F1" />-->
 
 
     <!--    <ImageView-->

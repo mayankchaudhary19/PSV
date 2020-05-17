@@ -45,22 +45,48 @@
             android:layout_height="50dp"
             android:background="#FFFFFF"
             android:elevation="30dp"
+            android:paddingStart="0dp"
+            android:paddingEnd="10dp"
             app:popupTheme="@style/ToolbarTheme"
             app:titleMargin="0dp"
             app:titleMargins="0dp"
             app:titleTextColor="#FFFFFF" />
     </com.google.android.material.appbar.AppBarLayout>
 
-    <ScrollView
+    <LinearLayout
+        android:id="@+id/layout_shipping_background"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:animateLayoutChanges="true"
+        android:background="#33111111"
+        android:visibility="invisible"
+        android:elevation="0.1dp"
+        app:layout_constraintBottom_toBottomOf="@+id/scrollView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayoutTwo">
 
         <LinearLayout
+            android:id="@+id/layout_shipping_address"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <include layout="@layout/select_shipping_address" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView3"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="60dp"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayoutTwo">
+
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -68,25 +94,21 @@
 
             <include layout="@layout/product_images_layout" />
 
-            <include layout="@layout/cart_item_layout" />
-            <include layout="@layout/cart_item_layout_two" />
-
             <include layout="@layout/rewards_and_other_info_with_product_layout" />
 
             <include
                 layout="@layout/product_description_layout"
                 android:backgroundTint="#FFFFFF" />
 
-
             <include layout="@layout/product_details_only_layout" />
 
             <include layout="@layout/rating_layout" />
 
+            <!--            <include layout="@layout/activity_order_details" />-->
+            <!--            <include layout="@layout/order_item_layout" />-->
+            <!--            <include layout="@layout/order_item_layout" />-->
+            <!--            <include layout="@layout/order_item_layout" />-->
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="800dp"
-                app:cardBackgroundColor="#111111" />
 
         </LinearLayout>
 
@@ -96,7 +118,7 @@
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="65dp"
         android:background="@drawable/bg_add_to_cart_andbuy_now_background"
         android:elevation="15dp"
         android:orientation="horizontal"
@@ -110,15 +132,16 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="11dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="10dp"
             android:layout_weight="1"
-            android:background="@drawable/bg_add_to_cart_outline_box"
+            android:background="@drawable/bg_black_outline_btn"
             android:gravity="center"
             android:text="Add to cart"
             android:textAllCaps="true"
-            android:textColor="#C9000000" />
+            android:textColor="#000000"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/buy_now_text_btn"
@@ -134,6 +157,7 @@
             android:gravity="center"
             android:text="Buy Now"
             android:textAllCaps="true"
+            android:textStyle="bold"
             android:textColor="#FFFFFF"
             android:textSize="14sp" />
 

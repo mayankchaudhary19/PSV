@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
-import android.content.res.Resources;
+import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -19,12 +20,10 @@ import com.example.myapplication.Models.GridProductModel;
 import com.example.myapplication.Models.HomePageModel;
 import com.example.myapplication.Models.HorizontalProductScrollModel;
 import com.example.myapplication.Models.SliderModel;
-import com.example.myapplication.adapters.HomePageAdapter;
+import com.example.myapplication.Adapters.HomePageAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import io.opencensus.resource.Resource;
 
 public class CategoryActivity extends AppCompatActivity {
     private TextView categoryTitle;
@@ -40,11 +39,12 @@ public class CategoryActivity extends AppCompatActivity {
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 
         final Drawable upArrow = getResources().getDrawable(R.drawable.ic_keyboard_arrow_left_black_24dp);
-        upArrow.setColorFilter(getResources().getColor(R.color.black_overlay), PorterDuff.Mode.SRC_ATOP);
+        upArrow.setColorFilter(getResources().getColor(R.color.black_overlay2), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
         String title = getIntent().getStringExtra("CategoryName");
         categoryTitle.setText(title);
+        categoryTitle.setTextColor(Color.parseColor("#99090909"));
 //        getSupportActionBar().setTitle(title);
 //        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -86,10 +86,10 @@ public class CategoryActivity extends AppCompatActivity {
         //////////////// GridProductLayout
 
         List<GridProductModel> gridProductModelList=new ArrayList<>();
-        gridProductModelList.add(new GridProductModel(R.drawable.unknown1,"rsrstrsrstrst","₹5000/-"));
-        gridProductModelList.add(new GridProductModel(R.drawable.unknown2,"rsrstrsrstrst","₹5000/-"));
-        gridProductModelList.add(new GridProductModel(R.drawable.unknown3,"rsrstrsrstrst","₹5000/-"));
-        gridProductModelList.add(new GridProductModel(R.drawable.unknown4,"rsrstrsrstrst","₹5000/-"));
+        gridProductModelList.add(new GridProductModel(R.drawable.unknown1,"rsrstrsrstrst","2 New Colors Available","₹5000/-"));
+        gridProductModelList.add(new GridProductModel(R.drawable.unknown2,"rsrstrsrstrst","20% Discount","₹5000/-"));
+        gridProductModelList.add(new GridProductModel(R.drawable.unknown3,"rsrstrsrstrst","2 New Colors Available","₹5000/-"));
+        gridProductModelList.add(new GridProductModel(R.drawable.unknown4,"rsrstrsrstrst","New Designs Available","₹5000/-"));
 
         //////////////// GridProductLayout
 
@@ -122,7 +122,7 @@ public class CategoryActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.search_icon, menu);
+        getMenuInflater().inflate(R.menu.without_cotification_menu, menu);
         return true;
     }
 
@@ -133,13 +133,21 @@ public class CategoryActivity extends AppCompatActivity {
             return true;
         }
         if (id == R.id.main_wishlist) {
+            Intent wishlistIntent=new Intent(CategoryActivity.this,WishlistActivity.class);
+            startActivity(wishlistIntent);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             return true;
         }
         if (id == R.id.main_shopping_cart) {
+            Intent cartIntent=new Intent(CategoryActivity.this,MyCartActivity.class);
+            startActivity(cartIntent);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             return true;
+
         }
         else if (id == android.R.id.home) {
             finish();
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             return true;
         }
 

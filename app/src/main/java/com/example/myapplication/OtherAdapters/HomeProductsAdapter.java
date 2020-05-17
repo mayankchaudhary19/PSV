@@ -49,11 +49,11 @@ public class HomeProductsAdapter extends RecyclerView.Adapter<HomeProductsAdapte
 
         public viewHolder(View itemView) {
             super(itemView);
-            img4 = (ImageView) itemView.findViewById(R.id.product_img);
-            title4 = (TextView) itemView.findViewById(R.id.product_name);
-            subtitle4 =(TextView) itemView.findViewById(R.id.product_description);
-            price4 =(TextView) itemView.findViewById(R.id.product_price);
-            initialPrice4 =(TextView) itemView.findViewById(R.id.product_initialPrice);
+//            img4 = (ImageView) itemView.findViewById(R.id.product_img);
+//            title4 = (TextView) itemView.findViewById(R.id.product_name);
+//            subtitle4 =(TextView) itemView.findViewById(R.id.product_description);
+//            price4 =(TextView) itemView.findViewById(R.id.product_price);
+//            initialPrice4 =(TextView) itemView.findViewById(R.id.product_initialPrice);
 
 
 

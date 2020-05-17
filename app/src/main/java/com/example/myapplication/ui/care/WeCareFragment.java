@@ -2,6 +2,7 @@ package com.example.myapplication.ui.care;
 
 import androidx.lifecycle.ViewModelProviders;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,7 +12,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 
+import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 
 public class WeCareFragment extends Fragment {
@@ -26,6 +30,7 @@ public class WeCareFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_we_care, container, false);
+
     }
 
     @Override
@@ -35,4 +40,15 @@ public class WeCareFragment extends Fragment {
         // TODO: Use the ViewModel
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        //////////
+        Window window = ((MainActivity) getActivity()).getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(Color.parseColor("#ffffff"));
+        ((MainActivity) getActivity()).getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        ((MainActivity) getActivity()).getSupportActionBar().show();
+//////////
+    }
 }

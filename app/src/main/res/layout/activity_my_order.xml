@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MyOrderActivity"
+    >
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingEnd="10dp"
+            android:background="#FFFFFF"
+            app:popupTheme="@style/ToolbarTheme"
+            app:titleMargin="0dp"
+            app:titleMargins="0dp"
+            app:titleTextColor="#FFFFFF" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <TextView
+        android:id="@+id/order_activity_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="55dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="15dp"
+        android:elevation="4dp"
+        android:fontFamily="sans-serif-light"
+        android:text="Orders"
+        android:textColor="#545353"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/appbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include layout="@layout/order_status_layout" />
+
+            <include layout="@layout/recent_order_layout" />
+
+            <TextView
+                android:id="@+id/textView65"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:background="#FFFFFF"
+                android:paddingStart="16dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:text="Ordered Products"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <!--            <include layout="@layout/my_order_recycler_view_layout"/>-->
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/order_items_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView58"
+                    android:layout_width="0dp"
+                    android:layout_height="26dp"
+                    android:layout_marginTop="14dp"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="center"
+                    android:letterSpacing="0.6"
+                    android:text="PURAN SINGH VERMA"
+                    android:textColor="#63000000"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toTopOf="@+id/textView59"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView59"
+                    android:layout_width="412dp"
+                    android:layout_height="17dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="16dp"
+                    android:gravity="center"
+                    android:text="100% Authentic Products · Pay using GooglePay/ Paytm/ PhonePay · Order on WhatsApp"
+                    android:textColor="#57000000"
+                    android:textSize="9.5sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:ignore="SmallSp" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

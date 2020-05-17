@@ -6,12 +6,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.MainActivity;
 import com.example.myapplication.Models.GridProductModel;
 import com.example.myapplication.Models.HomePageModel;
 import com.example.myapplication.Models.HorizontalProductScrollModel;
@@ -21,11 +24,11 @@ import com.example.myapplication.Models.CategoryModel;
 import com.example.myapplication.Pojos.Products;
 import com.example.myapplication.R;
 import com.example.myapplication.OtherAdapters.AllProductsAdapter;
-import com.example.myapplication.adapters.CategoryAdapter;
+import com.example.myapplication.Adapters.CategoryAdapter;
 import com.example.myapplication.OtherAdapters.HomeProductsAdapter;
 import com.example.myapplication.OtherAdapters.HomePageSliderAdapterUsingGlide;
 import com.example.myapplication.OtherAdapters.SubCategoryAdapter;
-import com.example.myapplication.adapters.HomePageAdapter;
+import com.example.myapplication.Adapters.HomePageAdapter;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.IndicatorView.draw.controller.DrawController;
 import com.smarteist.autoimageslider.SliderAnimations;
@@ -87,21 +90,25 @@ public class HomeFragment extends Fragment {
         SubCategoryHomeLayoutMananger();
 
 
+//////////
+        Window window = ((MainActivity) getActivity()).getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(Color.parseColor("#ffffff"));
+        ((MainActivity) getActivity()).getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        ((MainActivity) getActivity()).getSupportActionBar().show();
+//////////
 
 
         //////////////// Banner Slider
 
         List<SliderModel>sliderModelList=new ArrayList<SliderModel>( );
 
-        sliderModelList.add(new SliderModel(R.mipmap.ic_launcher,"#ffffff" ));
-        sliderModelList.add(new SliderModel(R.drawable.ic_menu_camera ,"#ffffff" ));
-        sliderModelList.add(new SliderModel(R.mipmap.ic_launcher,"#ffffff"));
-        sliderModelList.add(new SliderModel(R.drawable.ic_menu_camera,"#F3BABA"));
-        sliderModelList.add(new SliderModel(R.mipmap.ic_launcher,"#ffffff"));
-        sliderModelList.add(new SliderModel(R.mipmap.ic_launcher_round,"#ffffff" ));
-        sliderModelList.add(new SliderModel(R.mipmap.ic_launcher,"#ffffff"));
-        sliderModelList.add(new SliderModel(R.mipmap.ic_launcher ,"#ffffff"));
-
+        sliderModelList.add(new SliderModel(R.drawable.unknown,"#ffffff" ));
+        sliderModelList.add(new SliderModel(R.drawable.unknown1 ,"#ffffff" ));
+        sliderModelList.add(new SliderModel(R.drawable.unknown2,"#ffffff"));
+        sliderModelList.add(new SliderModel(R.drawable.unknown3,"#F3BABA"));
+        sliderModelList.add(new SliderModel(R.drawable.unknown4,"#ffffff"));
+        sliderModelList.add(new SliderModel(R.drawable.unknown5,"#ffffff" ));
         //////////////// Banner Slider
 
 
@@ -111,24 +118,24 @@ public class HomeFragment extends Fragment {
 
         //////////////// HorizontalProductLayout
         List<HorizontalProductScrollModel > horizontalProductScrollModelList=new ArrayList<>();
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.sampleproductone,"Jar","200 ml, small size jar","₹5000","₹7600"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.ic_like,"Jar","200 ml, small size jar","₹5000","₹7600"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.ic_like,"Jar","200 ml, small size jar","₹5000","₹7600"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.ic_like,"Jar","200 ml, small size jar","₹5000","₹7600"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.ic_like,"Jar","200 ml, small size jar","₹5000","₹7600"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.ic_like,"Jar","200 ml, small size jar","₹5000","₹7600"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.ic_like,"Jar","200 ml, small size jar","₹5000","₹7600"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.ic_like,"Jar","200 ml, small size jar","₹5000","₹7600"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.ic_like,"Jar","200 ml, small size jar","₹5000","₹7600"));
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.unknown1,"Jar","200 ml, small size jar","₹5000","₹7600"));
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.unknown2,"Jar","200 ml, small size jar","₹5000","₹7600"));
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.unknown3,"Jar","200 ml, small size jar","₹5000","₹7600"));
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.unknown4,"Jar","200 ml, small size jar","₹5000","₹7600"));
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.unknown5,"Jar","200 ml, small size jar","₹5000","₹7600"));
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.unknown1,"Jar","200 ml, small size jar","₹5000","₹7600"));
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.unknown,"Jar","200 ml, small size jar","₹5000","₹7600"));
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.unknown3,"Jar","200 ml, small size jar","₹5000","₹7600"));
+        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.unknown3,"Jar","200 ml, small size jar","₹5000","₹7600"));
         //////////////// HorizontalProductLayout
 
         //////////////// GridProductLayout
 
         List<GridProductModel> gridProductModelList=new ArrayList<>();
-        gridProductModelList.add(new GridProductModel(R.drawable.unknown1,"rsrstrsrstrst","₹5000/-"));
-        gridProductModelList.add(new GridProductModel(R.drawable.unknown2,"rsrstrsrstrst","₹5000/-"));
-        gridProductModelList.add(new GridProductModel(R.drawable.unknown3,"rsrstrsrstrst","₹5000/-"));
-        gridProductModelList.add(new GridProductModel(R.drawable.unknown4,"rsrstrsrstrst","₹5000/-"));
+        gridProductModelList.add(new GridProductModel(R.drawable.unknown1,"Pink Jug","2 New Colors Available","₹5000/-"));
+        gridProductModelList.add(new GridProductModel(R.drawable.unknown2,"Yellow Mug","20% Discount","₹5000/-"));
+        gridProductModelList.add(new GridProductModel(R.drawable.unknown3,"Square Container","2 New Colors Available","₹5000/-"));
+        gridProductModelList.add(new GridProductModel(R.drawable.unknown4,"Round Container","New Designs Available","₹5000/-"));
 
         //////////////// GridProductLayout
 
@@ -140,17 +147,22 @@ public class HomeFragment extends Fragment {
         testing.setLayoutManager(testingLayoutManager);
         List<HomePageModel> homePageModelList =new ArrayList<>();
         homePageModelList.add(new HomePageModel(2 ,"Deals Of The Day",horizontalProductScrollModelList));
-        homePageModelList.add(new HomePageModel(3 ,gridProductModelList,"#TRENDING"));
         homePageModelList.add(new HomePageModel(0 ,sliderModelList));
-        homePageModelList.add(new HomePageModel(1 ,R.drawable.ic_menu_camera,"#ff0000"));
+        homePageModelList.add(new HomePageModel(3 ,gridProductModelList,"#TRENDING"));
+        homePageModelList.add(new HomePageModel(2 ,"New Products",horizontalProductScrollModelList));
 
 
         homePageModelList.add(new HomePageModel(0 ,sliderModelList));
         homePageModelList.add(new HomePageModel(1 ,R.drawable.ic_like,"#000000"));
-        homePageModelList.add(new HomePageModel(0 ,sliderModelList));
-        homePageModelList.add(new HomePageModel(1 ,R.drawable.ic_menu_camera,"#ff0000"));
         homePageModelList.add(new HomePageModel(1 ,R.drawable.ic_menu_camera,"#ff0000"));
 
+//        homePageModelList.add(new HomePageModel(0 ,sliderModelList));
+        homePageModelList.add(new HomePageModel(1 ,R.drawable.ic_menu_camera,"#ff0000"));
+        homePageModelList.add(new HomePageModel(1 ,R.drawable.ic_menu_camera,"#ff0000"));
+        homePageModelList.add(new HomePageModel(3 ,gridProductModelList,"#TRENDING"));
+//        homePageModelList.add(new HomePageModel(0 ,sliderModelList));
+        homePageModelList.add(new HomePageModel(3 ,gridProductModelList,"#TRENDING"));
+//        homePageModelList.add(new HomePageModel(0 ,sliderModelList));
         HomePageAdapter adapter=new HomePageAdapter(homePageModelList);
         testing.setAdapter(adapter);
         adapter.notifyDataSetChanged();

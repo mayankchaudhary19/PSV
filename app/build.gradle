@@ -53,6 +53,11 @@ dependencies {
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
     implementation 'com.karumi:dexter:6.0.2'
 
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'androidx.gridlayout:gridlayout:1.0.0'
+    implementation 'org.jetbrains:annotations-java5:15.0'
+
+//    api 'com.google.android.material:material:1.1.0-alpha05'
 
 //    implementation 'com.androidx.support:design:26.1.0'
 }

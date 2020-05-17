@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp">
-
+    >
+<!--android:layout_marginBottom="12dp"-->
     <TextView
         android:id="@+id/product_rating_title"
         android:layout_width="0dp"
@@ -37,7 +37,6 @@
         android:id="@+id/constraint_layout_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
         android:background="#FFFFFF"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -64,7 +63,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_weight="1"
-            android:text="Rate This Product"
+            android:text="Rate this product"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/divider5" />
@@ -431,7 +430,7 @@
         <LinearLayout
             android:id="@+id/rate_now_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="45dp"
             android:layout_marginStart="40dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="40dp"
@@ -504,7 +503,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="12dp"
-            android:textAllCaps="true"
+            android:textAllCaps="false"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/rate_now_container"

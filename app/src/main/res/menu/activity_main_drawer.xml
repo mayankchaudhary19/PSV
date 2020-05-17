@@ -30,6 +30,10 @@
             android:id="@+id/nav_we_care"
             android:icon="@drawable/ic_sprout_4"
             android:title="We Care" />
+        <item
+        android:id="@+id/nav_wishlist"
+        android:icon="@drawable/ic_like"
+        android:title="We Care" />
     </group>
 
 <!--    <group android:id="@+id/group_menuThree">-->

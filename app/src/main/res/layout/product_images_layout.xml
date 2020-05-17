@@ -47,35 +47,36 @@
 
         </com.google.android.material.tabs.TabLayout>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="52dp"
-            android:layout_marginEnd="10dp"
-            android:backgroundTint="#F8F5F5"
-            android:clickable="true"
-            android:visibility="gone"
-            android:hapticFeedbackEnabled="true"
-            android:tint="#BEBDBD"
-            app:borderWidth="0dp"
-            app:elevation="0dp"
-            app:fabCustomSize="60dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/product_images_view_pager"
-            app:rippleColor="#4DB6AC"
-            app:srcCompat="@drawable/ic_favorite_black_24_dp_two" />
+<!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--            android:id="@+id/floatingActionButton2"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="52dp"-->
+<!--            android:layout_marginEnd="10dp"-->
+<!--            android:backgroundTint="#F8F5F5"-->
+<!--            android:clickable="true"-->
+<!--            android:visibility="gone"-->
+<!--            android:hapticFeedbackEnabled="true"-->
+<!--            android:tint="#BEBDBD"-->
+<!--            app:borderWidth="0dp"-->
+<!--            app:elevation="0dp"-->
+<!--            app:fabCustomSize="60dp"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/product_images_view_pager"-->
+<!--            app:rippleColor="#4DB6AC"-->
+<!--            app:srcCompat="@drawable/ic_favorite_black_24_dp_two" />-->
 
         <ImageView
             android:id="@+id/wishlist_btn"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_marginTop="14dp"
             android:layout_marginEnd="14dp"
             android:clickable="true"
             android:hapticFeedbackEnabled="true"
             android:padding="2.5dp"
-            app:layout_constraintEnd_toEndOf="@+id/floatingActionButton2"
+            android:tint="#1A000000"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/viewPager_indicator"
             app:srcCompat="@drawable/ic_favorite_black_24_dp_two" />
 
@@ -128,7 +129,7 @@
                     android:tint="@color/white" />
 
                 <TextView
-                    android:id="@+id/ttv_product_rating_miniView"
+                    android:id="@+id/tv_product_rating_miniView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginEnd="10dp"
     android:layout_marginBottom="10dp"
     android:background="@drawable/bg_horizontal_scroll_product_outline_box"
+    android:elevation="0dp"
     android:orientation="vertical">
 
     <ImageView
@@ -14,37 +15,36 @@
         android:layout_width="124dp"
         android:layout_height="124dp"
         android:padding="2dp"
-        android:src="@drawable/sampleproductone"
-        android:scaleType="fitCenter"/>
+        android:scaleType="fitCenter"
+        android:src="@drawable/sampleproductone" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:backgroundTint="#FFEFEFEF"
+        android:elevation="0dp"
+        android:layout_margin="1dp"
         app:cardCornerRadius="6dp"
-        android:elevation="0dp">
+        app:cardElevation="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:elevation="0dp">
+            android:elevation="0dp"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:background="#FFEFEFEF"
-                android:backgroundTint="#FFEFEFEF"
-                android:orientation="horizontal"
-                android:elevation="0dp">
+                android:backgroundTint="#08000000"
+                android:elevation="0dp"
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="95dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layout_marginStart="3dp"
                     android:elevation="0dp"
-                    >
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/h_s_product_title"
@@ -78,13 +78,13 @@
 
                 <ImageView
                     android:id="@+id/imageView15"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
                     android:layout_gravity="top"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginEnd="6dp"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_like" />
+                    android:src="@drawable/ic_favorite_black_24dp" />
 
             </LinearLayout>
 
@@ -92,10 +92,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
-                android:paddingBottom="4dp"
                 android:elevation="0dp"
                 android:orientation="horizontal"
-                android:paddingTop="2dp">
+                android:paddingTop="2dp"
+                android:paddingBottom="4dp">
 
                 <TextView
                     android:id="@+id/h_s_product_price"
