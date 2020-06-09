@@ -1,6 +1,7 @@
 package com.example.myapplication.UserSession;
 
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
@@ -16,10 +17,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,6 +30,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.SignInMethodQueryResult;
 
 import java.util.regex.Pattern;
+
+import static com.example.myapplication.UserSession.UserSessionActivity.registerFrag;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,13 +51,23 @@ public class RegisterFragment extends Fragment {
     private ProgressBar progressbar;
     private Button register;
     private FirebaseAuth mAuth;
+    private ImageView skipLoginBtn;
+    public static boolean disableCloseBtn=false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_session_register, container, false);
+        View view=inflater.inflate(R.layout.fragment_user_session_register, container, false);
+        skipLoginBtn=view.findViewById(R.id.skipLoginImg);
+
+        if (disableCloseBtn){
+            skipLoginBtn.setVisibility(View.GONE);
+        }else {
+            skipLoginBtn.setVisibility(View.VISIBLE);
+        }
+        return view;
     }
 
     @Override
@@ -86,6 +101,8 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ((UserSessionActivity)getActivity()).setFragment(new LoginFragment());
+                registerFrag=false;
+
             }
         });
 //OTP fragment on register btn
@@ -133,6 +150,21 @@ public class RegisterFragment extends Fragment {
                 createAccount();
             }
 
+        });
+
+        skipLoginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (disableCloseBtn){
+                    disableCloseBtn=false;
+                }else {
+                    Intent intent = new Intent(getContext(), MainActivity.class);
+//                intent.putExtra("Not Registered", true);
+                    startActivity(intent);
+                }
+                getActivity().finishAffinity();
+
+            }
         });
 
 

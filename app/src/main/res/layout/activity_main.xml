@@ -5,48 +5,53 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="start"
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
+
     <include
         layout="@layout/app_bar_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
+        android:layout_gravity="left"
         android:fitsSystemWindows="false"
+        android:theme="@style/NavigationTheme"
         app:headerLayout="@layout/nav_header_main"
         app:itemIconPadding="@dimen/nav_drawer_icon_margin"
-        android:theme="@style/NavigationTheme"
         app:itemTextAppearance="@style/TextAppearance.AppCompat.Small"
         app:menu="@menu/activity_main_drawer">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/nav_rate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="start"
-                android:clickable="true"
                 android:layout_marginStart="25dp"
-                android:text="Rate"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:clickable="true"
+                android:gravity="start"
+                android:text="Rate" />
+
             <TextView
                 android:id="@+id/nav_share"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="start"
                 android:layout_marginStart="25dp"
-                android:clickable="true"
-                android:text="Share"
                 android:layout_marginTop="20dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:clickable="true"
+                android:gravity="start"
+                android:text="Share" />
 
             <View
                 android:id="@+id/divider19"
@@ -74,20 +79,22 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="left"
-                    android:text="About Us"
-                    />
+                    android:text="About Us" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
                     <View
                         android:id="@+id/divider20"
                         android:layout_width="1dp"
-                        android:layout_marginStart="35dp"
                         android:layout_height="match_parent"
+                        android:layout_marginStart="35dp"
                         android:background="?android:attr/listDivider" />
                 </LinearLayout>
+
                 <TextView
                     android:id="@+id/ontact_us"
                     android:layout_width="match_parent"
@@ -98,13 +105,13 @@
 
             </LinearLayout>
 
-<!--            <TextView-->
-<!--                android:id="@+id/AboutUsandContactUs"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:gravity="center"-->
-<!--                android:text="   About Us              |             Contact Us" />-->
-    </LinearLayout>
+            <!--            <TextView-->
+            <!--                android:id="@+id/AboutUsandContactUs"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:gravity="center"-->
+            <!--                android:text="   About Us              |             Contact Us" />-->
+        </LinearLayout>
     </com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>

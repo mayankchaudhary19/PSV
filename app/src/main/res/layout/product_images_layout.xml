@@ -10,7 +10,9 @@
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
         android:background="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/coupon_redemption_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -47,24 +49,24 @@
 
         </com.google.android.material.tabs.TabLayout>
 
-<!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--            android:id="@+id/floatingActionButton2"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="52dp"-->
-<!--            android:layout_marginEnd="10dp"-->
-<!--            android:backgroundTint="#F8F5F5"-->
-<!--            android:clickable="true"-->
-<!--            android:visibility="gone"-->
-<!--            android:hapticFeedbackEnabled="true"-->
-<!--            android:tint="#BEBDBD"-->
-<!--            app:borderWidth="0dp"-->
-<!--            app:elevation="0dp"-->
-<!--            app:fabCustomSize="60dp"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="@+id/product_images_view_pager"-->
-<!--            app:rippleColor="#4DB6AC"-->
-<!--            app:srcCompat="@drawable/ic_favorite_black_24_dp_two" />-->
+        <!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+        <!--            android:id="@+id/floatingActionButton2"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="52dp"-->
+        <!--            android:layout_marginEnd="10dp"-->
+        <!--            android:backgroundTint="#F8F5F5"-->
+        <!--            android:clickable="true"-->
+        <!--            android:visibility="gone"-->
+        <!--            android:hapticFeedbackEnabled="true"-->
+        <!--            android:tint="#BEBDBD"-->
+        <!--            app:borderWidth="0dp"-->
+        <!--            app:elevation="0dp"-->
+        <!--            app:fabCustomSize="60dp"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="@+id/product_images_view_pager"-->
+        <!--            app:rippleColor="#4DB6AC"-->
+        <!--            app:srcCompat="@drawable/ic_favorite_black_24_dp_two" />-->
 
         <ImageView
             android:id="@+id/wishlist_btn"
@@ -87,6 +89,7 @@
             android:layout_marginStart="14dp"
             android:layout_marginTop="14dp"
             android:gravity="bottom"
+            android:singleLine="true"
             android:text="Bread Box"
             android:textColor="#92000000"
             android:textSize="18sp"
@@ -98,12 +101,13 @@
             android:id="@+id/cardView11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="14dp"
             android:backgroundTint="#C94DB6AC"
             app:cardCornerRadius="8dp"
             app:cardElevation="0dp"
-            app:layout_constraintBottom_toBottomOf="@+id/product_discount"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/product_price">
 
 
             <LinearLayout
@@ -123,8 +127,8 @@
                     android:layout_gravity="center"
                     android:paddingStart="4dp"
                     android:paddingTop="3dp"
-                    android:paddingBottom="4dp"
                     android:paddingEnd="2dp"
+                    android:paddingBottom="4dp"
                     android:src="@drawable/ic_star_2"
                     android:tint="@color/white" />
 
@@ -146,6 +150,7 @@
             android:id="@+id/product_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
             android:layout_marginTop="16dp"
             android:text="₹1,200/pc"
             android:textSize="18sp"
@@ -166,13 +171,16 @@
 
         <TextView
             android:id="@+id/product_subtitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginEnd="20dp"
             android:gravity="bottom"
+            android:singleLine="true"
             android:text="Medium Size, 250g"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/product_title"
+            app:layout_constraintEnd_toStartOf="@+id/wishlist_btn"
             app:layout_constraintStart_toEndOf="@+id/product_title" />
 
         <TextView
@@ -181,9 +189,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="18dp"
-            android:text="MRP inclusive of all taxes"
-            android:textColor="#26A69A"
+            android:text="MRP Exclusive Of GST"
+            android:textColor="#3AA99E"
             android:textSize="11sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/product_price"
             app:layout_constraintTop_toBottomOf="@+id/product_price" />
@@ -211,7 +220,7 @@
             app:layout_constraintTop_toBottomOf="@+id/product_title" />
 
         <TextView
-            android:id="@+id/textView51product_sub_category_one"
+            android:id="@+id/product_sub_category_one"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -230,8 +239,8 @@
             android:background="@drawable/bg_product_categories_outline_box"
             android:text=""
             android:textSize="13sp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView51product_sub_category_one"
-            app:layout_constraintStart_toEndOf="@+id/textView51product_sub_category_one" />
+            app:layout_constraintBottom_toBottomOf="@+id/product_sub_category_one"
+            app:layout_constraintStart_toEndOf="@+id/product_sub_category_one" />
 
         <TextView
             android:id="@+id/product_sub_category_three"
@@ -244,8 +253,8 @@
             app:layout_constraintBottom_toBottomOf="@+id/product_sub_category_two"
             app:layout_constraintStart_toEndOf="@+id/product_sub_category_two" />
 
-<!--//todo: use background tint- if text is null then set background tint equal to #ffffff-->
-<!--android:backgroundTint="#FFFFFF"-->
+        <!--//todo: use background tint- if text is null then set background tint equal to #ffffff-->
+        <!--android:backgroundTint="#FFFFFF"-->
 
         <View
             android:id="@+id/divider"
@@ -264,7 +273,6 @@
         android:id="@+id/coupon_redemption_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
         android:layout_marginBottom="12dp"
         android:background="@drawable/gradient"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -278,7 +286,7 @@
             android:id="@+id/coupon_redemption_txt"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:gravity="center"
@@ -295,16 +303,18 @@
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="80dp"
             android:layout_height="0dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="4dp"
-            android:background="@drawable/bg_redem_coupon_outline_box"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="3dp"
+            android:background="@drawable/bg_white_outline_btn"
             android:gravity="center"
-            android:text="REDEM"
+            android:paddingBottom="2dp"
+            android:text="REDEEM"
             android:textColor="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="@+id/coupon_redemption_txt"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/coupon_redemption_txt" />
+            app:layout_constraintTop_toTopOf="@+id/coupon_redemption_txt"
+            app:layout_constraintVertical_bias="0.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

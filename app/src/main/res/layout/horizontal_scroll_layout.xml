@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container_horizontal_scroll"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,9 +19,9 @@
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
             android:layout_weight="1"
-            android:textStyle="bold"
             android:text="Featured Products"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/horizontal_scroll_layout_viewAll_btn"
@@ -35,7 +36,7 @@
             android:text="View All"
             android:textColor="@color/colorPrimaryTwo" />
 
-<!-- android:background="@drawable/bg_view_all_outline_box"
+        <!-- android:background="@drawable/bg_view_all_outline_box"
 -->
     </LinearLayout>
 
@@ -43,8 +44,7 @@
         android:id="@+id/horizontal_scroll_layout_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        />
+        android:layout_marginStart="10dp" />
 
 
 </LinearLayout>

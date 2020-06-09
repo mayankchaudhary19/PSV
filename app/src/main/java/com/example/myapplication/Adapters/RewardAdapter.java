@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.Models.RewardModel;
+import com.example.myapplication.ProductDetailsActivity;
 import com.example.myapplication.R;
 
 import java.util.List;
@@ -17,15 +18,22 @@ import java.util.List;
 public class RewardAdapter extends RecyclerView.Adapter<RewardAdapter.ViewHolder> {
 
     private List<RewardModel> rewardModelList;
-    public RewardAdapter(List<RewardModel> rewardModelList) {
+    private boolean useMiniLayout=false;
+    public RewardAdapter(List<RewardModel> rewardModelList,boolean useMiniLayout ) {
         this.rewardModelList = rewardModelList;
+        this.useMiniLayout=useMiniLayout;
     }
 
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.rewards_item_layout,parent,false);
+
+        View view;
+        if (useMiniLayout)
+          view= LayoutInflater.from(parent.getContext()).inflate(R.layout.mini_rewards_item_layout2,parent,false);
+       else
+            view= LayoutInflater.from(parent.getContext()).inflate(R.layout.rewards_item_layout2,parent,false);
         return new ViewHolder(view);
     }
 
@@ -53,11 +61,22 @@ public class RewardAdapter extends RecyclerView.Adapter<RewardAdapter.ViewHolder
             couponBody=itemView.findViewById(R.id.couponBody);
             couponExpiryDate=itemView.findViewById(R.id.couponValidityDate);
         }
-        private void setData(int icon,String title,String body,String expiryDate){
+        private void setData(final int icon, final String title, final String body, final String expiryDate){
             couponIcon.setImageResource(icon);
             couponTitle.setText(title);
             couponBody.setText(body);
             couponExpiryDate.setText(expiryDate);
+            if (useMiniLayout)
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ProductDetailsActivity.couponTile.setText(title);
+                        ProductDetailsActivity.couponBody.setText(body);
+                        ProductDetailsActivity.couponExpiryDate.setText(expiryDate);
+                        ProductDetailsActivity.couponIcon.setImageResource(icon);
+                        ProductDetailsActivity.showDialogRecyclerView();
+                    }
+                });
 
         }
     }

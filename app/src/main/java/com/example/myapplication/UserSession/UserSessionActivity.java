@@ -19,6 +19,7 @@ public class UserSessionActivity extends AppCompatActivity {
     private FrameLayout frameLayout;
     public static boolean registerFrag;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +35,8 @@ public class UserSessionActivity extends AppCompatActivity {
         }else{
             setFragment(new LoginFragment());
             FragmentTransaction fragmentTransaction= getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out,android.R.anim.fade_in,android.R.anim.fade_out);
+            fragmentTransaction.addToBackStack(null);
+//            fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out,android.R.anim.fade_in,android.R.anim.fade_out);
         }
     }
 
@@ -47,7 +49,7 @@ public class UserSessionActivity extends AppCompatActivity {
 
     public void setFragment(Fragment fragment){
         FragmentTransaction fragmentTransaction= getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left,android.R.anim.fade_out,android.R.anim.slide_in_left,android.R.anim.fade_out);
+//        fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out,android.R.anim.fade_in,android.R.anim.fade_out);
 
         if(fragment instanceof ForgotPasswordFragment || fragment instanceof OTPFragment ){
             fragmentTransaction.addToBackStack(null);
@@ -57,7 +59,7 @@ public class UserSessionActivity extends AppCompatActivity {
 //            final LoginFragment fragment = new LoginFragment();
             final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.framelayout, fragment, TAG_FRAGMENT);
-            if (!registerFrag){
+            if (!registerFrag) {
                 transaction.addToBackStack(null);
             }
             transaction.commit();

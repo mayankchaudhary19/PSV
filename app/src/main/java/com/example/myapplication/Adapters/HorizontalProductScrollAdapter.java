@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.myapplication.Models.HorizontalProductScrollModel;
 import com.example.myapplication.ProductDetailsActivity;
 import com.example.myapplication.R;
@@ -34,17 +36,15 @@ public class HorizontalProductScrollAdapter extends RecyclerView.Adapter< Horizo
 
     @Override
     public void onBindViewHolder(@NonNull HorizontalProductScrollAdapter.ViewHolder viewHolder, int position) {
-        int resource =horizontalProductScrollModelList.get(position).getProductImage();
+        String  productId =horizontalProductScrollModelList.get(position).getProductId();
+        String resource =horizontalProductScrollModelList.get(position).getProductImage();
         String title=horizontalProductScrollModelList.get(position).getProductTitle();
         String description=horizontalProductScrollModelList.get(position).getProductDescription();
         String price=horizontalProductScrollModelList.get(position).getProductPrice();
         String initialPrice=horizontalProductScrollModelList.get(position).getProductInitialPrice();
 
-        viewHolder.setProductImage(resource);
-        viewHolder.setProductTitle(title);
-        viewHolder.setProductTitle(description);
-        viewHolder.setProductTitle(price);
-        viewHolder.setProductTitle(initialPrice);
+        viewHolder.setProductDetails(productId,resource,title,description,price,initialPrice);
+
     }
 
     @Override
@@ -71,33 +71,29 @@ public class HorizontalProductScrollAdapter extends RecyclerView.Adapter< Horizo
             productDescription=itemView.findViewById(R.id.h_s_product_description);
             productPrice=itemView.findViewById(R.id.h_s_product_price);
             productInitialPrice=itemView.findViewById(R.id.h_s_product_initialPrice);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent productDetailsIntent= new Intent(itemView.getContext(), ProductDetailsActivity.class);
-                    Activity activity = (Activity) itemView.getContext();
-                    activity.startActivity(productDetailsIntent);
-                    activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                }
-            });
         }
 
-        private void setProductImage(int resource){
-            productImage.setImageResource(resource);
-        }
-        private void setProductTitle(String title){
+        private void setProductDetails(final String productId, String  resource, String title, String description, String price, String initialPrice){
+//            productImage.setImageResource(resource);
+            Glide.with(itemView.getContext()).load(resource).apply(new RequestOptions().placeholder(R.drawable.square_placeholder)).into(productImage);
             productTitle.setText(title);
+            productDescription.setText(description);
+            productPrice.setText("₹"+price+"/pc");
+            productInitialPrice.setText("₹"+initialPrice);
+            if (!title.equals("")) {
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent productDetailsIntent = new Intent(itemView.getContext(), ProductDetailsActivity.class);
+                        productDetailsIntent.putExtra("productId",productId);
+                        Activity activity = (Activity) itemView.getContext();
+                        activity.startActivity(productDetailsIntent);
+                        activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                    }
+                });
+            }
         }
-        private void setProductDescription(String description){
-            productTitle.setText(description);
-        }
-        private void setProductPrice(String price){
-            productTitle.setText(price);
-        }
-        private void setProductInitialPrice(String initialPrice){
-            productTitle.setText(initialPrice);
-        }
+
 
     }
 }

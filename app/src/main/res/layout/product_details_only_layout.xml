@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="12dp"
-    android:paddingBottom="10dp"
     android:background="#FFFFFF">
 
 
@@ -32,21 +31,36 @@
         android:layout_width="409dp"
         android:layout_height="2dp"
         android:background="#0D000000"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/product_only_details_title" />
 
-    <TextView
-        android:id="@+id/product_only_details_body"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="14dp"
-        android:text="Pink colored 150 ml mug ,used for bathroom and dishwash purposes, and other daily needs, it's material quality is polypropylene [PP].\nAlso available in different colors, and different qualities with Product Series Code: 1234. \n \nMaterial Care\nDo not Scrub the product with any metallic thing, use soap and cloth for cleaning. Avoid leaving the product in extreme sunlight for more than 1-2 hours to ensure better life span of the product."
+    <LinearLayout
+        android:id="@+id/linearLayout8"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider2" />
+        app:layout_constraintTop_toBottomOf="@+id/product_only_details_title">
+
+        <include layout="@layout/fragment_product_description" />
+    </LinearLayout>
+
+<!--    <TextView-->
+<!--        android:id="@+id/product_only_details_body"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginTop="12dp"-->
+<!--        android:layout_marginEnd="16dp"-->
+<!--        android:layout_marginBottom="14dp"-->
+<!--        android:text="Pink colored 150 ml mug ,used for bathroom and dishwash purposes, and other daily needs, it's material quality is polypropylene [PP].\nAlso available in different colors, and different qualities with Product Series Code: 1234. \n \nMaterial Care\nDo not Scrub the product with any metallic thing, use soap and cloth for cleaning. Avoid leaving the product in extreme sunlight for more than 1-2 hours to ensure better life span of the product."-->
+<!--        android:visibility="gone"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/divider2" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>

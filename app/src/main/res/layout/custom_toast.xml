@@ -8,16 +8,17 @@
     android:elevation="3dp"
     android:background="@drawable/bg_toast_background"
   >
-    <TextView android:id="@+id/text"
+
+    <TextView
+        android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="hbvhchgwvwghvcghwvchgwv"
-        android:layout_marginTop="6dp"
-        android:layout_marginBottom="6dp"
-        android:gravity="center"
         android:layout_gravity="center"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="6dp"
         android:layout_marginEnd="16dp"
-        android:textColor="#C3000000"
-        />
+        android:layout_marginBottom="6dp"
+        android:gravity="center"
+        android:text="hbvhchgwvwghvcghwvchgwv"
+        android:textColor="#232323" />
 </LinearLayout>

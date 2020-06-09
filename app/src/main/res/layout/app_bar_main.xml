@@ -21,8 +21,7 @@
             android:layout_height="50dp"
             android:paddingEnd="10dp"
             app:contentInsetStart="0dp"
-            app:popupTheme="@style/myActionButtonStyle"
-            />
+            app:popupTheme="@style/myActionButtonStyle" />
 <!--        android:background="@drawable/bg_horizontal_scroll_product_outline_box"-->
 <!--        android:paddingEnd="10dp"-->
     </com.google.android.material.appbar.AppBarLayout>

@@ -1,10 +1,19 @@
 package com.example.myapplication.Models;
 
 public class GridProductModel {
-    private int productImage;
+    private String productId;
+    private String productImage;
     private String productTitle;
     private String productSubTitle;
     private String productPrice;
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
 
     public String getProductSubTitle() {
         return productSubTitle;
@@ -14,11 +23,11 @@ public class GridProductModel {
         this.productSubTitle = productSubTitle;
     }
 
-    public int getProductImage() {
+    public String getProductImage() {
         return productImage;
     }
 
-    public void setProductImage(int productImage) {
+    public void setProductImage(String productImage) {
         this.productImage = productImage;
     }
 
@@ -38,7 +47,8 @@ public class GridProductModel {
         this.productPrice = productPrice;
     }
 
-    public GridProductModel(int productImage, String productTitle, String productSubTitle, String productPrice) {
+    public GridProductModel(String productId,String productImage, String productTitle, String productSubTitle, String productPrice) {
+        this.productId=productId;
         this.productImage = productImage;
         this.productTitle = productTitle;
         this.productSubTitle=productSubTitle;

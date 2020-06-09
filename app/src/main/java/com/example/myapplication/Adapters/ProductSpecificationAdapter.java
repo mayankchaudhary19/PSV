@@ -78,9 +78,6 @@ public class ProductSpecificationAdapter extends RecyclerView.Adapter<ProductSpe
                 return;
         }
 
-
-
-
     }
 
     @Override

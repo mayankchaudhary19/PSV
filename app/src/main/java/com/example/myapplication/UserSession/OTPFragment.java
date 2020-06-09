@@ -59,6 +59,7 @@ public class OTPFragment extends Fragment {
     private PhoneAuthProvider.ForceResendingToken mResendToken;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mcallback;
     private FirebaseAuth firebaseAuth;
+//    public static boolean disableCloseBtn=false;
 
 
 
@@ -248,19 +249,36 @@ public class OTPFragment extends Fragment {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if(task.isSuccessful()){
-                                        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+                                        final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
                                         Map<String, Object> map = new HashMap<>();
                                         map.put("email",username);
                                         map.put("phone", phone);
 
-                                        firebaseFirestore.collection("users").document(firebaseAuth.getCurrentUser().getUid()).set(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        firebaseFirestore.collection("Users").document(firebaseAuth.getCurrentUser().getUid())
+                                                .set(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if (task.isSuccessful()){
-                                                    Intent mainIntent = new Intent (getContext(), MainActivity.class);
-                                                    startActivity(mainIntent);
-                                                    getActivity().finish();
+                                                    Map<String,Object> listSize =new HashMap<>();
+                                                    listSize.put("wishlistSize",(long)0);
+                                                    firebaseFirestore.collection("Users").document(firebaseAuth.getCurrentUser().getUid())
+                                                            .collection("UserData").document("Wishlist")
+                                                            .set(listSize).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task) {
+                                                            if (task.isSuccessful()){
+                                                                Intent mainIntent = new Intent (getContext(), MainActivity.class);
+                                                                startActivity(mainIntent);
+//                                                    disableCloseBtn=false;
+                                                                getActivity().finish();
+                                                            }else{
+                                                                String error = task.getException().getMessage();
+                                                                Toast.makeText(getContext(),error , Toast.LENGTH_SHORT).show();
+                                                                progressBar.setVisibility(View.INVISIBLE);
 
+                                                            }
+                                                        }
+                                                    });
 
                                                 }else{
                                                     String error = task.getException().getMessage();

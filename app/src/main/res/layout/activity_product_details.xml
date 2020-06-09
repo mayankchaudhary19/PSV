@@ -127,7 +127,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
-            android:id="@+id/add_to_wishlist_text_btn"
+            android:id="@+id/add_to_cart_btn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"

@@ -56,10 +56,6 @@ public class MyCartActivity extends AppCompatActivity  {
 
 
 
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,14 +105,14 @@ public class MyCartActivity extends AppCompatActivity  {
         wishlistCartRecylerView.setLayoutManager(layoutManager2);
         List<WishlistModel> wishlistModelList =new ArrayList<>();
 
-        wishlistModelList.add(new WishlistModel(R.drawable.unknown1,"200ml Jug","Easy to handle grip, Pink color","₹1600/pc","₹1800","(10% OFF)"));
-        wishlistModelList.add(new WishlistModel(R.drawable.unknown3,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
-        wishlistModelList.add(new WishlistModel(R.drawable.unknown2,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
-        wishlistModelList.add(new WishlistModel(R.drawable.unknown4,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
-        wishlistModelList.add(new WishlistModel(R.drawable.unknown5,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
-        wishlistModelList.add(new WishlistModel(R.drawable.unknown1,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
-        wishlistModelList.add(new WishlistModel(R.drawable.unknown4,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
-        wishlistModelList.add(new WishlistModel(R.drawable.unknown2,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
+//        wishlistModelList.add(new WishlistModel(R.drawable.unknown1,"200ml Jug","Easy to handle grip, Pink color","₹1600/pc","₹1800","(10% OFF)"));
+//        wishlistModelList.add(new WishlistModel(R.drawable.unknown3,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
+//        wishlistModelList.add(new WishlistModel(R.drawable.unknown2,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
+//        wishlistModelList.add(new WishlistModel(R.drawable.unknown4,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
+//        wishlistModelList.add(new WishlistModel(R.drawable.unknown5,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
+//        wishlistModelList.add(new WishlistModel(R.drawable.unknown1,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
+//        wishlistModelList.add(new WishlistModel(R.drawable.unknown4,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
+//        wishlistModelList.add(new WishlistModel(R.drawable.unknown2,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
 
         WishlistAdapter wishlistAdapter =new WishlistAdapter(wishlistModelList,getApplicationContext(),false,true);
 

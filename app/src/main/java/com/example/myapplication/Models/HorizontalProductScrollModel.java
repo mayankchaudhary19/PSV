@@ -1,25 +1,38 @@
 package com.example.myapplication.Models;
 
 public class HorizontalProductScrollModel {
-    private int productImage;
+    private String productImage;
     private String productTitle;
     private String productDescription;
     private String productPrice;
     private String productInitialPrice;
+    private String productId;
+//    private String backgroundColor;
 
-    public HorizontalProductScrollModel(int productImage, String productTitle, String productDescription, String productPrice, String productInitialPrice) {
+
+
+
+    public HorizontalProductScrollModel(String productId, String productImage, String productTitle, String productDescription, String productPrice, String productInitialPrice) {
+        this.productId = productId;
         this.productImage = productImage;
         this.productTitle = productTitle;
         this.productDescription = productDescription;
         this.productPrice = productPrice;
         this.productInitialPrice = productInitialPrice;
     }
+    public String getProductId() {
+        return productId;
+    }
 
-    public int getProductImage() {
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
+    public String getProductImage() {
         return productImage;
     }
 
-    public void setProductImage(int productImage) {
+    public void setProductImage(String productImage) {
         this.productImage = productImage;
     }
 

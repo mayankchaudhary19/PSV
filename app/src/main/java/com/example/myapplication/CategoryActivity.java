@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -21,13 +22,21 @@ import com.example.myapplication.Models.HomePageModel;
 import com.example.myapplication.Models.HorizontalProductScrollModel;
 import com.example.myapplication.Models.SliderModel;
 import com.example.myapplication.Adapters.HomePageAdapter;
+import com.example.myapplication.Models.ViewAllWithRatingModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.myapplication.DBqueries.lists;
+import static com.example.myapplication.DBqueries.loadCategoriesNames;
+import static com.example.myapplication.DBqueries.loadFragmentRecyclerData;
+
 public class CategoryActivity extends AppCompatActivity {
     private TextView categoryTitle;
     private RecyclerView categoryRecyclerView;
+    private HomePageAdapter adapter;
+    private List<HomePageModel> homePageModelFakeList=new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,16 +61,16 @@ public class CategoryActivity extends AppCompatActivity {
         categoryRecyclerView =findViewById(R.id.categoryPage_recyclerView);
         //////////////// Banner Slider
 
-        List<SliderModel> sliderModelList=new ArrayList<SliderModel>( );
+//        List<SliderModel> sliderModelList=new ArrayList<SliderModel>( );
 
-        sliderModelList.add(new SliderModel(R.mipmap.ic_launcher,"#ffffff" ));
-        sliderModelList.add(new SliderModel(R.drawable.ic_menu_camera ,"#ffffff" ));
-        sliderModelList.add(new SliderModel(R.mipmap.ic_launcher,"#ffffff"));
-        sliderModelList.add(new SliderModel(R.drawable.ic_menu_camera,"#F3BABA"));
-        sliderModelList.add(new SliderModel(R.mipmap.ic_launcher,"#ffffff"));
-        sliderModelList.add(new SliderModel(R.mipmap.ic_launcher_round,"#ffffff" ));
-        sliderModelList.add(new SliderModel(R.mipmap.ic_launcher,"#ffffff"));
-        sliderModelList.add(new SliderModel(R.mipmap.ic_launcher ,"#ffffff"));
+//        sliderModelList.add(new SliderModel(R.mipmap.ic_launcher,"#ffffff" ));
+//        sliderModelList.add(new SliderModel(R.drawable.ic_menu_camera ,"#ffffff" ));
+//        sliderModelList.add(new SliderModel(R.mipmap.ic_launcher,"#ffffff"));
+//        sliderModelList.add(new SliderModel(R.drawable.ic_menu_camera,"#F3BABA"));
+//        sliderModelList.add(new SliderModel(R.mipmap.ic_launcher,"#ffffff"));
+//        sliderModelList.add(new SliderModel(R.mipmap.ic_launcher_round,"#ffffff" ));
+//        sliderModelList.add(new SliderModel(R.mipmap.ic_launcher,"#ffffff"));
+//        sliderModelList.add(new SliderModel(R.mipmap.ic_launcher ,"#ffffff"));
 
         //////////////// Banner Slider
 
@@ -71,48 +80,101 @@ public class CategoryActivity extends AppCompatActivity {
         //////////////// Strip Ad
 
         //////////////// HorizontalProductLayout
-        List<HorizontalProductScrollModel> horizontalProductScrollModelList=new ArrayList<>();
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.sampleproductone,"Jar","200 ml, small size jar","₹5000","₹7600"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.ic_like,"Jar","200 ml, small size jar","₹5000","₹7600"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.ic_like,"Jar","200 ml, small size jar","₹5000","₹7600"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.ic_like,"Jar","200 ml, small size jar","₹5000","₹7600"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.ic_like,"Jar","200 ml, small size jar","₹5000","₹7600"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.ic_like,"Jar","200 ml, small size jar","₹5000","₹7600"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.ic_like,"Jar","200 ml, small size jar","₹5000","₹7600"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.ic_like,"Jar","200 ml, small size jar","₹5000","₹7600"));
-        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.ic_like,"Jar","200 ml, small size jar","₹5000","₹7600"));
+//        List<HorizontalProductScrollModel> horizontalProductScrollModelList=new ArrayList<>();
+//        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.sampleproductone,"Jar","200 ml, small size jar","₹5000","₹7600"));
+//        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.ic_like,"Jar","200 ml, small size jar","₹5000","₹7600"));
+//        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.ic_like,"Jar","200 ml, small size jar","₹5000","₹7600"));
+//        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.ic_like,"Jar","200 ml, small size jar","₹5000","₹7600"));
+//        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.ic_like,"Jar","200 ml, small size jar","₹5000","₹7600"));
+//        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.ic_like,"Jar","200 ml, small size jar","₹5000","₹7600"));
+//        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.ic_like,"Jar","200 ml, small size jar","₹5000","₹7600"));
+//        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.ic_like,"Jar","200 ml, small size jar","₹5000","₹7600"));
+//        horizontalProductScrollModelList.add(new HorizontalProductScrollModel(R.drawable.ic_like,"Jar","200 ml, small size jar","₹5000","₹7600"));
         //////////////// HorizontalProductLayout
 
         //////////////// GridProductLayout
 
-        List<GridProductModel> gridProductModelList=new ArrayList<>();
-        gridProductModelList.add(new GridProductModel(R.drawable.unknown1,"rsrstrsrstrst","2 New Colors Available","₹5000/-"));
-        gridProductModelList.add(new GridProductModel(R.drawable.unknown2,"rsrstrsrstrst","20% Discount","₹5000/-"));
-        gridProductModelList.add(new GridProductModel(R.drawable.unknown3,"rsrstrsrstrst","2 New Colors Available","₹5000/-"));
-        gridProductModelList.add(new GridProductModel(R.drawable.unknown4,"rsrstrsrstrst","New Designs Available","₹5000/-"));
+//        List<GridProductModel> gridProductModelList=new ArrayList<>();
+//        gridProductModelList.add(new GridProductModel(R.drawable.unknown1,"rsrstrsrstrst","2 New Colors Available","₹5000/-"));
+//        gridProductModelList.add(new GridProductModel(R.drawable.unknown2,"rsrstrsrstrst","20% Discount","₹5000/-"));
+//        gridProductModelList.add(new GridProductModel(R.drawable.unknown3,"rsrstrsrstrst","2 New Colors Available","₹5000/-"));
+//        gridProductModelList.add(new GridProductModel(R.drawable.unknown4,"rsrstrsrstrst","New Designs Available","₹5000/-"));
 
         //////////////// GridProductLayout
+
+
+////////Home Page Fake List
+
+
+        List<SliderModel> sliderModelFakeList=new ArrayList<SliderModel>( );
+
+        sliderModelFakeList.add(new SliderModel("null","#ffffff" ));
+        sliderModelFakeList.add(new SliderModel("null","#ffffff" ));
+        sliderModelFakeList.add(new SliderModel("null","#ffffff" ));
+        sliderModelFakeList.add(new SliderModel("null","#ffffff" ));
+        sliderModelFakeList.add(new SliderModel("null","#ffffff" ));
+
+        List<HorizontalProductScrollModel> horizontalProductScrollModelFakeList=new ArrayList<>();
+        horizontalProductScrollModelFakeList.add(new HorizontalProductScrollModel("","","","","",""));
+        horizontalProductScrollModelFakeList.add(new HorizontalProductScrollModel("","","","","",""));
+        horizontalProductScrollModelFakeList.add(new HorizontalProductScrollModel("","","","","",""));
+        horizontalProductScrollModelFakeList.add(new HorizontalProductScrollModel("","","","","",""));
+        horizontalProductScrollModelFakeList.add(new HorizontalProductScrollModel("","","","","",""));
+
+        List<GridProductModel> gridProductModelFakeList=new ArrayList<>();
+        gridProductModelFakeList.add(new GridProductModel("", "","","",""));
+        gridProductModelFakeList.add(new GridProductModel("", "","","",""));
+        gridProductModelFakeList.add(new GridProductModel("", "","","",""));
+        gridProductModelFakeList.add(new GridProductModel("", "","","",""));
+        homePageModelFakeList.add(new HomePageModel(3 ,"",gridProductModelFakeList));
+
+        homePageModelFakeList.add(new HomePageModel(0 ,sliderModelFakeList));
+        homePageModelFakeList.add(new HomePageModel(1 ,"","#ffffff"));
+        homePageModelFakeList.add(new HomePageModel(2 ,"","#ffffff",horizontalProductScrollModelFakeList,new ArrayList<ViewAllWithRatingModel>()));
+
+////////Home Page Fake List
+
 
         ///////////////////////////////// TESTING MULTIPLE LAYOUT RECYCLER VIEW W/O FIREBASE
 
         LinearLayoutManager testingLayoutManager=new LinearLayoutManager(this);
         testingLayoutManager.setOrientation(RecyclerView.VERTICAL);
         categoryRecyclerView.setLayoutManager(testingLayoutManager);
-        List<HomePageModel> homePageModelList =new ArrayList<>();
-        homePageModelList.add(new HomePageModel(0 ,sliderModelList));
-        homePageModelList.add(new HomePageModel(2 ,"Deals Of The Day",horizontalProductScrollModelList));
-        homePageModelList.add(new HomePageModel(3 ,gridProductModelList,"#TRENDING"));
-        homePageModelList.add(new HomePageModel(1 ,R.drawable.ic_menu_camera,"#ff0000"));
 
+        adapter =new HomePageAdapter(homePageModelFakeList);
+//        List<HomePageModel> homePageModelList =new ArrayList<>();
 
-        homePageModelList.add(new HomePageModel(0 ,sliderModelList));
-        homePageModelList.add(new HomePageModel(1 ,R.drawable.ic_like,"#000000"));
-        homePageModelList.add(new HomePageModel(0 ,sliderModelList));
-        homePageModelList.add(new HomePageModel(1 ,R.drawable.ic_menu_camera,"#ff0000"));
-        homePageModelList.add(new HomePageModel(1 ,R.drawable.ic_menu_camera,"#ff0000"));
+//        homePageModelList.add(new HomePageModel(0 ,sliderModelList));
+//        homePageModelList.add(new HomePageModel(2 ,"Deals Of The Day",horizontalProductScrollModelList));
+//        homePageModelList.add(new HomePageModel(3 ,gridProductModelList,"#TRENDING"));
+//        homePageModelList.add(new HomePageModel(1 ,R.drawable.ic_menu_camera,"#ff0000"));
+//
+//
+//        homePageModelList.add(new HomePageModel(0 ,sliderModelList));
+//        homePageModelList.add(new HomePageModel(1 ,R.drawable.ic_like,"#000000"));
+//        homePageModelList.add(new HomePageModel(0 ,sliderModelList));
+//        homePageModelList.add(new HomePageModel(1 ,R.drawable.ic_menu_camera,"#ff0000"));
+//        homePageModelList.add(new HomePageModel(1 ,R.drawable.ic_menu_camera,"#ff0000"));
+        int listPosition=0;
 
-        HomePageAdapter adapter=new HomePageAdapter(homePageModelList);
+        for (int x=0;x<loadCategoriesNames.size();x++){
+            if (loadCategoriesNames.get(x).equals(title)){
+                listPosition=x;
+            }
+        }
+        if (listPosition==0){
+            loadCategoriesNames.add(title);
+            lists.add(new ArrayList<HomePageModel>());
+         //   adapter =new HomePageAdapter(lists.get(loadCategoriesNames.size() - 1));
+            loadFragmentRecyclerData(categoryRecyclerView, this,loadCategoriesNames.size() - 1,title);
+
+        }else {
+            adapter =new HomePageAdapter(lists.get(listPosition));
+        }
+//        HomePageAdapter adapter=new HomePageAdapter(lists);
         categoryRecyclerView.setAdapter(adapter);
+
+       // categoryRecyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
         ////////////////////////////////

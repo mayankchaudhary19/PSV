@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.myapplication.Models.ProductSpecificationModel;
+import com.example.myapplication.ProductDetailsActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.Adapters.ProductSpecificationAdapter;
 
@@ -27,6 +28,7 @@ public class ProductSpecificationFragment extends Fragment {
     }
 
     private RecyclerView productSpecificationRecyclerView;
+    public List<ProductSpecificationModel> productSpecificationModelList;
 //    private TextView materialAndSizeTxt;
 
     @Override
@@ -39,13 +41,13 @@ public class ProductSpecificationFragment extends Fragment {
        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
        productSpecificationRecyclerView.setLayoutManager(linearLayoutManager);
 
-        List<ProductSpecificationModel> productSpecificationModelList=new ArrayList<>();
-        productSpecificationModelList.add(new ProductSpecificationModel(0,"Material and Size"));
-        productSpecificationModelList.add(new ProductSpecificationModel(1,"Material","Polypropylene"));
-        productSpecificationModelList.add(new ProductSpecificationModel(1,"Height","20cm"));
-        productSpecificationModelList.add(new ProductSpecificationModel(1,"Width","13cm"));
-        productSpecificationModelList.add(new ProductSpecificationModel(1,"Length","25cm"));
-        productSpecificationModelList.add(new ProductSpecificationModel(1," Weight","28gm"));
+//       productSpecificationModelList=new ArrayList<>();
+//        productSpecificationModelList.add(new ProductSpecificationModel(0,"Material and Size"));
+//        productSpecificationModelList.add(new ProductSpecificationModel(1,"Material","Polypropylene"));
+//        productSpecificationModelList.add(new ProductSpecificationModel(1,"Height","20cm"));
+//        productSpecificationModelList.add(new ProductSpecificationModel(1,"Width","13cm"));
+//        productSpecificationModelList.add(new ProductSpecificationModel(1,"Length","25cm"));
+//        productSpecificationModelList.add(new ProductSpecificationModel(1," Weight","28gm"));
 
         ProductSpecificationAdapter productSpecificationAdapter=new ProductSpecificationAdapter(productSpecificationModelList);
         productSpecificationRecyclerView.setAdapter(productSpecificationAdapter);

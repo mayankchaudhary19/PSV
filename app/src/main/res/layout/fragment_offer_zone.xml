@@ -11,28 +11,27 @@
         android:layout_width="40dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:elevation="1dp"
+        android:elevation="0.001dp"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
-        android:tint="#FFFFFF"
         android:src="@drawable/ic_menu_black_24dp"
+        android:tint="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="@+id/appbar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/cartIcon"
         android:layout_width="34dp"
         android:layout_height="34dp"
-        android:layout_marginEnd="12dp"
+        android:layout_marginEnd="13dp"
         android:elevation="0.1dp"
         android:padding="6dp"
         android:tint="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_shopping_cart_2" />
+        app:srcCompat="@drawable/ic_shopping_cart_3" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
@@ -49,7 +48,7 @@
             android:id="@+id/toolbar_offer"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#FA9A7E"
+            android:background="#FA815D"
             android:elevation="0dp">
 
         </androidx.appcompat.widget.Toolbar>
@@ -60,6 +59,7 @@
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="#F3F3F3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,29 +68,154 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/redem_gradient"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/imageView33"
-                android:layout_width="wrap_content"
-                android:layout_height="190dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
-                android:background="#EBEBE8"
-                app:srcCompat="@drawable/sampleproducttwo" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="330dp"
+                android:background="@drawable/redem_gradient">
+
+                <TextView
+                    android:id="@+id/textView73"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/racing_sans_one"
+                    android:text="S A L E"
+                    android:textColor="#FFFFFF"
+                    android:textSize="120sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView77"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:fontFamily="@font/racing_sans_one"
+                    android:text="S A L E"
+                    android:textColor="#5BFFFFFF"
+                    android:textSize="120sp"
+                    app:layout_constraintEnd_toEndOf="@+id/textView73"
+                    app:layout_constraintStart_toStartOf="@+id/textView73"
+                    app:layout_constraintTop_toTopOf="@+id/textView73" />
+
+                <TextView
+                    android:id="@+id/textView76"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="19dp"
+                    android:layout_marginEnd="4dp"
+                    android:background="#FB8F6D"
+                    android:fontFamily="@font/kaushan_script"
+                    android:gravity="center|top"
+                    android:textColor="#F6F6F6"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView73"
+                    app:layout_constraintEnd_toEndOf="@+id/textView73"
+                    app:layout_constraintStart_toStartOf="@+id/textView73"
+                    app:layout_constraintTop_toTopOf="@+id/textView73" />
+
+                <TextView
+                    android:id="@+id/textView81"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="23dp"
+                    android:elevation="0.1dp"
+                    android:fontFamily="@font/miniver"
+                    android:letterSpacing="0.7"
+                    android:text="Coupons"
+                    android:textColor="#FFFFFF"
+                    android:textSize="22sp"
+                    android:textStyle="bold|italic"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView73"
+                    app:layout_constraintEnd_toEndOf="@+id/textView73"
+                    app:layout_constraintStart_toStartOf="@+id/textView73"
+                    app:layout_constraintTop_toTopOf="@+id/textView73" />
+
+                <TextView
+                    android:id="@+id/textView83"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="23dp"
+                    android:layout_marginEnd="7dp"
+                    android:fontFamily="@font/miniver"
+                    android:letterSpacing="0.7"
+                    android:text="Coupons"
+                    android:textColor="#11000000"
+                    android:textSize="22sp"
+                    android:textStyle="bold|italic"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView73"
+                    app:layout_constraintEnd_toEndOf="@+id/textView73"
+                    app:layout_constraintStart_toStartOf="@+id/textView73"
+                    app:layout_constraintTop_toTopOf="@+id/textView73" />
+
+                <ImageView
+                    android:id="@+id/imageView42"
+                    android:layout_width="160dp"
+                    android:layout_height="190dp"
+                    android:layout_marginTop="180dp"
+                    android:rotation="-80"
+                    android:tint="#FFFFFF"
+                    android:translationX="-15dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_commerce" />
+
+                <ImageView
+                    android:id="@+id/imageView43"
+                    android:layout_width="155dp"
+                    android:layout_height="171dp"
+                    android:layout_marginTop="178dp"
+                    android:layout_marginEnd="10dp"
+                    android:tint="#FFFFFF"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_commerce_and_shopping" />
+
+                <ImageView
+                    android:id="@+id/imageView44"
+                    android:layout_width="139dp"
+                    android:layout_height="103dp"
+                    android:layout_marginStart="110dp"
+                    android:layout_marginTop="240dp"
+                    android:tint="#FFFFFF"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_shopping_cart_2" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/applyCoupon_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="#FFFFFF"
+                android:ellipsize="marquee"
+                android:gravity="center"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:singleLine="true"
+                android:letterSpacing="0.5"
+                android:text="APPLY COUPON AT CHECKOUT              APPLY COUPON AT CHECKOUT"
+                android:textColor="#F9AA74"
+                android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/myRewardsRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginTop="12dp"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp">
 
             </androidx.recyclerview.widget.RecyclerView>
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

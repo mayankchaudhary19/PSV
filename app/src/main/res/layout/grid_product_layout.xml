@@ -24,33 +24,34 @@
 
 <!--    </LinearLayout>-->
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="620dp"
-        android:orientation="vertical">
-
-        <ImageView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="310dp"
-            android:background="@drawable/faded_background_top" />
+            android:layout_height="620dp"
+            android:orientation="vertical"
+            android:visibility="visible">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="310dp"
-            android:background="@drawable/faded_background_bottom" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="310dp"
+                android:background="@drawable/faded_bck_top" />
 
-    </LinearLayout>
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="310dp"
+                android:background="@drawable/faded_bck_bottom" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:paddingTop="90dp">
 
             <TextView
                 android:id="@+id/grid_layout_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:layout_marginTop="90dp"
                 android:layout_weight="1"
                 android:text="#Trending"
                 android:textSize="17sp"
@@ -60,7 +61,6 @@
                 android:id="@+id/grid_layout_view_all_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="22dp"
-                android:layout_marginTop="90dp"
                 android:layout_marginEnd="8dp"
                 android:clickable="true"
                 android:gravity="end"
@@ -68,7 +68,7 @@
                 android:paddingEnd="10dp"
                 android:text="More"
                 android:textSize="16sp" />
-<!--                android:background="@drawable/bg_grid_view_product_outline_box"
+            <!--                android:background="@drawable/bg_grid_view_product_outline_box"
 -->
         </LinearLayout>
 

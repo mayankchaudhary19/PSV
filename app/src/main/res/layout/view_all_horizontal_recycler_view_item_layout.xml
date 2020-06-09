@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp"
+    android:layout_marginTop="6dp"
+    android:layout_marginBottom="6dp"
     android:background="#FFFFFF">
 
     <ImageView
@@ -12,10 +13,9 @@
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginStart="14dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginBottom="14dp"
-        android:background="@drawable/bg_cart_product_outline_box"
-        android:padding="1dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:padding="3dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="13dp"
+        android:layout_marginEnd="10dp"
         android:ellipsize="end"
         android:maxLines="1"
         android:text="Square Bowl [small size]"
@@ -41,13 +41,12 @@
         android:id="@+id/product_subtitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:layout_marginEnd="13dp"
+        android:layout_marginTop="2dp"
         android:ellipsize="end"
-        android:maxLines="2"
+        android:singleLine="true"
         android:text="Transparent color, with dotted texture"
         android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageView36"
         app:layout_constraintStart_toStartOf="@+id/product_title"
         app:layout_constraintTop_toBottomOf="@+id/product_title" />
 
@@ -57,10 +56,10 @@
         android:layout_height="wrap_content"
         android:text="₹150"
         android:textColor="#A6000000"
-        android:textSize="17sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/product_image"
-        app:layout_constraintStart_toStartOf="@+id/t_v_coupon_applied" />
+        app:layout_constraintStart_toStartOf="@+id/t_v_coupon_available" />
 
     <TextView
         android:id="@+id/product_initial_price"
@@ -69,12 +68,12 @@
         android:layout_marginStart="8dp"
         android:text="₹160"
         android:textColor="#9F000000"
-        android:textSize="15sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/product_price"
         app:layout_constraintStart_toEndOf="@+id/product_price" />
 
     <View
-        android:id="@+id/divider"
+        android:id="@+id/dividerInitialPrice"
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:background="#65000000"
@@ -91,34 +90,39 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:text="(20% off)"
-        android:textSize="14sp"
+        android:textSize="13sp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/product_price"
         app:layout_constraintStart_toEndOf="@+id/product_initial_price" />
 
+    <!--        android:text="free coupons Available"
+-->
     <TextView
-        android:id="@+id/t_v_coupon_applied"
+        android:id="@+id/t_v_coupon_available"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"
         android:drawableStart="@drawable/ic_local_offer_black_24dp"
         android:drawablePadding="5dp"
-        android:drawableTint="#1EAEA1"
+        android:drawableTint="#F69375"
         android:includeFontPadding="false"
+        android:paddingStart="0dp"
         android:paddingTop="3dp"
         android:paddingEnd="3dp"
         android:paddingBottom="3dp"
-        android:text="Free Coupons Available"
-        android:textColor="#4DB6AC"
-        android:textSize="12sp"
+        android:text="1 Coupon Available"
+        android:textColor="#FFAB91"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:visibility="visible"
         app:layout_constraintStart_toEndOf="@+id/product_image"
         app:layout_constraintTop_toBottomOf="@+id/product_subtitle" />
 
     <ImageView
         android:id="@+id/imageView36"
-        android:layout_width="22dp"
-        android:layout_height="22dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_marginTop="14dp"
         android:layout_marginEnd="14dp"
         android:tint="#1A000000"
@@ -127,23 +131,26 @@
         app:srcCompat="@drawable/ic_favorite_black_24_dp_two" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView11"
+        android:id="@+id/cardViewViewAllRating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:backgroundTint="#FFAB91"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="0dp"
-        app:layout_constraintStart_toStartOf="@+id/t_v_coupon_applied"
-        app:layout_constraintTop_toBottomOf="@+id/t_v_coupon_applied">
+        android:layout_marginTop="2dp"
+        android:backgroundTint="#80CBC4"
+        android:visibility="visible"
+        app:cardCornerRadius="7dp"
+        app:cardElevation="1dp"
+        app:layout_constraintStart_toStartOf="@+id/t_v_coupon_available"
+        app:layout_constraintTop_toBottomOf="@+id/t_v_coupon_available">
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_marginStart="6dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="0.4dp"
+            android:layout_marginEnd="6dp"
+            android:layout_marginBottom="0.4dp"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -151,27 +158,53 @@
             <ImageView
                 android:id="@+id/imageView22"
                 android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:layout_height="14dp"
                 android:layout_gravity="center"
-                android:paddingStart="4dp"
-                android:paddingTop="2.5dp"
+                android:layout_marginBottom="0.1dp"
+                android:paddingStart="2dp"
+                android:paddingTop="2dp"
+                android:paddingEnd="0dp"
                 android:paddingBottom="3dp"
                 android:src="@drawable/ic_star_2"
-                android:tint="@color/white" />
+                android:tint="@color/white"
+                android:translationY="0.8dp" />
 
             <TextView
                 android:id="@+id/tv_product_rating_miniView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginStart="2dp"
+                android:layout_marginStart="3dp"
                 android:gravity="center"
-                android:paddingTop="1dp"
-                android:paddingBottom="1dp"
                 android:text=" 3.5"
                 android:textColor="@color/white"
-                android:textSize="10sp"
-                android:textStyle="bold" />
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:translationY="-0.3dp" />
+
+            <!--            <TextView-->
+            <!--                android:id="@+id/textView84"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginStart="4dp"-->
+            <!--                android:gravity="top"-->
+            <!--                android:text="|"-->
+            <!--                android:textColor="#FFFFFF"-->
+            <!--                android:textStyle="bold"-->
+            <!--                android:translationX="3.5dp"-->
+            <!--                android:translationY="-2dp" />-->
+
+            <!--            <TextView-->
+            <!--                android:id="@+id/total_no_of_rating"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginStart="4dp"-->
+            <!--                android:paddingStart="5dp"-->
+            <!--                android:paddingBottom="1dp"-->
+            <!--                android:text="12 ratings "-->
+            <!--                android:textColor="#FFFFFF"-->
+            <!--                android:textSize="11sp"-->
+            <!--                android:textStyle="bold" />-->
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -179,11 +212,12 @@
         android:id="@+id/total_no_of_rating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="(12 ratings)"
-        android:textSize="11sp"
-        app:layout_constraintBottom_toBottomOf="@+id/cardView11"
-        app:layout_constraintStart_toEndOf="@+id/cardView11"
-        app:layout_constraintTop_toTopOf="@+id/cardView11" />
+        android:paddingStart="5dp"
+        android:text="12 ratings "
+        android:textSize="12sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/cardViewViewAllRating"
+        app:layout_constraintStart_toEndOf="@+id/cardViewViewAllRating"
+        app:layout_constraintTop_toTopOf="@+id/cardViewViewAllRating" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

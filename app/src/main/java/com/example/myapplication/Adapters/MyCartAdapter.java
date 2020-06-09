@@ -330,18 +330,18 @@ public class MyCartAdapter extends RecyclerView.Adapter {
             });
 
             final List<String> list2 = new ArrayList<String>();
-            list2.add("Piece (1)");
-            list2.add("Pieces(3)");
-            list2.add("Pieces(6)");
-            list2.add("Dozen(12)");
-            list2.add("Gross(144)");
+            list2.add("Piece [1]");
+            list2.add("Pieces [3]");
+            list2.add("Pieces [6]");
+            list2.add("Dozen [12]");
+            list2.add("Gross [144]");
 
             final ArrayAdapter<String> quantityTypeAdapter = new ArrayAdapter<String>(context, R.layout.spinner_text2, list2) {
                 public View getView(int position, View convertView, ViewGroup parent) {
                     View v = super.getView(position, convertView, parent);
                     ((TextView) v).setTextSize(14);
                     ((TextView) v).setGravity(Gravity.CENTER);
-                    v.setPadding(25,2,0,5);
+                    v.setPadding(30,2,0,5);
                     return v;
                 }
 
@@ -349,15 +349,16 @@ public class MyCartAdapter extends RecyclerView.Adapter {
 
                     View v = super.getDropDownView(position, convertView, parent);
                     ((TextView) v).setGravity(Gravity.START);
-                    v.setPadding(20,0,0,5);
+                    v.setPadding(30,0,0,5);
                     ((TextView) v).setWidth(250);
+//                    ((TextView) v).setHeight(62);
 
                     if (position == mSelectedIndex2)
                         ((TextView) v).setTextColor(Color.parseColor("#FF8A65"));
-//                    if (position==list2.size()-1)
-//                        ((TextView) v).setPadding(20,0,20,5);
-//                    if (position<list2.size()-1)
-//                        ((TextView) v).setPadding(30,4,0,0);
+                    if (position==list2.size()-1)
+                        ((TextView) v).setPadding(25,0,20,10);
+                    if (position<list2.size()-1)
+                        ((TextView) v).setPadding(30,2,0,2);
                     return v;
                 }
             };

@@ -103,7 +103,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="3dp"
-                android:clickable="true"
                 android:text="Account"
                 android:textColor="@color/cardview_dark_background"
                 android:textSize="11sp"

@@ -1,28 +1,44 @@
 package com.example.myapplication.Models;
 
 public class ViewAllWithRatingModel {
-    private int productImage;
-    private String productTitle,productSubtitle,productPrice,productInitialPrice,productDiscount,no_of_ratings;
+    private String productImage;
+    private long freeCoupons, no_of_ratings;
+    private String productTitle, productSubtitle, productPrice, productInitialPrice;
     private String rating;
 
-    public ViewAllWithRatingModel(int productImage, String productTitle, String productSubtitle, String productPrice, String productInitialPrice, String productDiscount, String rating, String no_of_ratings) {
+    public ViewAllWithRatingModel(String productImage, long freeCoupons, long no_of_ratings, String productTitle, String productSubtitle, String productPrice, String productInitialPrice, String rating) {
         this.productImage = productImage;
+        this.freeCoupons = freeCoupons;
+        this.no_of_ratings = no_of_ratings;
         this.productTitle = productTitle;
         this.productSubtitle = productSubtitle;
         this.productPrice = productPrice;
         this.productInitialPrice = productInitialPrice;
-        this.productDiscount = productDiscount;
         this.rating = rating;
-        this.no_of_ratings = no_of_ratings;
-
     }
 
-    public int getProductImage() {
+    public String getProductImage() {
         return productImage;
     }
 
-    public void setProductImage(int productImage) {
+    public void setProductImage(String productImage) {
         this.productImage = productImage;
+    }
+
+    public long getFreeCoupons() {
+        return freeCoupons;
+    }
+
+    public void setFreeCoupons(long freeCoupons) {
+        this.freeCoupons = freeCoupons;
+    }
+
+    public long getNo_of_ratings() {
+        return no_of_ratings;
+    }
+
+    public void setNo_of_ratings(long no_of_ratings) {
+        this.no_of_ratings = no_of_ratings;
     }
 
     public String getProductTitle() {
@@ -57,27 +73,11 @@ public class ViewAllWithRatingModel {
         this.productInitialPrice = productInitialPrice;
     }
 
-    public String getProductDiscount() {
-        return productDiscount;
-    }
-
-    public void setProductDiscount(String productDiscount) {
-        this.productDiscount = productDiscount;
-    }
-
-    public String getNo_of_ratings() {
-        return no_of_ratings;
-    }
-
-    public void setNo_of_ratings(String no_of_ratings) {
-        this.no_of_ratings = no_of_ratings;
-    }
-
     public String getRating() {
         return rating;
     }
 
-    public void setRating(String  rating) {
+    public void setRating(String rating) {
         this.rating = rating;
     }
 }

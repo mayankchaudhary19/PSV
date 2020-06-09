@@ -14,9 +14,10 @@
         android:layout_height="23dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:rotation="45"
         android:src="@drawable/ic_tag"
         android:tint="#46000000"
-        android:rotation="45"
+        android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -24,26 +25,28 @@
         android:id="@+id/reward_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="11dp"
         android:gravity="bottom"
         android:text="Discount"
         android:textSize="18sp"
         android:textStyle="italic"
-        app:layout_constraintBottom_toBottomOf="@+id/reward_icon"
-        app:layout_constraintStart_toEndOf="@+id/reward_icon" />
+        app:layout_constraintBottom_toTopOf="@+id/reward_body"
+        app:layout_constraintStart_toEndOf="@+id/reward_icon"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/reward_body"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="9dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="20dp"
         android:text="Create an Android Activity with fixed tabs in the a Toolbar and dynamic ... Infinite Scroll Page Code Generator · Android Master Detail Flow Custom Fragment Code .. "
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reward_icon" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

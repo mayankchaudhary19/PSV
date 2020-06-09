@@ -1,23 +1,32 @@
 package com.example.myapplication.Models;
 
 public class WishlistModel {
-    private int productImage;
-    private String productTitle,productSubtitle,productPrice,productInitialPrice,productDiscount;
+    private String productImage,productId;
+    private String productTitle,productSubtitle,productPrice,productInitialPrice;
 
-    public WishlistModel(int productImage, String productTitle, String productSubtitle, String productPrice, String productInitialPrice, String productDiscount) {
+    public WishlistModel(String productId,String productImage, String productTitle, String productSubtitle, String productPrice, String productInitialPrice) {
+        this.productId=productId;
         this.productImage = productImage;
         this.productTitle = productTitle;
         this.productSubtitle = productSubtitle;
         this.productPrice = productPrice;
         this.productInitialPrice = productInitialPrice;
-        this.productDiscount = productDiscount;
+//        this.productDiscount = productDiscount;
     }
 
-    public int getProductImage() {
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
+    public String getProductImage() {
         return productImage;
     }
 
-    public void setProductImage(int productImage) {
+    public void setProductImage(String productImage) {
         this.productImage = productImage;
     }
 
@@ -51,13 +60,5 @@ public class WishlistModel {
 
     public void setProductInitialPrice(String productInitialPrice) {
         this.productInitialPrice = productInitialPrice;
-    }
-
-    public String getProductDiscount() {
-        return productDiscount;
-    }
-
-    public void setProductDiscount(String productDiscount) {
-        this.productDiscount = productDiscount;
     }
 }

@@ -80,7 +80,7 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView11"
-                android:layout_width="match_parent"
+                android:layout_width="65dp"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#FFC400"
                 app:cardCornerRadius="8dp"
@@ -91,7 +91,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginStart="6dp"
+                    android:layout_marginStart="8dp"
                     android:layout_marginEnd="6dp"
                     android:gravity="center"
                     android:orientation="horizontal"
@@ -104,6 +104,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
+                        android:paddingStart="0dp"
                         android:paddingEnd="4dp"
                         android:paddingBottom="1dp"
                         android:text=" 3.5"
@@ -113,7 +114,7 @@
 
                     <ImageView
                         android:id="@+id/average_rating_star"
-                        android:layout_width="20dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="20dp"
                         android:layout_gravity="center"
                         android:padding="3dp"
@@ -243,7 +244,7 @@
                     android:layout_height="10dp"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:backgroundTint="#33000000"
+                    android:tint="#33000000"
                     app:srcCompat="@drawable/ic_star_2" />
 
             </LinearLayout>
@@ -272,7 +273,7 @@
                     android:layout_height="10dp"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:backgroundTint="#33000000"
+                    android:tint="#33000000"
                     app:srcCompat="@drawable/ic_star_2" />
 
             </LinearLayout>
@@ -300,7 +301,7 @@
                     android:layout_height="10dp"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:backgroundTint="#33000000"
+                    android:tint="#33000000"
                     app:srcCompat="@drawable/ic_star_2" />
 
             </LinearLayout>
@@ -329,7 +330,7 @@
                     android:layout_height="10dp"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:backgroundTint="#33000000"
+                    android:tint="#33000000"
                     app:srcCompat="@drawable/ic_star_2" />
 
             </LinearLayout>
@@ -358,7 +359,7 @@
                     android:layout_height="10dp"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:backgroundTint="#33000000"
+                    android:tint="#33000000"
                     app:srcCompat="@drawable/ic_star_2" />
 
             </LinearLayout>
@@ -369,6 +370,7 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginEnd="38dp"
+            android:gravity="center"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="@+id/ratings_progress_bar_container"
             app:layout_constraintEnd_toEndOf="parent"

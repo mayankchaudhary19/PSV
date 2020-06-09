@@ -54,21 +54,28 @@ public class LoginFragment extends Fragment {
     private FirebaseAuth firebaseAuth;
     private ProgressBar progressbar;
     private ImageView skipLoginBtn;
+    public static boolean disableCloseBtn=false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         ((UserSessionActivity)getActivity()).updateStatusBarColor("#F5977A");
-        return inflater.inflate(R.layout.fragment_user_session_login, container, false);
+        View view = inflater.inflate(R.layout.fragment_user_session_login, container, false);
+        skipLoginBtn=view.findViewById(R.id.skipLoginImg);
 
+        if (disableCloseBtn){
+            skipLoginBtn.setVisibility(View.GONE);
+        }else {
+            skipLoginBtn.setVisibility(View.VISIBLE);
+        }
+        return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         init(view);
-
 
         sign_up__txt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,7 +115,7 @@ public class LoginFragment extends Fragment {
                 } else if (username_or_phone.getText().toString().matches("\\d{10}")) {
                     FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
                     firebaseAuth=FirebaseAuth.getInstance();
-                    firebaseFirestore.collection("users").whereEqualTo("phone", username_or_phone.getText().toString())
+                    firebaseFirestore.collection("Users").whereEqualTo("phone", username_or_phone.getText().toString())
                             .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -140,8 +147,9 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent =new Intent(getContext(),MainActivity.class);
-                intent.putExtra("Not Registered", true);
+//                intent.putExtra("Not Registered", true);
                 startActivity(intent);
+                disableCloseBtn=false;
                 getActivity().finishAffinity();
 
             }
@@ -157,7 +165,6 @@ public class LoginFragment extends Fragment {
         sign_up__txt=view.findViewById(R.id.sign_up_txt);
         login=view.findViewById(R.id.btn_login);
         progressbar=view.findViewById(R.id.progressBar);
-        skipLoginBtn=view.findViewById(R.id.skipLoginImg);
 
 
     }
@@ -169,9 +176,12 @@ public class LoginFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
+                    if (disableCloseBtn){
+                        disableCloseBtn=false;
+                    }else {
                     Intent mainIntent =new Intent(getContext(), MainActivity.class);
-                    mainIntent.putExtra("Not Registered", false);
-                    startActivity(mainIntent);
+//                    mainIntent.putExtra("Not Registered", false);
+                    startActivity(mainIntent);}
                     getActivity().finish();
 
                 }

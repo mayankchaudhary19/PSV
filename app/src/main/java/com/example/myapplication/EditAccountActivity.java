@@ -198,7 +198,7 @@ public class EditAccountActivity extends AppCompatActivity {
 
 
 
-        db.collection("users").document(firebaseAuth.getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        db.collection("Users").document(firebaseAuth.getCurrentUser().getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(final DocumentSnapshot documentSnapshot) {
 ////////UpdateProfileTitle
@@ -290,6 +290,7 @@ public class EditAccountActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
+                DBqueries.clearData();
                 finish();
                 Intent intent = new Intent(EditAccountActivity.this, UserSessionActivity.class);
                 startActivity(intent);
@@ -304,6 +305,7 @@ public class EditAccountActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
+                DBqueries.clearData();
                 finish();
                 Intent intent = new Intent(EditAccountActivity.this, UserSessionActivity.class);
                 startActivity(intent);
@@ -334,7 +336,7 @@ public class EditAccountActivity extends AppCompatActivity {
                                         Map<String, Object> map = new HashMap<>();
                                         FirebaseFirestore db = FirebaseFirestore.getInstance();
                                         map.put("profile_url", url);
-                                        db.collection("users").document(firebaseAuth.getCurrentUser().getUid()).update(map);
+                                        db.collection("Users").document(firebaseAuth.getCurrentUser().getUid()).update(map);
                                         Toast.makeText(EditAccountActivity.this, "Successfully Deleted", Toast.LENGTH_SHORT).show();
                                         removeCircle.setVisibility(View.INVISIBLE);
                                         removeCross.setVisibility(View.INVISIBLE);
@@ -420,7 +422,7 @@ public class EditAccountActivity extends AppCompatActivity {
                 map.put("secondaryPhoneNumber", secondaryPhoneNumber.getText().toString());
                 map.put("postalAddress", postalAddress.getText().toString());
 
-                db.collection("users").document(firebaseAuth.getCurrentUser().getUid()).update(map)
+                db.collection("Users").document(firebaseAuth.getCurrentUser().getUid()).update(map)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
@@ -461,7 +463,7 @@ public class EditAccountActivity extends AppCompatActivity {
                 map.put("officeAddress", officeAddress.getText().toString());
                 map.put("officeContactNumber", officeContactNumber.getText().toString());
 
-                db.collection("users").document(firebaseAuth.getCurrentUser().getUid()).update(map)
+                db.collection("Users").document(firebaseAuth.getCurrentUser().getUid()).update(map)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {

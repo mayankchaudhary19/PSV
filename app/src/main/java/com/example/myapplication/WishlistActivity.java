@@ -6,26 +6,39 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myapplication.Models.WishlistModel;
 import com.example.myapplication.Adapters.WishlistAdapter;
+import com.example.myapplication.ui.wishlist.WishlistFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class WishlistActivity extends AppCompatActivity {
-    private TextView wishlistTitle;
+    public static TextView wishlistTitle;
     private RecyclerView wishlistItemRecyclerView;
     private int no_of_items;
+    private Dialog loadingDialog;
+    public static  WishlistAdapter wishlistAdapter;
 //    public static AtomicInteger activitiesLaunched = new AtomicInteger(0);
 
     @Override
@@ -45,33 +58,76 @@ public class WishlistActivity extends AppCompatActivity {
         upArrow.setColorFilter(getResources().getColor(R.color.black_overlay2), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
+        loadingDialog=new Dialog(WishlistActivity.this);
+        loadingDialog.setContentView(R.layout.loading_progress_dialog);
+        loadingDialog.setCancelable(false);
+        loadingDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        loadingDialog.show();
+
         wishlistItemRecyclerView=findViewById(R.id.wishlist_item_RecyclerView);
         GridLayoutManager layoutManager =new GridLayoutManager(this,2);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         wishlistItemRecyclerView.setLayoutManager(layoutManager);
-        List<WishlistModel> wishlistModelList =new ArrayList<>();
-        wishlistModelList.add(new WishlistModel(R.drawable.unknown1,"200ml Jug","Easy to handle grip, Pink color","₹1600/pc","₹1800","(10% OFF)"));
-        wishlistModelList.add(new WishlistModel(R.drawable.unknown3,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
-        wishlistModelList.add(new WishlistModel(R.drawable.unknown2,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
-        wishlistModelList.add(new WishlistModel(R.drawable.unknown4,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
-        wishlistModelList.add(new WishlistModel(R.drawable.unknown5,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
-        wishlistModelList.add(new WishlistModel(R.drawable.unknown1,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
-        wishlistModelList.add(new WishlistModel(R.drawable.unknown4,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
-        wishlistModelList.add(new WishlistModel(R.drawable.unknown2,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
 
-        WishlistAdapter wishlistAdapter =new WishlistAdapter(wishlistModelList,getApplicationContext(),true,false);
-        no_of_items= wishlistModelList.size();
+//        if (DBqueries.wishlistModelList.size()==0){
+//            DBqueries.wishlistModelList.clear();
+//            DBqueries.loadWishlist(getApplicationContext(),loadingDialog,true);
+//        }else {
+//            loadingDialog.dismiss();
+//        }
+//        List<WishlistModel> wishlistModelList =new ArrayList<>();
+//        wishlistModelList.add(new WishlistModel(R.drawable.unknown1,"200ml Jug","Easy to handle grip, Pink color","₹1600/pc","₹1800","(10% OFF)"));
+//        wishlistModelList.add(new WishlistModel(R.drawable.unknown3,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
+//        wishlistModelList.add(new WishlistModel(R.drawable.unknown2,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
+//        wishlistModelList.add(new WishlistModel(R.drawable.unknown4,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
+//        wishlistModelList.add(new WishlistModel(R.drawable.unknown5,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
+//        wishlistModelList.add(new WishlistModel(R.drawable.unknown1,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
+//        wishlistModelList.add(new WishlistModel(R.drawable.unknown4,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
+//        wishlistModelList.add(new WishlistModel(R.drawable.unknown2,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
+        if (DBqueries.wishlistModelList.size()==0){
+            DBqueries.wishList.clear();
+            DBqueries.loadWishlist(getApplicationContext(),loadingDialog,true);
+        }else {
+            loadingDialog.dismiss();
+        }
 
-        wishlistTitle.setText("Wishlist ("+no_of_items+")");
+        wishlistAdapter=new WishlistAdapter(DBqueries.wishlistModelList,getApplicationContext(),true,false);
+
 
         wishlistItemRecyclerView.setAdapter(wishlistAdapter);
         wishlistAdapter.notifyDataSetChanged();
+        FirebaseFirestore firebaseFirestore=FirebaseFirestore.getInstance();
+        firebaseFirestore.collection("Users").document(FirebaseAuth.getInstance().getUid())
+                .collection("UserData").document("Wishlist")
+                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    wishlistTitle.setText("Wishlist ("+task.getResult().getLong("wishlistSize")+")");
+
+                }else{
+                    wishlistTitle.setText("Wishlist");
+                    String error= task.getException().getMessage();
+                    Toast.makeText(WishlistActivity.this, error, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
+//        no_of_items= DBqueries.wishlistModelList.size();
+//        wishlistTitle.setText("Wishlist ("+DBqueries.wishList.size()+")");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        wishlistTitle.setText("Wishlist ("+DBqueries.wishList.size()+")");
 
 
     }
 
-
-//    @Override
+    //    @Override
 //    protected void onDestroy() {
 //
 //        //remove this activity from the counter

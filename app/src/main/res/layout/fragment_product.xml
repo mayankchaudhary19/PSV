@@ -7,14 +7,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:layout_editor_absoluteY="1dp">
+            android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/imageView20"
@@ -136,7 +135,8 @@
                                 android:id="@+id/imageView3"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
-                                android:layout_gravity="center" android:padding="5dp"
+                                android:layout_gravity="center"
+                                android:padding="5dp"
                                 android:src="@drawable/ic_bowls" />
 
                             <TextView
@@ -166,7 +166,8 @@
                                 android:id="@+id/imageView28"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
-                                android:layout_gravity="center" android:padding="7dp"
+                                android:layout_gravity="center"
+                                android:padding="7dp"
                                 android:src="@drawable/ic_fan_2" />
 
                             <TextView
@@ -200,7 +201,8 @@
                                 android:layout_width="60dp"
                                 android:layout_height="50dp"
                                 android:layout_gravity="center"
-                                android:scaleType="centerCrop" android:padding="5dp"
+                                android:padding="5dp"
+                                android:scaleType="centerCrop"
                                 android:src="@drawable/ic_plates" />
 
                             <TextView
@@ -239,8 +241,8 @@
                                 android:id="@+id/imageView5"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
-                                android:padding="5dp"
                                 android:layout_gravity="center"
+                                android:padding="5dp"
                                 android:src="@drawable/ic_jug_2" />
 
                             <TextView
@@ -270,7 +272,8 @@
                                 android:id="@+id/imageView6"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
-                                android:layout_gravity="center" android:padding="5dp"
+                                android:layout_gravity="center"
+                                android:padding="5dp"
                                 android:src="@drawable/ic_tupperware_2" />
 
                             <TextView
@@ -302,7 +305,8 @@
                                 android:id="@+id/imageView7"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
-                                android:layout_gravity="center" android:padding="8dp"
+                                android:layout_gravity="center"
+                                android:padding="8dp"
                                 android:src="@drawable/ic_water_2" />
 
                             <TextView
@@ -333,9 +337,10 @@
 
                             <ImageView
                                 android:id="@+id/imageView8"
-                                android:layout_width="50dp" android:padding="5dp"
+                                android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:layout_gravity="center"
+                                android:padding="5dp"
                                 android:src="@drawable/ic_bucket_2" />
 
                             <TextView
@@ -343,8 +348,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:text="Buckets"
-                            />
+                                android:text="Buckets" />
                         </LinearLayout>
 
 
@@ -466,7 +470,7 @@
             <!--                app:layout_constraintTop_toBottomOf="@+id/linearLayout" />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
 </LinearLayout>

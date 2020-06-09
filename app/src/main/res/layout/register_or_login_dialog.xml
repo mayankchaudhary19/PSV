@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="35dp"
-    android:layout_marginEnd="35dp"
+    android:layout_marginStart="30dp"
+    android:layout_marginEnd="30dp"
     android:background="@drawable/bg_horizontal_scroll_product_outline_box">
 
     <ImageView
@@ -20,14 +20,14 @@
 
     <TextView
         android:id="@+id/registerLoginDilogText"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Just few steps away from your cart!"
-        android:textColor="#000000"
-        app:layout_constraintEnd_toEndOf="@+id/imageView37"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="@+id/imageView37"
+        android:gravity="center"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView37" />
 
     <View

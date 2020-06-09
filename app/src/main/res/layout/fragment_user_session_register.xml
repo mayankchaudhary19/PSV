@@ -6,6 +6,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".UserSession.RegisterFragment">
 
+    <ImageView
+        android:id="@+id/skipLoginImg"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:padding="13dp"
+        android:src="@drawable/ic_cancel"
+        android:tint="#D98E8E8E"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <TextView
         android:id="@+id/company_name"
         android:layout_width="wrap_content"

@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.myapplication.Models.GridProductModel;
 import com.example.myapplication.ProductDetailsActivity;
 import com.example.myapplication.R;
@@ -39,7 +41,7 @@ public class GridProductLayoutAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, final ViewGroup parent) {
+    public View getView(final int position, View convertView, final ViewGroup parent) {
        View view;
        if (convertView==null){
            view= LayoutInflater.from(parent.getContext()).inflate(R.layout.grid_product_layout_item ,null);
@@ -52,13 +54,16 @@ public class GridProductLayoutAdapter extends BaseAdapter {
                @Override
                public void onClick(View v) {
                    Intent productDetailsIntent =new Intent(parent.getContext(), ProductDetailsActivity.class);
+                   productDetailsIntent.putExtra("productId",gridProductModelList.get(position).getProductId());
                    parent.getContext().startActivity(productDetailsIntent);
                }
            });
-           productImage.setImageResource(gridProductModelList.get(position).getProductImage());
+
+           Glide.with(view.getContext()).load(gridProductModelList.get(position).getProductImage()).apply(new RequestOptions().placeholder(R.drawable.square_placeholder)).into(productImage);
+//           productImage.setImageResource(gridProductModelList.get(position).getProductImage());
            productTitle.setText(gridProductModelList.get(position).getProductTitle());
            productSubTitle.setText(gridProductModelList.get(position).getProductSubTitle());
-           productPrice.setText(gridProductModelList.get(position).getProductPrice());
+           productPrice.setText("₹"+  gridProductModelList.get(position).getProductPrice());
        }else{
            view= convertView;
 

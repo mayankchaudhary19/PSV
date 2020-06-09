@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="preloaded_fonts" translatable="false">
-        <item>@font/acme</item>
-        <item>@font/allerta_stencil</item>
-        <item>@font/candal</item>
-        <item>@font/dosis_extralight</item>
-        <item>@font/emilys_candy</item>
-        <item>@font/exo_2_extralight</item>
-        <item>@font/josefin_sans_thin</item>
-        <item>@font/lobster</item>
-        <item>@font/nova_round</item>
+<!--        <item>@font/acme</item>-->
+<!--        <item>@font/allerta_stencil</item>-->
+<!--        <item>@font/candal</item>-->
+<!--        <item>@font/dosis_extralight</item>-->
+<!--        <item>@font/emilys_candy</item>-->
+<!--        <item>@font/exo_2_extralight</item>-->
+<!--        <item>@font/josefin_sans_thin</item>-->
+        <item>@font/kaushan_script</item>
+<!--        <item>@font/lobster</item>-->
+<!--        <item>@font/londrina_outline</item>-->
+        <item>@font/miniver</item>
+<!--        <item>@font/nova_round</item>-->
+<!--        <item>@font/nova_slim</item>-->
+        <item>@font/racing_sans_one</item>
+<!--        <item>@font/seaweed_script</item>-->
     </array>
 </resources>

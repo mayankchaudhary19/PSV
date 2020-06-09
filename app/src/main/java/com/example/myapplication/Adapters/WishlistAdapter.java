@@ -8,6 +8,8 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,6 +21,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.example.myapplication.DBqueries;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.Models.WishlistModel;
 import com.example.myapplication.MyCartActivity;
@@ -33,6 +38,7 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
     private Boolean wishlist;
     private Boolean cartWishlist;
     private Context context;
+    private int  lastPosition=-1;
     public WishlistAdapter(List<WishlistModel> wishlistModelList,Context context,Boolean wishlist,Boolean cartWishlist) {
         this.wishlistModelList = wishlistModelList;
         this.wishlist=wishlist;
@@ -49,13 +55,20 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        int resource=wishlistModelList.get(position).getProductImage();
+        String productId=wishlistModelList.get(position).getProductId();
+        String resource=wishlistModelList.get(position).getProductImage();
         String title=wishlistModelList.get(position).getProductTitle();
         String subtitle=wishlistModelList.get(position).getProductSubtitle();
         String price=wishlistModelList.get(position).getProductPrice();
         String initialPrice=wishlistModelList.get(position).getProductInitialPrice();
-        String discount=wishlistModelList.get(position).getProductDiscount();
-        holder.setData(resource,title,subtitle,price,initialPrice,discount);
+//        String discount=wishlistModelList.get(position).getProductDiscount();
+        holder.setData(productId,resource,title,subtitle,price,initialPrice,position);
+
+       if (lastPosition <position) {
+        Animation animation = AnimationUtils.loadAnimation(holder.itemView.getContext(), R.anim.fade_in);
+        holder.itemView.setAnimation(animation);
+        lastPosition=position;
+    }
     }
 
     @Override
@@ -85,13 +98,28 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
             moveToCart_tv=itemView.findViewById(R.id.move_to_cart_tv);
             wishlistItemLayoutContainer=itemView.findViewById(R.id.wishlistItemLayoutContainer);
         }
-        private void setData(int resource, String title, String subtitle, String price, String initialPrice,String discount){
-            productImage.setImageResource(resource);
+        private void setData(final String productId, String resource, String title, String subtitle, final String price, String initialPrice, final int index){
+//            productImage.setImageResource(resource);
+            Glide.with(itemView.getContext()).load(resource).apply(new RequestOptions().placeholder(R.drawable.square_placeholder)).into(productImage);
             productTitle.setText(title);
             productSubtitle.setText(subtitle);
-            productPrice.setText(price);
-            productInitialPrice.setText(initialPrice);
-            productDiscount.setText(discount);
+            productPrice.setText("₹"+price+"/pc");
+            productInitialPrice.setText("₹"+initialPrice);
+//            productDiscount.setText(discount);
+
+            if (!price.isEmpty()&&!initialPrice.isEmpty()){
+                int intPrice=Integer.parseInt(price);
+                int intInitialPrice=Integer.parseInt(initialPrice);
+                int  productDiscountValue;
+                if (intInitialPrice>intPrice && !initialPrice.equals(" ") && !initialPrice.isEmpty() && !price.equals(" ") && !price.isEmpty()){
+                    productDiscountValue= ((intInitialPrice-intPrice)*100)/intInitialPrice;
+                    productDiscount.setText("("+productDiscountValue+"% OFF)");
+                }
+                else
+                    productDiscount.setText(" ");
+            }
+            else
+                productDiscount.setText(" ");
 
             if(wishlist){
                 deleteFromWishlistBtn.setImageResource(R.drawable.ic_cancel);
@@ -100,7 +128,16 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
                 deleteFromWishlistBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(itemView.getContext(), "delete", Toast.LENGTH_SHORT).show();
+//                        deleteFromWishlistBtn.setEnabled(false);
+                        if (!ProductDetailsActivity.running_wishlist_query) {
+                            if (DBqueries.wishList.contains(productId)) {
+                                ProductDetailsActivity.running_wishlist_query = true;
+                                DBqueries.removeFromWishlist(index, itemView.getContext());
+                                WishlistActivity.wishlistTitle.setText("Wishlist (" + DBqueries.wishList.size() + ")");
+                            }
+                            //todo:else where we can updtae the list id it is already removed also {if (DBqueries.wishList.contains(productId))} this just don't allow clicking if the product is not in the wishlist
+                        }
+//                        Toast.makeText(itemView.getContext(), "delete", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -123,6 +160,7 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
                 wishlistDivider.setVisibility(View.INVISIBLE);
                 moveToCarBtn.setVisibility(View.GONE);
             }
+
             moveToCarBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -134,7 +172,8 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
                 @Override
                 public void onClick(View v) {
                     Intent productDetailsIntent=new Intent(itemView.getContext(), ProductDetailsActivity.class);
-                    //                    itemView.getContext().startActivity(productDetailsIntent);
+                    //                    itemView.getContext().startActivity(productDetailsIntent);\
+                    productDetailsIntent.putExtra("productId",productId);
                     Activity activity = (Activity) itemView.getContext();
                     activity.startActivity(productDetailsIntent);
                     activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
