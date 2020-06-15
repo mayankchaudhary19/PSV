@@ -413,12 +413,17 @@ public class EditAccountActivity extends AppCompatActivity {
                         secondaryPhoneNumber.setError("Invalid Phone Number");
                         return;
                     }
+
                 }
+                String firstNameTxt= firstName.getText().toString();
+                String LastNameTxt= lastName.getText().toString();
+                profileUserName.setText(firstNameTxt+" "+LastNameTxt);
+
                 progress_layout.setVisibility(View.VISIBLE);
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 Map<String, Object> map = new HashMap<>();
-                map.put("firstName", firstName.getText().toString());
-                map.put("lastName", lastName.getText().toString());
+                map.put("firstName", firstNameTxt);
+                map.put("lastName", LastNameTxt);
                 map.put("secondaryPhoneNumber", secondaryPhoneNumber.getText().toString());
                 map.put("postalAddress", postalAddress.getText().toString());
 

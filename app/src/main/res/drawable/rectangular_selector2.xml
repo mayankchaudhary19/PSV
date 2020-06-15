@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/rectangular_selected_indicator"
+    <item android:drawable="@drawable/rectangular_selected_indicator2"
         android:state_selected="true" />
-    <item android:drawable="@drawable/rectangular_indicator"/>
+    <item android:drawable="@drawable/rectangular_indicator2"/>
 </selector>

@@ -91,8 +91,10 @@ public class WishlistActivity extends AppCompatActivity {
         }else {
             loadingDialog.dismiss();
         }
+//        String currentProductId=getIntent().getStringExtra("currentProductId");
+//        Boolean PDtoW=getIntent().getBooleanExtra("PDtoW",false);
 
-        wishlistAdapter=new WishlistAdapter(DBqueries.wishlistModelList,getApplicationContext(),true,false);
+        wishlistAdapter=new WishlistAdapter(DBqueries.wishlistModelList,this,true,false);
 
 
         wishlistItemRecyclerView.setAdapter(wishlistAdapter);
@@ -123,6 +125,7 @@ public class WishlistActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         wishlistTitle.setText("Wishlist ("+DBqueries.wishList.size()+")");
+
 
 
     }

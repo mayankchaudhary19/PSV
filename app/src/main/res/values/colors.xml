@@ -20,6 +20,10 @@
     <color name="yellowIndicator">#FFFFC400</color>
     <color name="greenIndicator">#FF91E35E</color>
 
+<!--    <color name="pinkIndicator">#F48FB1</color>-->
+<!--    <color name="blueIndicator">#90CAF9</color>-->
+<!--    <color name="orangeIndicator">#FFAB91</color>-->
+
 
     <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">#66000000</color>
 

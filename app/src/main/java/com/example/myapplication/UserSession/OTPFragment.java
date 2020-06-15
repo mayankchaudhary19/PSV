@@ -35,9 +35,12 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -259,26 +262,65 @@ public class OTPFragment extends Fragment {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if (task.isSuccessful()){
-                                                    Map<String,Object> listSize =new HashMap<>();
-                                                    listSize.put("wishlistSize",(long)0);
-                                                    firebaseFirestore.collection("Users").document(firebaseAuth.getCurrentUser().getUid())
-                                                            .collection("UserData").document("Wishlist")
-                                                            .set(listSize).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                        @Override
-                                                        public void onComplete(@NonNull Task<Void> task) {
-                                                            if (task.isSuccessful()){
-                                                                Intent mainIntent = new Intent (getContext(), MainActivity.class);
-                                                                startActivity(mainIntent);
-//                                                    disableCloseBtn=false;
-                                                                getActivity().finish();
-                                                            }else{
-                                                                String error = task.getException().getMessage();
-                                                                Toast.makeText(getContext(),error , Toast.LENGTH_SHORT).show();
-                                                                progressBar.setVisibility(View.INVISIBLE);
+                                                    CollectionReference userDataReference= firebaseFirestore.collection("Users").document(firebaseAuth.getCurrentUser().getUid()).collection("UserData");
 
+                                                    ////////////////Maps
+                                                    Map<String,Object> wishListMap =new HashMap<>();
+                                                    wishListMap.put("wishlistSize",(long)0);
+
+                                                    Map<String,Object> ratingsMap =new HashMap<>();
+                                                    ratingsMap.put("ratingListSize",(long)0);
+                                                    ////////////////Maps
+
+                                                    final List<String> documentNames=new ArrayList<>();
+                                                    documentNames.add("Wishlist");
+                                                    documentNames.add("Ratings");
+
+                                                    List<Map<String,Object>> documentFields =new ArrayList<>();
+                                                    documentFields.add(wishListMap);
+                                                    documentFields.add(ratingsMap);
+
+                                                    for (int x=0;x<documentNames.size();x++){
+                                                        final int finalX=x;
+
+                                                        userDataReference.document(documentNames.get(x))
+                                                                .set(documentFields.get(x)).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<Void> task) {
+                                                                if (task.isSuccessful()){
+                                                                    if (finalX==documentNames.size()-1){
+                                                                        Intent mainIntent = new Intent (getContext(), MainActivity.class);
+                                                                        startActivity(mainIntent);
+                                                                        getActivity().finish();
+                                                                    }
+                                                                }else{
+                                                                    String error = task.getException().getMessage();
+                                                                    Toast.makeText(getContext(),error , Toast.LENGTH_SHORT).show();
+                                                                    progressBar.setVisibility(View.INVISIBLE);
+                                                                }
                                                             }
-                                                        }
-                                                    });
+                                                        });
+                                                    }
+
+//                                                    firebaseFirestore.collection("Users").document(firebaseAuth.getCurrentUser().getUid())
+//                                                            .collection("UserData").document("Wishlist")
+//                                                            .set(documentFields).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                                        @Override
+//                                                        public void onComplete(@NonNull Task<Void> task) {
+//                                                            if (task.isSuccessful()){
+//                                                                Intent mainIntent = new Intent (getContext(), MainActivity.class);
+//                                                                startActivity(mainIntent);
+////                                                    disableCloseBtn=false;
+//                                                                getActivity().finish();
+//
+//                                                            }else{
+//                                                                String error = task.getException().getMessage();
+//                                                                Toast.makeText(getContext(),error , Toast.LENGTH_SHORT).show();
+//                                                                progressBar.setVisibility(View.INVISIBLE);
+//
+//                                                            }
+//                                                        }
+//                                                    });
 
                                                 }else{
                                                     String error = task.getException().getMessage();
