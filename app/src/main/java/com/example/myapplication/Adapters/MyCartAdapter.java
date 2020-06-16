@@ -24,6 +24,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.myapplication.Models.MyCartItemModel;
 import com.example.myapplication.R;
 
@@ -73,13 +75,18 @@ public class MyCartAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         switch (myCartItemModelList.get(position).getType()){
             case MyCartItemModel.CART_ITEM:
-                int resource= myCartItemModelList.get(position).getProductImage();
+                String productId= myCartItemModelList.get(position).getProductId();
+                boolean inStock = myCartItemModelList.get(position).isInStock();
+                String resource= myCartItemModelList.get(position).getProductImage();
                 String title= myCartItemModelList.get(position).getProductTitle();
                 String subTitle= myCartItemModelList.get(position).getProductSubtitle();
                 String price= myCartItemModelList.get(position).getProductPrice();
                 String initialPrice= myCartItemModelList.get(position).getProductInitialPrice();
                 String discountAmount= myCartItemModelList.get(position).getProductDiscount();
-                ((CartItemViewHolder)holder).setItemDetails(resource,title,subTitle,price,initialPrice,discountAmount);
+                Long offerApplied=myCartItemModelList.get(position).getOffersApplied();
+                Long couponsApplied=myCartItemModelList.get(position).getCouponsApplied();
+
+                ((CartItemViewHolder)holder).setItemDetails(productId,inStock,resource,title,subTitle,price,initialPrice,discountAmount,offerApplied,couponsApplied);
                 break;
             case MyCartItemModel.TOTAL_AMOUNT:
                 String totalItems= myCartItemModelList.get(position).getTotalItems();
@@ -106,6 +113,9 @@ public class MyCartAdapter extends RecyclerView.Adapter {
         private TextView productPrice;
         private TextView productInitialPrice;
         private TextView productDiscountAmount;
+        private TextView offerApplied;
+        private TextView couponsApplied;
+        private LinearLayout couponRedemptionLayout;
 ////////////
         private int mSelectedIndex = 0;
         private int mSelectedIndex2 = 0;
@@ -116,7 +126,6 @@ public class MyCartAdapter extends RecyclerView.Adapter {
         private Dialog quantityDilog;
         private boolean is123=true;
 ////////////
-//        private TextView couponsApplied;
 
 
         public CartItemViewHolder(@NonNull View itemView) {
@@ -127,15 +136,40 @@ public class MyCartAdapter extends RecyclerView.Adapter {
             productPrice=itemView.findViewById(R.id.product_price);
             productInitialPrice=itemView.findViewById(R.id.product_initial_price);
             productDiscountAmount=itemView.findViewById(R.id.product_discount);
+            offerApplied=itemView.findViewById(R.id.t_v_offer_applied);
+            couponsApplied=itemView.findViewById(R.id.t_v_coupon_applied);
+
+            couponRedemptionLayout = itemView.findViewById(R.id.coupon_redemption_layout);
+
 //////////////////
             spinnerQty = itemView.findViewById(R.id.spinner1);
             spinnerQtyType = itemView.findViewById(R.id.spinner2);
         }
-
-        private void setItemDetails(int resource, String title, String subtitle, final String price, final String initialPrice, String discountAmount){
-            productImage.setImageResource(resource);
+        private void setItemDetails(String productId,boolean inStock, String resource, String title, String subtitle, final String price, final String initialPrice, String discountAmount,Long offerAppliedNo ,Long couponsAppliedNo , final int position){
+//            productImage.setImageResource(resource);
+            Glide.with(itemView.getContext()).load(resource).apply(new RequestOptions().placeholder(R.drawable.square_placeholder)).into(productImage);
             productTitle.setText(title);
             productSubtitle.setText(subtitle);
+            if (inStock) {
+                productPrice.setText(price);
+                productInitialPrice.setText(initialPrice);
+                productDiscountAmount.setText(discountAmount);
+
+                if (couponsAppliedNo > 0) {
+                    couponsApplied.setVisibility(View.VISIBLE);
+                    if (couponsAppliedNo == 1) {
+                        couponsApplied.setText("free " + couponsAppliedNo + " coupen");
+                    } else {
+                        couponsApplied.setText("free " + couponsAppliedNo + " coupens");
+                    }
+                } else {
+                    couponsApplied.setVisibility(View.INVISIBLE);
+                }
+
+            }else{
+
+            }
+
             productPrice.setText(price);
             productInitialPrice.setText(initialPrice);
             productDiscountAmount.setText(discountAmount);

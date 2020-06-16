@@ -117,7 +117,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
     public static boolean ALREADY_ADDED_TO_WISHLIST=false;
     public static  ImageView wishlist_btn;
 
-     //////////////////// buy Now layout
+    public static boolean ALREADY_ADDED_TO_CART=false;
+
+
+    //////////////////// buy Now layout
      private LinearLayout shipping_details_layout,shipping_details_layout_background,address_container;
      private TextView butNowBtn,addtoCartBtn;
      private int count=0;
@@ -352,6 +355,73 @@ public class ProductDetailsActivity extends AppCompatActivity {
                         }
 //                    }
 
+                    if ((boolean) documentSnapshot.get("inStock")){
+                        /////////////////////////////////////click listener
+                        addtoCartBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (currentUser == null) {
+                                    signInDialog.show();
+                                } else {
+                                    if (!running_cart_query) {
+                                        running_cart_query = true;
+                                        if (ALREADY_ADDED_TO_CART) {
+                                            running_cart_query = false;
+                                            Toast.makeText(ProductDetailsActivity.this, "Already added to cart", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Map<String, Object> addProduct = new HashMap<>();
+                                            addProduct.put("product_ID_" + String.valueOf(DBqueries.cartList.size()), productId);
+                                            addProduct.put("list_size", (long) DBqueries.cartList.size() + 1);
+
+                                            firebaseFirestore.collection("USERS").document(currentUser.getUid()).collection("USER_DATA").document("MY_CART")
+                                                    .update(addProduct).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+
+                                                        // abhi agar dekhega to humne  """"DBqueries.cartItemModelList.add(0,""" aisa likha h just 2 line neeche
+                                                        // waha index 0 isliye diya h
+                                                        // taki jo bhi product add kare hum
+                                                        // wo index value 0 ya top ya first position pr hi aaye.......
+                                                        if (DBqueries.cartItemModelList.size() != 0) {
+                                                            DBqueries.cartItemModelList.add(0,new CartItemModel(CartItemModel.CART_ITEM, documentSnapshot.get("product_image_1").toString(),
+                                                                    documentSnapshot.get("product_title").toString(),
+                                                                    (long) documentSnapshot.get("free_coupens"),
+                                                                    documentSnapshot.get("product_price").toString(),
+                                                                    documentSnapshot.get("cutted_price").toString(),
+                                                                    (long) 1,
+                                                                    (long) 0,
+                                                                    (long) 0,
+                                                                    productID,
+                                                                    (boolean) documentSnapshot.get("in_stock")));
+                                                        }
+
+                                                        ALREADY_ADDED_TO_CART = true;
+                                                        DBqueries.cartList.add(productID);
+                                                        Toast.makeText(ProductDetailsActivity.this, "Product added to cart successfully", Toast.LENGTH_SHORT).show();
+                                                        //  addToWishListBtn.setEnabled(true);
+                                                        invalidateOptionsMenu();
+                                                        running_cart_query = false;
+                                                    }
+
+                                                    ////////////////////////
+                                                    else {
+                                                        //addToWishListBtn.setEnabled(true);
+                                                        running_cart_query = false;
+                                                        String error = task.getException().getMessage();
+                                                        Toast.makeText(ProductDetailsActivity.this, error, Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            });
+
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                        /////////////////////////////////////click listener
+                    }
+
 
                 }else{
                     loadingDialog.dismiss();
@@ -398,6 +468,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 //                            wishlist_btn.setImageTintList(getResources().getColorStateList(R.color.lightOrange,null));
                             Map<String,Object> productIdMap=new HashMap<>();
                             productIdMap.put("productId"+ String.valueOf(DBqueries.wishList.size()),productId);
+                            productIdMap.put("wishlistSize",(long) (DBqueries.wishList.size()+1));
 
                             firebaseFirestore.collection("Users").document(FirebaseAuth.getInstance().getUid())
                                     .collection("UserData").document("Wishlist")
@@ -406,14 +477,14 @@ public class ProductDetailsActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()){
 
-                                        Map<String ,Object> updateProductIdMap=new HashMap<>();
-                                        updateProductIdMap.put("wishlistSize",(long) (DBqueries.wishList.size()+1));
-                                        firebaseFirestore.collection("Users").document(FirebaseAuth.getInstance().getUid())
-                                            .collection("UserData").document("Wishlist")
-                                            .update(updateProductIdMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()){
+//                                        Map<String ,Object> updateProductIdMap=new HashMap<>();
+//                                        updateProductIdMap.put("wishlistSize",(long) (DBqueries.wishList.size()+1));
+//                                        firebaseFirestore.collection("Users").document(FirebaseAuth.getInstance().getUid())
+//                                            .collection("UserData").document("Wishlist")
+//                                            .update(updateProductIdMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                        @Override
+//                                        public void onComplete(@NonNull Task<Void> task) {
+//                                            if (task.isSuccessful()){
                                                 if (DBqueries.wishlistModelList.size()!=0){
                                                     DBqueries.wishlistModelList.add(new WishlistModel(
                                                             productId,
@@ -437,23 +508,26 @@ public class ProductDetailsActivity extends AppCompatActivity {
                                                 toast.setGravity(Gravity.BOTTOM, 0, 190);
                                                 toast.show();
 
-                                            }else {
-
-                                                wishlist_btn.setImageTintList(ColorStateList.valueOf(Color.parseColor("#14000000")));
-                                                String error=task.getException().getMessage();
-                                                Toast.makeText(ProductDetailsActivity.this, error, Toast.LENGTH_SHORT).show();
-                                            }
-                                            running_wishlist_query=false;
+//                                            }else {
+//
+//                                                wishlist_btn.setImageTintList(ColorStateList.valueOf(Color.parseColor("#14000000")));
+//                                                String error=task.getException().getMessage();
+//                                                Toast.makeText(ProductDetailsActivity.this, error, Toast.LENGTH_SHORT).show();
+//                                            }
+//                                            running_wishlist_query=false;
 //                                                wishlist_btn.setEnabled(true);
-                                            }
-                                        });
+//                                            }
+//                                        });
                                     }else {
+                                        wishlist_btn.setImageTintList(ColorStateList.valueOf(Color.parseColor("#14000000")));
 //                                        wishlist_btn.setEnabled(true);
-                                        running_wishlist_query=false;
+//                                        running_wishlist_query=false;
                                         String error=task.getException().getMessage();
                                         Toast.makeText(ProductDetailsActivity.this, error, Toast.LENGTH_SHORT).show();
                                 }
-                            }
+                                    running_wishlist_query=false;
+
+                                }
                         });
                     }
                 }
@@ -494,10 +568,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
                         signInDialog.show();
                     } else {
                         if (starPosition != initialRating) {
-                            if (!running_rated_query) {//running_rated_query = false ; here
-                             running_rated_query = true;
+                            if (!running_rated_query) {
+                                running_rated_query = true;
                                 setRating(starPosition);
-
                                 Map<String, Object> updateRating = new HashMap<>();
                                 if (DBqueries.myRatedIds.contains(productId)) {
                                     TextView oldRating = (TextView) ratingsNoContainer.getChildAt(5 - initialRating - 1);
@@ -509,31 +582,31 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
                                     updateRating.put("productRating", calculateAverageRating((long) starPosition - initialRating, true));
 
-//                                    Toast.makeText(ProductDetailsActivity.this, "stage 1 bancho", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(ProductDetailsActivity.this, "updated", Toast.LENGTH_SHORT).show();
 
-                                } else {
+                                } else { //when user has not given any rating to the product
                                     updateRating.put((starPosition + 1) + "Star", (long) documentSnapshot.get(starPosition + 1 + "Star") + 1);
-                                    updateRating.put("productRating", calculateAverageRating((long) starPosition + 1, false)); //user agar pehli baar rating de rha h to update false hoga
+                                    updateRating.put("productRating", calculateAverageRating((long) starPosition + 1, false));
                                     updateRating.put("totalRatings", (long) documentSnapshot.get("totalRatings") + 1);
                                 }
+
+
                                 firebaseFirestore.collection("PRODUCTS")
                                         .document(productId)
                                         .update(updateRating).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
-//                                            Toast.makeText(ProductDetailsActivity.this, "haa haa aagaya bancho andar :)", Toast.LENGTH_SHORT).show();
 
                                             Map<String, Object> myRating = new HashMap<>();
 
                                             if (DBqueries.myRatedIds.contains(productId)) {
                                                 myRating.put("rating" + DBqueries.myRatedIds.indexOf(productId), (long) starPosition + 1);
-                                            } else {
+                                            } else {   //rating 1st time
                                                 myRating.put("ratingListSize", (long) DBqueries.myRatedIds.size() + 1);
                                                 myRating.put("productId" + DBqueries.myRatedIds.size(), productId);
                                                 myRating.put("rating" + DBqueries.myRatedIds.size(), (long) (starPosition + 1));
                                             }
-                                            // ye neeche wali condition tab ki h jab user first time rating deta h product ko
                                             firebaseFirestore.collection("Users")
                                                     .document(currentUser.getUid())
                                                     .collection("UserData")
@@ -544,30 +617,23 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
                                                     if (task.isSuccessful()) {
 
-//                                                        Toast.makeText(ProductDetailsActivity.this, ""+totalRatingValue, Toast.LENGTH_SHORT).show();
                                                         if (DBqueries.myRatedIds.contains(productId)) {
-
                                                             DBqueries.myRating.set(DBqueries.myRatedIds.indexOf(productId), (long) starPosition + 1);
-
                                                             TextView oldRating = (TextView) ratingsNoContainer.getChildAt(5 - initialRating - 1);
                                                             TextView finalRating = (TextView) ratingsNoContainer.getChildAt(5 - starPosition - 1);
-
                                                             finalRating.setText(String.valueOf(Integer.parseInt(finalRating.getText().toString()) + 1));
                                                             oldRating.setText(String.valueOf(Integer.parseInt(oldRating.getText().toString()) - 1));
                                                         } else {
                                                             DBqueries.myRatedIds.add(productId);
                                                             DBqueries.myRating.add((long) (starPosition + 1));
                                                             TextView rating = (TextView) ratingsNoContainer.getChildAt(5 - starPosition - 1);
-
                                                             rating.setText(String.valueOf(Integer.parseInt(rating.getText().toString()) + 1));
-
-
 //                                                            averageRatingMiniView.setText( + ((long) documentSnapshot.get("totalRatings") + 1) + " Ratings");
                                                             totalRatings.setText((long) documentSnapshot.get("totalRatings") + 1 + " Ratings");
                                                             totalRatingsFigure.setText(String.valueOf((long) documentSnapshot.get("totalRatings") + 1));
-
                                                             Toast.makeText(ProductDetailsActivity.this, "Thanks for your feedback!", Toast.LENGTH_SHORT).show();
                                                         }
+
 
                                                         for (int x = 0; x < 5; x++) {
                                                             TextView ratingFigures = (TextView) ratingsNoContainer.getChildAt(x);
@@ -579,6 +645,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
                                                             progressBar.setProgress(Integer.parseInt(ratingFigures.getText().toString()));
                                                         }
+
+
                                                         initialRating = starPosition;
                                                         averageProductRating.setText(calculateAverageRating(0, true));
                                                         averageRatingMiniView.setText(calculateAverageRating(0, true));
@@ -592,7 +660,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 //                                                        }
 
                                                     } else {
-                                                        setRating(initialRating);// agar kuchh process me gadbad ho gayi to initial rating hi wapas set hojayega
+                                                        setRating(initialRating);// if any error occurs set rating as previous rating
                                                         String error = task.getException().getMessage();
                                                         Toast.makeText(ProductDetailsActivity.this, error, Toast.LENGTH_SHORT).show();
                                                     }
@@ -600,7 +668,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
                                                 }
                                             });
                                         } else {
-//                                            Toast.makeText(ProductDetailsActivity.this, "kyu bancho :):):)", Toast.LENGTH_SHORT).show();
                                             running_rated_query = false;
                                             setRating(initialRating);
                                             String error = task.getException().getMessage();
@@ -899,21 +966,16 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private String calculateAverageRating(long currentUserRating, boolean update) {
         Double totalStars = Double.valueOf(0);
         for (int x = 1; x < 6; x++) {
-            TextView ratingNo = (TextView) ratingsNoContainer.getChildAt(5 - x); // multiply by x kiya taki humko pata chale ki kitne users ne stars diya h
+            TextView ratingNo = (TextView) ratingsNoContainer.getChildAt(5 - x); // multiply by x for no. of users who rated the product
             totalStars = totalStars + (Long.parseLong(ratingNo.getText().toString()) * x);
-            // matlab 1 star multiply by uske no.of users, 2 stars multiply by it's users and so on
+            // 1 star multiply by no.of users, 2 stars multiply by it's users and so on
         }
         totalStars = totalStars + currentUserRating;
         if (update) {
-            return String.valueOf(totalStars / Long.parseLong(totalRatingsFigure.getText().toString())).substring(0, 3);
+            return String.valueOf(totalStars / Long.parseLong(totalRatingsFigure.getText().toString())).substring(0, 3);//for already rated product
         } else {
-            return String.valueOf(totalStars / (Long.parseLong(totalRatingsFigure.getText().toString()) + 1)).substring(0, 3);
+            return String.valueOf(totalStars / (Long.parseLong(totalRatingsFigure.getText().toString()) + 1)).substring(0, 3);//for newly rated product
         }
-        // abhi ye if statements isliye banaya h kyuki say jab user first time koi bhi product ko rating de rha h to uss time apan total rating ka value
-        // plus (+1) 1 karenge
-        // coz agar user sirf change kr rha h
-        // say 3 star se 4 star kiya to uss time total ratings to same hi rahegi na
-        // islliye uss time plus one (+1) nhi karenge
     }
 
      public void slideUp(View view){

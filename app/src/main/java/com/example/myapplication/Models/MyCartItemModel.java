@@ -15,32 +15,43 @@ public class MyCartItemModel {
     }
 
     /////////////////cartItem
-    private int productImage;
+
+    private String productId;
+    private boolean inStock;
+    private String productImage;
     private String productTitle;
     private String productSubtitle;
     private String productPrice;
     private String productInitialPrice;
     private String productDiscount;
-    private String  productQuantity;
+    private Long productQuantity;
     private String productQuantityType;
+    private Long offersApplied;
+    private Long couponsApplied;
 
-    public MyCartItemModel(int type, int productImage, String productTitle, String productSubtitle, String productPrice, String productInitialPrice, String productDiscount) {
+
+    public MyCartItemModel(int type, String productId, boolean inStock, String productImage, String productTitle, String productSubtitle, String productPrice, String productInitialPrice, String productDiscount,Long productQuantity,Long offersApplied, Long couponsApplied) {
         this.type = type;
+        this.productId = productId;
+        this.inStock = inStock;
         this.productImage = productImage;
         this.productTitle = productTitle;
         this.productSubtitle = productSubtitle;
         this.productPrice = productPrice;
         this.productInitialPrice = productInitialPrice;
         this.productDiscount = productDiscount;
-//        this.productQuantity = productQuantity;
+        this.productQuantity = productQuantity;
+        this.offersApplied = offersApplied;
+        this.couponsApplied = couponsApplied;
+
 //        this.productQuantityType = productQuantityType;
     }
 
-    public int getProductImage() {
+    public String getProductImage() {
         return productImage;
     }
 
-    public void setProductImage(int productImage) {
+    public void setProductImage(String productImage) {
         this.productImage = productImage;
     }
 
@@ -84,8 +95,48 @@ public class MyCartItemModel {
         this.productDiscount = productDiscount;
     }
 
+    public String getProductId() {
+        return productId;
+    }
 
-//    private int couponApplied;
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
+    public boolean isInStock() {
+        return inStock;
+    }
+
+    public void setInStock(boolean inStock) {
+        this.inStock = inStock;
+    }
+
+    public Long getProductQuantity() {
+        return productQuantity;
+    }
+
+    public void setProductQuantity(Long productQuantity) {
+        this.productQuantity = productQuantity;
+    }
+
+    public Long getOffersApplied() {
+        return offersApplied;
+    }
+
+    public void setOffersApplied(Long offersApplied) {
+        this.offersApplied = offersApplied;
+    }
+
+    public Long getCouponsApplied() {
+        return couponsApplied;
+    }
+
+    public void setCouponsApplied(Long couponsApplied) {
+        this.couponsApplied = couponsApplied;
+    }
+
+
+    //    private int couponApplied;
 //        this.couponApplied = couponApplied;
 //        this.productQuantity = productQuantity;
 //        this.productQuantityType = productQuantityType;

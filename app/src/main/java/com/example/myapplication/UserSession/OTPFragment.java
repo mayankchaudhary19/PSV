@@ -270,15 +270,27 @@ public class OTPFragment extends Fragment {
 
                                                     Map<String,Object> ratingsMap =new HashMap<>();
                                                     ratingsMap.put("ratingListSize",(long)0);
+
+                                                    Map <String,Object> cartMap = new HashMap<>();
+                                                    cartMap.put("cartListSize",(long)0);
+
+                                                    Map <String,Object> myAddressMap = new HashMap<>();
+                                                    myAddressMap.put("addressListSize",(long)0);
                                                     ////////////////Maps
 
                                                     final List<String> documentNames=new ArrayList<>();
                                                     documentNames.add("Wishlist");
                                                     documentNames.add("Ratings");
+                                                    documentNames.add("Cart");
+                                                    documentNames.add("Addresses");
+
 
                                                     List<Map<String,Object>> documentFields =new ArrayList<>();
                                                     documentFields.add(wishListMap);
                                                     documentFields.add(ratingsMap);
+                                                    documentFields.add(cartMap);
+                                                    documentFields.add(myAddressMap);
+
 
                                                     for (int x=0;x<documentNames.size();x++){
                                                         final int finalX=x;

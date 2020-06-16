@@ -13,19 +13,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/product_image"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView23"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
             android:layout_marginStart="14dp"
             android:layout_marginTop="14dp"
             android:layout_marginBottom="14dp"
-            android:background="@drawable/bg_cart_product_outline_box"
-            android:padding="1dp"
+            app:cardCornerRadius="0dp"
+            app:cardElevation="0.5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/sampleproductthree" />
+            app:layout_constraintTop_toTopOf="parent">
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:orientation="horizontal">-->
+
+            <ImageView
+                android:id="@+id/product_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                app:srcCompat="@drawable/unknown1" />
+<!--            </LinearLayout>-->
+        </androidx.cardview.widget.CardView>
+
 
         <TextView
             android:id="@+id/product_title"
@@ -33,13 +47,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
             android:layout_marginTop="12dp"
+            android:layout_marginEnd="14dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="Square Bowl [small size]"
+            android:text="Square Bowl [small size] jdjcen enein jeei jwi"
             android:textColor="#272727"
-            android:textSize="16sp"
+            android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/product_image"
+            app:layout_constraintStart_toEndOf="@+id/cardView23"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -47,8 +62,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
+            android:layout_marginEnd="14dp"
             android:ellipsize="end"
-            android:maxLines="2"
+            android:maxLines="1"
             android:text="Transparent color, with dotted texture"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -120,13 +136,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="24dp"
                 android:layout_gravity="start"
-                android:background="#FAFAFA"
+                android:background="#FFFFFF"
                 android:elevation="0dp"
                 android:gravity="center"
                 android:minWidth="80dp"
                 android:spinnerMode="dropdown"
                 tools:ignore="RtlSymmetry" />
-
+<!--                android:background="#FAFAFA"
+-->
         </FrameLayout>
 
         <ImageView
@@ -134,7 +151,7 @@
             android:layout_width="15dp"
             android:layout_height="match_parent"
             android:layout_gravity="end"
-            android:elevation="3dp"
+            android:elevation="0dp"
             android:src="@drawable/ic_keyboard_arrow_down_black_24dp"
             android:tint="#979797"
             android:translationX="-20dp"
@@ -159,7 +176,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="24dp"
                 android:layout_gravity="start"
-                android:background="#FAFAFA"
+                android:background="#FFFFFF"
                 android:elevation="0dp"
                 android:gravity="center"
                 android:minWidth="80dp"
@@ -192,8 +209,25 @@
             android:text="Coupon Applied"
             android:textColor="@color/sea_green"
             android:textSize="13sp"
-            app:layout_constraintBottom_toBottomOf="@+id/product_image"
-            app:layout_constraintStart_toEndOf="@+id/product_image" />
+            app:layout_constraintBottom_toBottomOf="@+id/cardView23"
+            app:layout_constraintStart_toEndOf="@+id/cardView23" />
+
+        <TextView
+            android:id="@+id/t_v_offer_applied"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="5dp"
+            android:drawableTint="#64B5F6"
+            android:includeFontPadding="false"
+            android:drawableStart="@drawable/ic_local_offer_black_24dp"
+            android:paddingTop="3dp"
+            android:paddingEnd="3dp"
+            android:paddingBottom="3dp"
+            android:text="1 Offer Applied"
+            android:textColor="#64B5F6"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toTopOf="@+id/t_v_coupon_applied"
+            app:layout_constraintStart_toStartOf="@+id/t_v_coupon_applied" />
 
         <View
             android:id="@+id/divider4"
