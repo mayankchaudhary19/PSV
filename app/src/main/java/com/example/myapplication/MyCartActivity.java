@@ -7,6 +7,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -36,8 +37,10 @@ import java.util.List;
 
 public class MyCartActivity extends AppCompatActivity  {
     private TextView cartTitle;
+    private Dialog loadingDialog;
+
     private RecyclerView cartItemRecyclerView ,wishlistCartRecylerView;
-    ;
+    public static MyCartAdapter cartAdapter;
     private int no_of_items;
     private LinearLayout shipping_details_layout,shipping_details_layout_background,address_container;
     private TextView cartContinueBtn;
@@ -87,10 +90,10 @@ public class MyCartActivity extends AppCompatActivity  {
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         cartItemRecyclerView.setLayoutManager(layoutManager);
         List<MyCartItemModel> myCartItemModelList =new ArrayList<>();
-        myCartItemModelList.add(new MyCartItemModel(0,R.drawable.sampleproductone,"Round container [small height] with anti water leakage lid ","Transparent color, with dotted texture","₹150","₹160","[ 10% OFF ]"));
-        myCartItemModelList.add(new MyCartItemModel(0,R.drawable.sampleproductone,"Square Bowl [small size]","Transparent color, with dotted texture","₹170","₹160","₹10"));
-        myCartItemModelList.add(new MyCartItemModel(0,R.drawable.sampleproductone,"Square Bowl [small size]","Transparent color, with dotted texture","₹180","₹160","₹10"));
-        myCartItemModelList.add(new MyCartItemModel(1,"Price ( 3 item )","₹380","₹130","Extra Charges*","250"));
+//        myCartItemModelList.add(new MyCartItemModel(0,R.drawable.sampleproductone,"Round container [small height] with anti water leakage lid ","Transparent color, with dotted texture","₹150","₹160","[ 10% OFF ]"));
+//        myCartItemModelList.add(new MyCartItemModel(0,R.drawable.sampleproductone,"Square Bowl [small size]","Transparent color, with dotted texture","₹170","₹160","₹10"));
+//        myCartItemModelList.add(new MyCartItemModel(0,R.drawable.sampleproductone,"Square Bowl [small size]","Transparent color, with dotted texture","₹180","₹160","₹10"));
+//        myCartItemModelList.add(new MyCartItemModel(1,"Price ( 3 item )","₹380","₹130","Extra Charges*","250"));
 
         MyCartAdapter myCartAdapter =new MyCartAdapter(myCartItemModelList,getApplicationContext());
         no_of_items= myCartItemModelList.size()-1;

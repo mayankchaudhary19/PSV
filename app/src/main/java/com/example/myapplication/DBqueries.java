@@ -351,28 +351,27 @@ public class DBqueries {
                                         if (cartList.size() >= 2){
                                             index = cartList.size() - 2;
                                         }
-                                        cartItemModelList.add(index, new MyCartItemModel(
-                                                productId,
-                                                MyCartItemModel.CART_ITEM,task.getResult().get("productImage1").toString(),
+                                        cartItemModelList.add(index, new MyCartItemModel(MyCartItemModel.CART_ITEM,
+                                                productId, (boolean) task.getResult().get("inStock"),
+                                                task.getResult().get("productImage1").toString(),
                                                 task.getResult().get("productTitle").toString(),
-                                                (long) task.getResult().get("freeCoupens"),
-                                                task.getResult().get("product_price").toString(),
-                                                task.getResult().get("cutted_price").toString(),
-                                                (long)1,
-                                                (long)0,
-                                                (long)0,
+                                                task.getResult().get("productSubtitle").toString(),
+                                                task.getResult().get("productPrice").toString(),
+                                                task.getResult().get("productInitialPrice").toString(),
+                                                (long)1,    //couponAvailableNoInLayout
+                                                (long)0,   //offerApplied
+                                                (long) task.getResult().get("freeCoupons")
+                                                ));
 
-                                                (boolean) task.getResult().get("in_stock")));
-
-                                        if (cartList.size() == 1){
-                                            cartItemModelList.add(new MyCartItemModel(MyCartItemModel.TOTAL_AMOUNT));
-                                            LinearLayout parent = (LinearLayout) cartTotalAmount.getParent().getParent();
-                                            parent.setVisibility(View.VISIBLE);
-                                        }
+//                                        if (cartList.size() == 1){
+//                                            cartItemModelList.add(new MyCartItemModel(MyCartItemModel.TOTAL_AMOUNT));
+//                                            LinearLayout parent = (LinearLayout) cartTotalAmount.getParent().getParent();
+//                                            parent.setVisibility(View.VISIBLE);
+//                                        }
                                         if (cartList.size() == 0 ){
                                             cartItemModelList.clear();
                                         }
-                                        MyCartFragment.cartAdapter.notifyDataSetChanged();
+                                        MyCartActivity.cartAdapter.notifyDataSetChanged();
 
                                     } else {
                                         String error = task.getException().getMessage();

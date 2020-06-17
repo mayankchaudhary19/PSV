@@ -28,9 +28,11 @@ public class MyCartItemModel {
     private String productQuantityType;
     private Long offersApplied;
     private Long couponsApplied;
+    private Long freeCouponsAvailable;
 
 
-    public MyCartItemModel(int type, String productId, boolean inStock, String productImage, String productTitle, String productSubtitle, String productPrice, String productInitialPrice, String productDiscount,Long productQuantity,Long offersApplied, Long couponsApplied) {
+
+    public MyCartItemModel(int type, String productId, boolean inStock, String productImage, String productTitle, String productSubtitle, String productPrice, String productInitialPrice,Long productQuantity,Long offersApplied,Long freeCoupons) {
         this.type = type;
         this.productId = productId;
         this.inStock = inStock;
@@ -39,10 +41,11 @@ public class MyCartItemModel {
         this.productSubtitle = productSubtitle;
         this.productPrice = productPrice;
         this.productInitialPrice = productInitialPrice;
-        this.productDiscount = productDiscount;
+//        this.productDiscount = productDiscount;
         this.productQuantity = productQuantity;
         this.offersApplied = offersApplied;
         this.couponsApplied = couponsApplied;
+        this.freeCouponsAvailable=freeCoupons;
 
 //        this.productQuantityType = productQuantityType;
     }
@@ -87,13 +90,13 @@ public class MyCartItemModel {
         this.productInitialPrice = productInitialPrice;
     }
 
-    public String getProductDiscount() {
-        return productDiscount;
-    }
-
-    public void setProductDiscount(String productDiscount) {
-        this.productDiscount = productDiscount;
-    }
+//    public String getProductDiscount() {
+//        return productDiscount;
+//    }
+//
+//    public void setProductDiscount(String productDiscount) {
+//        this.productDiscount = productDiscount;
+//    }
 
     public String getProductId() {
         return productId;
@@ -126,15 +129,22 @@ public class MyCartItemModel {
     public void setOffersApplied(Long offersApplied) {
         this.offersApplied = offersApplied;
     }
+//
+//    public Long getCouponsApplied() {
+//        return couponsApplied;
+//    }
+//
+//    public void setCouponsApplied(Long couponsApplied) {
+//        this.couponsApplied = couponsApplied;
+//    }
 
-    public Long getCouponsApplied() {
-        return couponsApplied;
+    public Long getFreeCouponsAvailable() {
+        return freeCouponsAvailable;
     }
 
-    public void setCouponsApplied(Long couponsApplied) {
-        this.couponsApplied = couponsApplied;
+    public void setFreeCouponsAvailable(Long freeCouponsAvailable) {
+        this.freeCouponsAvailable = freeCouponsAvailable;
     }
-
 
     //    private int couponApplied;
 //        this.couponApplied = couponApplied;
