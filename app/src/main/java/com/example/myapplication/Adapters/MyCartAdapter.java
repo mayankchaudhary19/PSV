@@ -25,11 +25,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.myapplication.DBqueries;
 import com.example.myapplication.Models.MyCartItemModel;
+import com.example.myapplication.ProductDetailsActivity;
 import com.example.myapplication.R;
 
 import java.util.ArrayList;
@@ -40,7 +43,6 @@ public class MyCartAdapter extends RecyclerView.Adapter {
     private int lastPosition = -1;
     private TextView cartTotalAmount;
     Context context;
-//    private
 
     public MyCartAdapter(List<MyCartItemModel> myCartItemModelList,Context context){
         this.myCartItemModelList = myCartItemModelList;
@@ -75,7 +77,6 @@ public class MyCartAdapter extends RecyclerView.Adapter {
     }
 
 
-
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         switch (myCartItemModelList.get(position).getType()){
@@ -87,12 +88,11 @@ public class MyCartAdapter extends RecyclerView.Adapter {
                 String subTitle= myCartItemModelList.get(position).getProductSubtitle();
                 String price= myCartItemModelList.get(position).getProductPrice();
                 String initialPrice= myCartItemModelList.get(position).getProductInitialPrice();
-//                String discountAmount= myCartItemModelList.get(position).getProductDiscount();
                 Long offerApplied=myCartItemModelList.get(position).getOffersApplied();
                 Long couponAvailableNo=myCartItemModelList.get(position).getFreeCouponsAvailable();
 //                Long couponsApplied=myCartItemModelList.get(position).getCouponApplied();
 
-                ((CartItemViewHolder)holder).setItemDetails(productId,inStock,resource,title,subTitle,price,initialPrice,offerApplied,couponAvailableNo,position);
+                ((CartItemViewHolder)holder).setItemDetails(productId,inStock,resource,title,subTitle,price,initialPrice,couponAvailableNo,offerApplied,position);
                 break;
             case MyCartItemModel.TOTAL_AMOUNT:
                 String totalItems= myCartItemModelList.get(position).getTotalItems();
@@ -126,7 +126,7 @@ public class MyCartAdapter extends RecyclerView.Adapter {
         private TextView productDiscountAmount;
         private TextView offerApplied;
         private TextView couponsApplied,freeCouponsAvailable;
-        private LinearLayout couponRedemptionLayout;
+        private ConstraintLayout couponRedemptionLayout;
 ////////////
         private int mSelectedIndex = 0;
         private int mSelectedIndex2 = 0;
@@ -135,7 +135,7 @@ public class MyCartAdapter extends RecyclerView.Adapter {
         private String specifiedQuantity;
         private Spinner spinnerQty,spinnerQtyType;
         private Dialog quantityDialog;
-        private Button saveForLaterBtn,removeBtn;
+        private TextView saveForLaterBtn,removeBtn;
 
         private boolean is123=true;
 ////////////
@@ -172,7 +172,7 @@ public class MyCartAdapter extends RecyclerView.Adapter {
                 productInitialPrice.setVisibility(View.VISIBLE);
 
                 productPrice.setText("₹"+price+"/pc");
-                productPrice.setTextColor(Color.parseColor("#383838 "));
+                productPrice.setTextColor(Color.parseColor("#383838"));
                 productInitialPrice.setText("₹"+initialPrice);
 
                 if (!price.isEmpty()&&!initialPrice.isEmpty()){
@@ -200,8 +200,8 @@ public class MyCartAdapter extends RecyclerView.Adapter {
                         freeCouponsAvailable.setText(couponAvailableNo + " Coupons Available");
                     }
                 } else {
-                    couponRedemptionLayout.setVisibility(View.INVISIBLE);
-                    freeCouponsAvailable.setVisibility(View.INVISIBLE);
+                    couponRedemptionLayout.setVisibility(View.GONE);
+                    freeCouponsAvailable.setVisibility(View.GONE);
                 }
 
                 if (offerAppliedNo > 0) {
@@ -407,17 +407,17 @@ public class MyCartAdapter extends RecyclerView.Adapter {
                 });
 
                 final List<String> list2 = new ArrayList<String>();
-                list2.add("Piece [1]");
-                list2.add("Pieces [3]");
-                list2.add("Pieces [6]");
-                list2.add("Dozen [12]");
-                list2.add("Gross [144]");
+                list2.add(" Piece [1]");
+                list2.add(" Pieces [3]");
+                list2.add(" Pieces [6]");
+                list2.add(" Dozen [12]");
+                list2.add(" Gross [144]");
 
                 final ArrayAdapter<String> quantityTypeAdapter = new ArrayAdapter<String>(context, R.layout.spinner_text2, list2) {
                     public View getView(int position, View convertView, ViewGroup parent) {
                         View v = super.getView(position, convertView, parent);
                         ((TextView) v).setTextSize(14);
-                        ((TextView) v).setGravity(Gravity.CENTER);
+                        ((TextView) v).setGravity(Gravity.START);
                         v.setPadding(30,2,0,5);
                         return v;
                     }
@@ -425,7 +425,7 @@ public class MyCartAdapter extends RecyclerView.Adapter {
                     public View getDropDownView(final int position, View convertView, ViewGroup parent) {
 
                         View v = super.getDropDownView(position, convertView, parent);
-                        ((TextView) v).setGravity(Gravity.CENTER);
+                        ((TextView) v).setGravity(Gravity.START);
                         v.setPadding(30,0,0,5);
                         ((TextView) v).setWidth(250);
 //                    ((TextView) v).setHeight(62);
@@ -469,6 +469,16 @@ public class MyCartAdapter extends RecyclerView.Adapter {
                 couponRedemptionLayout.setVisibility(View.GONE);
 
             }
+            removeBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(!ProductDetailsActivity.running_cart_query){
+                        ProductDetailsActivity.running_cart_query = true;
+
+                        DBqueries.removeFromCart(position,itemView.getContext(),cartTotalAmount);
+                    }
+                }
+            });
 
 //            productPrice.setText(price);
 //            productInitialPrice.setText(initialPrice);
@@ -479,8 +489,6 @@ public class MyCartAdapter extends RecyclerView.Adapter {
         }
 
     }
-
-
 
     class CartTotalPriceViewHolder extends RecyclerView.ViewHolder{
 

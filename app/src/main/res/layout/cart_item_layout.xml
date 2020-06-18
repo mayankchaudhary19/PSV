@@ -21,15 +21,15 @@
             android:layout_marginTop="14dp"
             android:layout_marginBottom="14dp"
             app:cardCornerRadius="0dp"
-            app:cardElevation="0.5dp"
+            app:cardElevation="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:orientation="horizontal">-->
+            <!--            <LinearLayout-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="match_parent"-->
+            <!--                android:orientation="horizontal">-->
 
             <ImageView
                 android:id="@+id/product_image"
@@ -37,7 +37,7 @@
                 android:layout_height="match_parent"
 
                 app:srcCompat="@drawable/unknown1" />
-<!--            </LinearLayout>-->
+            <!--            </LinearLayout>-->
         </androidx.cardview.widget.CardView>
 
 
@@ -125,6 +125,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:elevation="0dp"
+            android:background="#FFFFFF"
             android:gravity="center"
             android:minWidth="80dp"
             android:orientation="horizontal"
@@ -137,6 +138,7 @@
                 android:layout_height="24dp"
                 android:layout_gravity="start"
                 android:background="#FFFFFF"
+                android:backgroundTint="#FFFFFF"
                 android:elevation="0dp"
                 android:gravity="center"
                 android:minWidth="80dp"
@@ -158,12 +160,13 @@
             app:layout_constraintBottom_toBottomOf="@+id/constraintLayout4"
             app:layout_constraintStart_toEndOf="@+id/constraintLayout4"
             app:layout_constraintTop_toTopOf="@+id/constraintLayout4" />
-
+<!--            android:background="#FAFAFA"
+-->
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
-            android:background="#FAFAFA"
+            android:background="#FFFFFF"
             android:gravity="center"
             android:minWidth="80dp"
             android:orientation="horizontal"
@@ -177,6 +180,7 @@
                 android:layout_height="24dp"
                 android:layout_gravity="start"
                 android:background="#FFFFFF"
+                android:backgroundTint="#FFFFFF"
                 android:elevation="0dp"
                 android:gravity="center"
                 android:minWidth="80dp"
@@ -209,6 +213,7 @@
             android:text="Coupon Applied"
             android:textColor="@color/sea_green"
             android:textSize="12sp"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@+id/product_price"
             app:layout_constraintStart_toEndOf="@+id/cardView23" />
 
@@ -273,16 +278,18 @@
 
         <TextView
             android:id="@+id/coupon_redemption_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="21dp"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
+            android:layout_marginTop="13dp"
+            android:gravity="center|start"
+            android:letterSpacing="0.08"
             android:text="2 Coupons Available"
             android:textColor="#FFFFFF"
-            android:textSize="14sp"
-            android:textStyle="bold|italic"
+            android:textSize="17sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/textView84"
+            app:layout_constraintEnd_toStartOf="@+id/coupon_redemptionbutton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -309,11 +316,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="23dp"
-            android:layout_marginBottom="12dp"
-            android:text="Redeem coupon to avail discount"
+            android:layout_marginBottom="16dp"
+            android:letterSpacing="0.1"
+            android:text="*Redeem coupon to avail discount"
             android:textColor="#FFFFFF"
             android:textSize="12sp"
-            android:textStyle="bold|italic"
+            android:textStyle="italic"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 

@@ -79,38 +79,30 @@ public class MyCartActivity extends AppCompatActivity  {
         upArrow.setColorFilter(getResources().getColor(R.color.black_overlay2), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
+        //////loadingDialog
         loadingDialog = new Dialog(this);
         loadingDialog.setContentView(R.layout.loading_progress_dialog);
         loadingDialog.setCancelable(false);
         loadingDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.slider_background));
         loadingDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         loadingDialog.show();
+        //////loadingDialog
 
         cartItemRecyclerView=findViewById(R.id.cart_items_recyclerView);
         cartContinueBtn = findViewById(R.id.cart_continue_btn);
         totalAmount =findViewById(R.id.cart_total_amount);
-
-//        cartItemRecyclerView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(MyCartActivity.this, "jjbj", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
 
 
         LinearLayoutManager layoutManager=new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         cartItemRecyclerView.setLayoutManager(layoutManager);
 
-
         if(DBqueries.cartItemModelList.size() == 0){
-
             DBqueries.cartList.clear();
-            DBqueries.loadCartList(this,loadingDialog,true,new TextView(this),totalAmount);
+            DBqueries.loadCartList(this,loadingDialog,true,new TextView(this));
         }
         else{
-            if (DBqueries.cartItemModelList.get(DBqueries.cartItemModelList.size()-1).getType() == CartItemModel.TOTAL_AMOUNT){
+            if (DBqueries.cartItemModelList.get(DBqueries.cartItemModelList.size()-1).getType() == MyCartItemModel.TOTAL_AMOUNT){
                 LinearLayout parent = (LinearLayout) totalAmount.getParent().getParent();
                 parent.setVisibility(View.VISIBLE);
             }
@@ -119,16 +111,15 @@ public class MyCartActivity extends AppCompatActivity  {
 //        List<MyCartItemModel> myCartItemModelList =new ArrayList<>();
 //        myCartItemModelList.add(new MyCartItemModel(0,R.drawable.sampleproductone,"Round container [small height] with anti water leakage lid ","Transparent color, with dotted texture","₹150","₹160","[ 10% OFF ]"));
 //        myCartItemModelList.add(new MyCartItemModel(0,R.drawable.sampleproductone,"Square Bowl [small size]","Transparent color, with dotted texture","₹170","₹160","₹10"));
-//        myCartItemModelList.add(new MyCartItemModel(0,R.drawable.sampleproductone,"Square Bowl [small size]","Transparent color, with dotted texture","₹180","₹160","₹10"));
-//        myCartItemModelList.add(new MyCartItemModel(1,"Price ( 3 item )","₹380","₹130","Extra Charges*","250"));
 
-        MyCartAdapter myCartAdapter =new MyCartAdapter(myCartItemModelList,getApplicationContext());
-        no_of_items= myCartItemModelList.size()-1;
+        cartAdapter =new MyCartAdapter(DBqueries.cartItemModelList,getApplicationContext());
+
+        no_of_items= DBqueries.cartItemModelList.size()-1;
         cartTitle.setText("Cart ("+no_of_items+")");
 
-        cartItemRecyclerView.setAdapter(myCartAdapter);
-        myCartAdapter.notifyDataSetChanged();
-
+        cartItemRecyclerView.setAdapter(cartAdapter);
+        cartAdapter.notifyDataSetChanged();
+////////wishListDialog
         wishlistCartRecylerView=findViewById(R.id.wishlistCartRecyclerView);
         LinearLayoutManager layoutManager2=new LinearLayoutManager(this);
         layoutManager2.setOrientation(RecyclerView.HORIZONTAL);
@@ -137,12 +128,6 @@ public class MyCartActivity extends AppCompatActivity  {
 
 //        wishlistModelList.add(new WishlistModel(R.drawable.unknown1,"200ml Jug","Easy to handle grip, Pink color","₹1600/pc","₹1800","(10% OFF)"));
 //        wishlistModelList.add(new WishlistModel(R.drawable.unknown3,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
-//        wishlistModelList.add(new WishlistModel(R.drawable.unknown2,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
-//        wishlistModelList.add(new WishlistModel(R.drawable.unknown4,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
-//        wishlistModelList.add(new WishlistModel(R.drawable.unknown5,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
-//        wishlistModelList.add(new WishlistModel(R.drawable.unknown1,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
-//        wishlistModelList.add(new WishlistModel(R.drawable.unknown4,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
-//        wishlistModelList.add(new WishlistModel(R.drawable.unknown2,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
 
         WishlistAdapter wishlistAdapter =new WishlistAdapter(wishlistModelList,getApplicationContext(),false,true);
 
@@ -164,8 +149,8 @@ public class MyCartActivity extends AppCompatActivity  {
 //            }
 //        });
 
+////////wishListDialog
 
-        cartContinueBtn= findViewById(R.id.cart_continue_btn);
         shipping_details_layout=findViewById(R.id.layout_shipping_address);
 
         shipping_details_layout_background=findViewById(R.id.layout_shipping_background);
@@ -173,7 +158,6 @@ public class MyCartActivity extends AppCompatActivity  {
 
         wishlistCartLayout=findViewById(R.id.wishliatCartLayout);
         wishlsitCartBackground=findViewById(R.id.wishlistCartBackground);
-
 
 
         ///////////new Address

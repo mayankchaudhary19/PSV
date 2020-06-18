@@ -40,6 +40,7 @@ import com.example.myapplication.Adapters.ProductImagesAdapter;
 import com.example.myapplication.Adapters.RewardAdapter;
 import com.example.myapplication.Fragments.ProductDescriptionFragment;
 import com.example.myapplication.Fragments.ProductSpecificationFragment;
+import com.example.myapplication.Models.MyCartItemModel;
 import com.example.myapplication.Models.ProductSpecificationModel;
 import com.example.myapplication.Models.RewardModel;
 import com.example.myapplication.Models.WishlistModel;
@@ -331,10 +332,16 @@ public class ProductDetailsActivity extends AppCompatActivity {
                         if (DBqueries.myRating.size() == 0) {
                             DBqueries.loadRatingList(ProductDetailsActivity.this);
                         }
+                        if (DBqueries.cartList.size() == 0) {
+                            DBqueries.loadCartList(ProductDetailsActivity.this, loadingDialog, false,new TextView(ProductDetailsActivity.this));
+                        }
                         if (DBqueries.wishList.size() == 0) {
                             DBqueries.loadWishlist(ProductDetailsActivity.this, loadingDialog, false);
                         } else {
-                            loadingDialog.dismiss(); }
+                            loadingDialog.dismiss();
+                        }
+
+
                     } else {
                         loadingDialog.dismiss();
                     }
@@ -355,56 +362,60 @@ public class ProductDetailsActivity extends AppCompatActivity {
                         }
 //                    }
 
+                    if (DBqueries.cartList.contains(productId)) {
+                        ALREADY_ADDED_TO_CART = true;
+                    } else {
+                        ALREADY_ADDED_TO_CART = false;
+                    }
+
+
+                    //////////////////// add to cart btn
                     if ((boolean) documentSnapshot.get("inStock")){
-                        /////////////////////////////////////click listener
                         addtoCartBtn.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if (currentUser == null) {
+                                if (currentUser==null){
+                                    registerLoginDialogText.setText("Please login to add products in your cart!");
                                     signInDialog.show();
-                                } else {
+                                }
+                                else {
                                     if (!running_cart_query) {
                                         running_cart_query = true;
                                         if (ALREADY_ADDED_TO_CART) {
                                             running_cart_query = false;
-                                            Toast.makeText(ProductDetailsActivity.this, "Already added to cart", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(ProductDetailsActivity.this, "Already In Cart", Toast.LENGTH_SHORT).show();
                                         } else {
                                             Map<String, Object> addProduct = new HashMap<>();
-                                            addProduct.put("product_ID_" + String.valueOf(DBqueries.cartList.size()), productId);
-                                            addProduct.put("list_size", (long) DBqueries.cartList.size() + 1);
+                                            addProduct.put("productId" + String.valueOf(DBqueries.cartList.size()), productId);
+                                            addProduct.put("cartListSize", (long) DBqueries.cartList.size() + 1);
 
-                                            firebaseFirestore.collection("USERS").document(currentUser.getUid()).collection("USER_DATA").document("MY_CART")
+                                            firebaseFirestore.collection("Users").document(currentUser.getUid()).collection("UserData").document("Cart")
                                                     .update(addProduct).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     if (task.isSuccessful()) {
-
-                                                        // abhi agar dekhega to humne  """"DBqueries.cartItemModelList.add(0,""" aisa likha h just 2 line neeche
-                                                        // waha index 0 isliye diya h
-                                                        // taki jo bhi product add kare hum
-                                                        // wo index value 0 ya top ya first position pr hi aaye.......
                                                         if (DBqueries.cartItemModelList.size() != 0) {
-                                                            DBqueries.cartItemModelList.add(0,new CartItemModel(CartItemModel.CART_ITEM, documentSnapshot.get("product_image_1").toString(),
-                                                                    documentSnapshot.get("product_title").toString(),
-                                                                    (long) documentSnapshot.get("free_coupens"),
-                                                                    documentSnapshot.get("product_price").toString(),
-                                                                    documentSnapshot.get("cutted_price").toString(),
-                                                                    (long) 1,
-                                                                    (long) 0,
-                                                                    (long) 0,
-                                                                    productID,
-                                                                    (boolean) documentSnapshot.get("in_stock")));
+                                                            DBqueries.cartItemModelList.add(0,new MyCartItemModel(MyCartItemModel.CART_ITEM,                                             //  index 0 isliye diya h taki jo bhi product add kare hum,wo index value 0 ya top ya first position pr hi aaye.......
+                                                                    productId,
+                                                                    (boolean) documentSnapshot.get("inStock"),
+                                                                    documentSnapshot.get("productImage1").toString(),
+                                                                    documentSnapshot.get("productTitle").toString(),
+                                                                    documentSnapshot.get("productSubtitle").toString(),
+                                                                    documentSnapshot.get("productPrice").toString(),
+                                                                    documentSnapshot.get("productInitialPrice").toString(),
+                                                                    (long)1,    //productQuantity
+                                                                    (long)0,   //offerApplied
+                                                                    (long) documentSnapshot.get("freeCoupons")
+                                                            ));
                                                         }
 
                                                         ALREADY_ADDED_TO_CART = true;
-                                                        DBqueries.cartList.add(productID);
-                                                        Toast.makeText(ProductDetailsActivity.this, "Product added to cart successfully", Toast.LENGTH_SHORT).show();
-                                                        //  addToWishListBtn.setEnabled(true);
-                                                        invalidateOptionsMenu();
+                                                        DBqueries.cartList.add(productId);
+                                                        Toast.makeText(ProductDetailsActivity.this, "Added To Cart", Toast.LENGTH_SHORT).show();
+                                                        invalidateOptionsMenu();//todo: why used this?
                                                         running_cart_query = false;
                                                     }
 
-                                                    ////////////////////////
                                                     else {
                                                         //addToWishListBtn.setEnabled(true);
                                                         running_cart_query = false;
@@ -415,13 +426,20 @@ public class ProductDetailsActivity extends AppCompatActivity {
                                             });
 
                                         }
-                                    }
+                                        /////////////////////////////////////click listener
+                                    }else{
+                                    butNowBtn.setVisibility(View.GONE);
+                                    TextView outOfStock = (TextView) addtoCartBtn;
+                                    outOfStock.setText("Out of Stock");
+                                    outOfStock.setTextColor(getResources().getColor(R.color.lightOrange));
+                                    outOfStock.setCompoundDrawables(null,null,null,null);
                                 }
+                                }
+
                             }
                         });
-                        /////////////////////////////////////click listener
                     }
-
+                    //////////////////// add to cart btn
 
                 }else{
                     loadingDialog.dismiss();
@@ -686,21 +704,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         //////////////////// rating layout
 
 
-         //////////////////// add to cart btn
-         addtoCartBtn.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-                 if (currentUser==null){
-                     registerLoginDialogText.setText("Please login to add products in your cart!");
-                     signInDialog.show();
-                 }
-                 else {
-                     //todo: add to cart
-                 }
 
-                 }
-         });
-         //////////////////// add to cart btn
 
          //////////////////// buy Now layout
 
@@ -891,6 +895,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
             if (DBqueries.myRating.size() == 0) {
                 DBqueries.loadRatingList(ProductDetailsActivity.this);
             }
+            if (DBqueries.cartList.size() == 0) {
+                DBqueries.loadCartList(ProductDetailsActivity.this, loadingDialog, false,new TextView(ProductDetailsActivity.this));
+            }
             if (DBqueries.wishList.size()==0){
                 DBqueries.loadWishlist(ProductDetailsActivity.this,loadingDialog,false);
             }else{
@@ -905,18 +912,22 @@ public class ProductDetailsActivity extends AppCompatActivity {
             setRating(initialRating);
         }
 
-        if (currentUser!=null){
-            if (DBqueries.wishList.contains(productId)){
-                wishlist_btn.setImageTintList(getResources().getColorStateList(R.color.lightOrange,null));
-                ALREADY_ADDED_TO_WISHLIST=true;
+        if (DBqueries.wishList.contains(productId)){
+            wishlist_btn.setImageTintList(getResources().getColorStateList(R.color.lightOrange,null));
+            ALREADY_ADDED_TO_WISHLIST=true;
 
-            }else {
-                wishlist_btn.setImageTintList(ColorStateList.valueOf(Color.parseColor("#14000000")));
-                ALREADY_ADDED_TO_WISHLIST = false;
-
-
-            }
+        }else {
+            wishlist_btn.setImageTintList(ColorStateList.valueOf(Color.parseColor("#14000000")));
+            ALREADY_ADDED_TO_WISHLIST = false;
         }
+
+        if (DBqueries.cartList.contains(productId)) {
+            ALREADY_ADDED_TO_CART = true;
+        } else {
+            ALREADY_ADDED_TO_CART = false;
+        }
+
+
     }
 
 

@@ -44,7 +44,7 @@ public class MyCartItemModel {
 //        this.productDiscount = productDiscount;
         this.productQuantity = productQuantity;
         this.offersApplied = offersApplied;
-        this.couponsApplied = couponsApplied;
+//        this.couponsApplied = couponsApplied;
         this.freeCouponsAvailable=freeCoupons;
 
 //        this.productQuantityType = productQuantityType;
@@ -89,14 +89,6 @@ public class MyCartItemModel {
     public void setProductInitialPrice(String productInitialPrice) {
         this.productInitialPrice = productInitialPrice;
     }
-
-//    public String getProductDiscount() {
-//        return productDiscount;
-//    }
-//
-//    public void setProductDiscount(String productDiscount) {
-//        this.productDiscount = productDiscount;
-//    }
 
     public String getProductId() {
         return productId;
@@ -145,15 +137,9 @@ public class MyCartItemModel {
     public void setFreeCouponsAvailable(Long freeCouponsAvailable) {
         this.freeCouponsAvailable = freeCouponsAvailable;
     }
-
-    //    private int couponApplied;
-//        this.couponApplied = couponApplied;
-//        this.productQuantity = productQuantity;
-//        this.productQuantityType = productQuantityType;
-//, int couponApplied, String productQuantity, String productQuantityType
-
-
     /////////////////cartItem
+
+
 
     /////////////////cartTotalPrice
 

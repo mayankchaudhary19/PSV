@@ -19,6 +19,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.myapplication.Adapters.CategoryAdapter;
 import com.example.myapplication.Adapters.HomePageAdapter;
+import com.example.myapplication.Adapters.MyCartAdapter;
 import com.example.myapplication.Models.CategoryModel;
 import com.example.myapplication.Models.GridProductModel;
 import com.example.myapplication.Models.HomePageModel;
@@ -231,6 +232,7 @@ public class DBqueries {
 
 
     public static void removeFromWishlist(final int index, final Context context ) {
+        final String removedProductId = wishList.get(index);
         wishList.remove(index);
         Map<String, Object> updateWishlist = new HashMap<>();
         for (int x = 0; x < wishList.size(); x++) {
@@ -264,6 +266,7 @@ public class DBqueries {
                     if (ProductDetailsActivity.wishlist_btn!=null) {
                         ProductDetailsActivity.wishlist_btn.setImageTintList(context.getResources().getColorStateList(R.color.lightOrange, null));
                         }
+                    wishList.add(index,removedProductId);
 
                     String error = task.getException().getMessage();
                     Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
@@ -317,13 +320,13 @@ public class DBqueries {
     }
 
 
-    public static void loadCartList(final Context context, final Dialog dialog , final boolean loadProductData, final TextView badgeCount, final TextView cartTotalAmount){
+    public static void loadCartList(final Context context, final Dialog dialog , final boolean loadProductData, final TextView cartTotalAmount){
 
         cartList.clear();
         firebaseFirestore.collection("Users")
                 .document(FirebaseAuth.getInstance().getUid())
                 .collection("UserData")
-                .document("cartListSize")
+                .document("Cart")
                 .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -358,16 +361,16 @@ public class DBqueries {
                                                 task.getResult().get("productSubtitle").toString(),
                                                 task.getResult().get("productPrice").toString(),
                                                 task.getResult().get("productInitialPrice").toString(),
-                                                (long)1,    //couponAvailableNoInLayout
+                                                (long)1,    //productQuantity
                                                 (long)0,   //offerApplied
                                                 (long) task.getResult().get("freeCoupons")
                                                 ));
 
-//                                        if (cartList.size() == 1){
-//                                            cartItemModelList.add(new MyCartItemModel(MyCartItemModel.TOTAL_AMOUNT));
+                                        if (cartList.size() == 1){
+//                                            cartItemModelList.add(new MyCartItemModel(MyCartItemModel.TOTAL_AMOUNT,));
 //                                            LinearLayout parent = (LinearLayout) cartTotalAmount.getParent().getParent();
 //                                            parent.setVisibility(View.VISIBLE);
-//                                        }
+                                        }
                                         if (cartList.size() == 0 ){
                                             cartItemModelList.clear();
                                         }
@@ -381,18 +384,18 @@ public class DBqueries {
                             });
                         }
                     }
-                    if (cartList.size() != 0){
-                        badgeCount.setVisibility(View.VISIBLE);
-                    }
-                    else{
-                        badgeCount.setVisibility(View.INVISIBLE);
-                    }
-                    if( DBqueries.cartList.size() < 99) {
-                        badgeCount.setText(String.valueOf(DBqueries.cartList.size()));
-                    }
-                    else{
-                        badgeCount.setText("99");
-                    }
+//                    if (cartList.size() != 0){
+//                        badgeCount.setVisibility(View.VISIBLE);
+//                    }
+//                    else{
+//                        badgeCount.setVisibility(View.INVISIBLE);
+//                    }
+//                    if( DBqueries.cartList.size() < 99) {
+//                        badgeCount.setText(String.valueOf(DBqueries.cartList.size()));
+//                    }
+//                    else{
+//                        badgeCount.setText("99");
+//                    }
                 }
                 else{
                     String error = task.getException().getMessage();
@@ -404,51 +407,51 @@ public class DBqueries {
     }
 
 
-//    public static void removeFromCart(final int index, final Context context, final TextView cartTotalAmount){
-//
-//        final String removedProductId = cartList.get(index);
-//        cartList.remove(index);
-//        Map<String,Object> updateCartList = new HashMap<>();
-//
-//        for(int x=0; x<cartList.size();x++){
-//            updateCartList.put("product_ID_"+x,cartList.get(x));
-//        }
-//        updateCartList.put("list_size",(long) cartList.size());
-//
-//        firebaseFirestore.collection("USERS")
-//                .document(FirebaseAuth.getInstance().getUid())
-//                .collection("USER_DATA")
-//                .document("MY_CART")
-//                .set(updateCartList).addOnCompleteListener(new OnCompleteListener<Void>() {// set krne se new document create hota h.......
-//            @Override
-//            public void onComplete(@NonNull Task<Void> task) {
-//                if(task.isSuccessful()){
-//
-//                    if(cartItemModelList.size() !=0 ){
-//                        cartItemModelList.remove(index);
-//                        MyCartFragment.cartAdapter.notifyDataSetChanged();
-//                    }
-//                    if (cartList.size() == 0 ){
-//                        LinearLayout parent = (LinearLayout) cartTotalAmount.getParent().getParent();
-//                        parent.setVisibility(View.GONE);
-//                        cartItemModelList.clear();
-//                    }
-//                    Toast.makeText(context, "removed successfully!!", Toast.LENGTH_SHORT).show();
+    public static void removeFromCart(final int index, final Context context, final TextView cartTotalAmount){
+
+        final String removedProductId = cartList.get(index);
+        cartList.remove(index);
+        Map<String,Object> updateCartList = new HashMap<>();
+
+        for(int x=0; x<cartList.size();x++){
+            updateCartList.put("productId"+x,cartList.get(x));
+        }
+        updateCartList.put("cartListSize",(long) cartList.size());
+
+        firebaseFirestore.collection("Users")
+                .document(FirebaseAuth.getInstance().getUid())
+                .collection("UserData")
+                .document("Cart")
+                .set(updateCartList).addOnCompleteListener(new OnCompleteListener<Void>() {// set krne se new document create hota h.......
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+
+                    if(cartItemModelList.size() !=0 ){
+                        cartItemModelList.remove(index);
+                        MyCartActivity.cartAdapter.notifyDataSetChanged();
+                    }
+                    if (cartList.size() == 0 ){
+                        LinearLayout parent = (LinearLayout) cartTotalAmount.getParent().getParent();
+                        parent.setVisibility(View.GONE);
+                        cartItemModelList.clear();
+                    }
+                    Toast.makeText(context, "Removed Successfully!", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    cartList.add(index,removedProductId);
+                    String error = task.getException().getMessage();
+                    Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
+                }
+//                if (ProductDetailsActivity.addToWishListBtn != null) {
+//                    ProductDetailsActivity.addToWishListBtn.setEnabled(true);
 //                }
-//                else{
-//                    cartList.add(index,removedProductId);
-//                    String error = task.getException().getMessage();
-//                    Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
-//                }
-////                if (ProductDetailsActivity.addToWishListBtn != null) {
-////                    ProductDetailsActivity.addToWishListBtn.setEnabled(true);
-////                }
-//
-//                ProductDetailsActivity.running_cart_query = false;
-//            }
-//        });
-//
-//    }
+
+                ProductDetailsActivity.running_cart_query = false;
+            }
+        });
+
+    }
 
 
     public static void clearData(){
