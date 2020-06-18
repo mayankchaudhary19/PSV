@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
@@ -42,8 +43,11 @@ public class MyCartActivity extends AppCompatActivity  {
     private RecyclerView cartItemRecyclerView ,wishlistCartRecylerView;
     public static MyCartAdapter cartAdapter;
     private int no_of_items;
-    private LinearLayout shipping_details_layout,shipping_details_layout_background,address_container;
     private TextView cartContinueBtn;
+    private TextView totalAmount;
+
+    private LinearLayout shipping_details_layout,shipping_details_layout_background,address_container;
+
 
     private LinearLayout new_shipping_details_layout,new_shipping_details_layout_background;
 //    private ConstraintLayout new_shipping_details_layout
@@ -75,7 +79,16 @@ public class MyCartActivity extends AppCompatActivity  {
         upArrow.setColorFilter(getResources().getColor(R.color.black_overlay2), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
+        loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.loading_progress_dialog);
+        loadingDialog.setCancelable(false);
+        loadingDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.slider_background));
+        loadingDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        loadingDialog.show();
+
         cartItemRecyclerView=findViewById(R.id.cart_items_recyclerView);
+        cartContinueBtn = findViewById(R.id.cart_continue_btn);
+        totalAmount =findViewById(R.id.cart_total_amount);
 
 //        cartItemRecyclerView.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -89,7 +102,21 @@ public class MyCartActivity extends AppCompatActivity  {
         LinearLayoutManager layoutManager=new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         cartItemRecyclerView.setLayoutManager(layoutManager);
-        List<MyCartItemModel> myCartItemModelList =new ArrayList<>();
+
+
+        if(DBqueries.cartItemModelList.size() == 0){
+
+            DBqueries.cartList.clear();
+            DBqueries.loadCartList(this,loadingDialog,true,new TextView(this),totalAmount);
+        }
+        else{
+            if (DBqueries.cartItemModelList.get(DBqueries.cartItemModelList.size()-1).getType() == CartItemModel.TOTAL_AMOUNT){
+                LinearLayout parent = (LinearLayout) totalAmount.getParent().getParent();
+                parent.setVisibility(View.VISIBLE);
+            }
+            loadingDialog.dismiss();
+        }
+//        List<MyCartItemModel> myCartItemModelList =new ArrayList<>();
 //        myCartItemModelList.add(new MyCartItemModel(0,R.drawable.sampleproductone,"Round container [small height] with anti water leakage lid ","Transparent color, with dotted texture","₹150","₹160","[ 10% OFF ]"));
 //        myCartItemModelList.add(new MyCartItemModel(0,R.drawable.sampleproductone,"Square Bowl [small size]","Transparent color, with dotted texture","₹170","₹160","₹10"));
 //        myCartItemModelList.add(new MyCartItemModel(0,R.drawable.sampleproductone,"Square Bowl [small size]","Transparent color, with dotted texture","₹180","₹160","₹10"));
