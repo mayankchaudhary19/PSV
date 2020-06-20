@@ -32,19 +32,24 @@ import com.example.myapplication.Adapters.WishlistAdapter;
 import com.example.myapplication.Models.MyCartItemModel;
 import com.example.myapplication.Adapters.MyCartAdapter;
 import com.example.myapplication.Models.WishlistModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MyCartActivity extends AppCompatActivity  {
-    private TextView cartTitle;
+    public static TextView cartTitle;
     private Dialog loadingDialog;
 
     private RecyclerView cartItemRecyclerView ,wishlistCartRecylerView;
     public static MyCartAdapter cartAdapter;
     private int no_of_items;
     private TextView cartContinueBtn;
-    private TextView totalAmount;
+    public static TextView totalAmount;
 
     private LinearLayout shipping_details_layout,shipping_details_layout_background,address_container;
 
@@ -93,15 +98,19 @@ public class MyCartActivity extends AppCompatActivity  {
         totalAmount =findViewById(R.id.cart_total_amount);
 
 
+
         LinearLayoutManager layoutManager=new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         cartItemRecyclerView.setLayoutManager(layoutManager);
 
         if(DBqueries.cartItemModelList.size() == 0){
             DBqueries.cartList.clear();
-            DBqueries.loadCartList(this,loadingDialog,true,new TextView(this));
+            DBqueries.loadCartList(this,loadingDialog,true,totalAmount);
+//            Toast.makeText(this, "1", Toast.LENGTH_SHORT).show();
+
         }
         else{
+//            Toast.makeText(this, "2", Toast.LENGTH_SHORT).show();
             if (DBqueries.cartItemModelList.get(DBqueries.cartItemModelList.size()-1).getType() == MyCartItemModel.TOTAL_AMOUNT){
                 LinearLayout parent = (LinearLayout) totalAmount.getParent().getParent();
                 parent.setVisibility(View.VISIBLE);
@@ -112,13 +121,34 @@ public class MyCartActivity extends AppCompatActivity  {
 //        myCartItemModelList.add(new MyCartItemModel(0,R.drawable.sampleproductone,"Round container [small height] with anti water leakage lid ","Transparent color, with dotted texture","₹150","₹160","[ 10% OFF ]"));
 //        myCartItemModelList.add(new MyCartItemModel(0,R.drawable.sampleproductone,"Square Bowl [small size]","Transparent color, with dotted texture","₹170","₹160","₹10"));
 
-        cartAdapter =new MyCartAdapter(DBqueries.cartItemModelList,getApplicationContext());
-
-        no_of_items= DBqueries.cartItemModelList.size()-1;
-        cartTitle.setText("Cart ("+no_of_items+")");
-
+        cartAdapter =new MyCartAdapter(DBqueries.cartItemModelList,getApplicationContext(),totalAmount);
         cartItemRecyclerView.setAdapter(cartAdapter);
+        cartItemRecyclerView.smoothScrollToPosition(1);
         cartAdapter.notifyDataSetChanged();
+
+
+//        totalAmount.setText(Integer.valueOf(MyCartItemModel.CART_ITEM));
+
+//        FirebaseFirestore firebaseFirestore=FirebaseFirestore.getInstance();
+//        firebaseFirestore.collection("Users").document(FirebaseAuth.getInstance().getUid())
+//                .collection("UserData").document("Cart")
+//                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                if (task.isSuccessful()){
+//                    cartTitle.setText("Cart ("+task.getResult().getLong("cartListSize")+")");
+//                    Toast.makeText(MyCartActivity.this, "set ", Toast.LENGTH_SHORT).show();
+//
+//                }else{
+//                    cartTitle.setText("Cart");
+//                    String error= task.getException().getMessage();
+//                    Toast.makeText(MyCartActivity.this, error, Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
+
+
+
 ////////wishListDialog
         wishlistCartRecylerView=findViewById(R.id.wishlistCartRecyclerView);
         LinearLayoutManager layoutManager2=new LinearLayoutManager(this);
@@ -392,6 +422,15 @@ public class MyCartActivity extends AppCompatActivity  {
 
 //    }
 
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        no_of_items= DBqueries.cartList.size();
+        cartTitle.setText("Cart ("+no_of_items+")");
+
+
+    }
 
     public void slideUp(View view){
         view.setVisibility(View.VISIBLE);

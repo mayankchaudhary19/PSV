@@ -99,22 +99,22 @@ public class WishlistActivity extends AppCompatActivity {
 
         wishlistItemRecyclerView.setAdapter(wishlistAdapter);
         wishlistAdapter.notifyDataSetChanged();
-        FirebaseFirestore firebaseFirestore=FirebaseFirestore.getInstance();
-        firebaseFirestore.collection("Users").document(FirebaseAuth.getInstance().getUid())
-                .collection("UserData").document("Wishlist")
-                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()){
-                    wishlistTitle.setText("Wishlist ("+task.getResult().getLong("wishlistSize")+")");
-
-                }else{
-                    wishlistTitle.setText("Wishlist");
-                    String error= task.getException().getMessage();
-                    Toast.makeText(WishlistActivity.this, error, Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+//        FirebaseFirestore firebaseFirestore=FirebaseFirestore.getInstance();
+//        firebaseFirestore.collection("Users").document(FirebaseAuth.getInstance().getUid())
+//                .collection("UserData").document("Wishlist")
+//                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+//                if (task.isSuccessful()){
+//                    wishlistTitle.setText("Wishlist ("+task.getResult().getLong("wishlistSize")+")");
+//
+//                }else{
+//                    wishlistTitle.setText("Wishlist");
+//                    String error= task.getException().getMessage();
+//                    Toast.makeText(WishlistActivity.this, error, Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
 
 
 //        no_of_items= DBqueries.wishlistModelList.size();

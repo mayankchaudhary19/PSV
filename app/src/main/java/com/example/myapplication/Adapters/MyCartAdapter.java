@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,8 +33,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.myapplication.DBqueries;
 import com.example.myapplication.Models.MyCartItemModel;
+import com.example.myapplication.MyCartActivity;
 import com.example.myapplication.ProductDetailsActivity;
 import com.example.myapplication.R;
+import com.example.myapplication.WishlistActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,9 +47,12 @@ public class MyCartAdapter extends RecyclerView.Adapter {
     private TextView cartTotalAmount;
     Context context;
 
-    public MyCartAdapter(List<MyCartItemModel> myCartItemModelList,Context context){
+
+    public MyCartAdapter(List<MyCartItemModel> myCartItemModelList,Context context,TextView cartTotalAmount){
         this.myCartItemModelList = myCartItemModelList;
         this.context = context;
+        this.cartTotalAmount = cartTotalAmount;
+
     }
 
     @Override
@@ -95,12 +101,49 @@ public class MyCartAdapter extends RecyclerView.Adapter {
                 ((CartItemViewHolder)holder).setItemDetails(productId,inStock,resource,title,subTitle,price,initialPrice,couponAvailableNo,offerApplied,position);
                 break;
             case MyCartItemModel.TOTAL_AMOUNT:
-                String totalItems= myCartItemModelList.get(position).getTotalItems();
-                String totalItemsPrice= myCartItemModelList.get(position).getTotalItemsPrice();
-                String discountItemsPrice= myCartItemModelList.get(position).getDiscountItemsPrice();
-                String shippingCharges= myCartItemModelList.get(position).getShippingCharges();
-                String subTotal= myCartItemModelList.get(position).getSubTotal();
-                ((CartTotalPriceViewHolder)holder).setPriceDetails(totalItems,totalItemsPrice,discountItemsPrice,shippingCharges,subTotal);
+                int totalItems = 0;
+                int totalItemPrice = 0;
+                int discountItemsPrice=0;
+                int discountInitialItemsPrice=0;
+                String couponDiscountPrice;
+                String shippingCharges;
+                int subTotal=0;
+                long couponAvailable=0;
+
+                for (int x = 0; x<myCartItemModelList.size(); x++){
+
+                    if (myCartItemModelList.get(x).getType() == MyCartItemModel.CART_ITEM && myCartItemModelList.get(x).isInStock()){
+                        totalItems++;
+                        totalItemPrice = totalItemPrice + Integer.parseInt(myCartItemModelList.get(x).getProductPrice());
+                        discountInitialItemsPrice=discountInitialItemsPrice+Integer.parseInt(myCartItemModelList.get(x).getProductInitialPrice());
+                        discountItemsPrice=discountInitialItemsPrice-totalItemPrice;
+                        couponAvailable=couponAvailable+Long.parseLong(String.valueOf(myCartItemModelList.get(x).getFreeCouponsAvailable()));
+                    }
+
+                }
+                //todo: amount for delivery
+                if (totalItemPrice > 20000){
+                    shippingCharges = "Free";
+                    subTotal = totalItemPrice;
+                }
+                else{
+                    shippingCharges = "Extra*";
+                    subTotal = totalItemPrice ;
+                }
+                //todo: amount for coupon
+
+                if (couponAvailable!=0){
+                    couponDiscountPrice="Apply Coupon";
+                }else{
+                    couponDiscountPrice="";
+                }
+
+//                String totalItems= myCartItemModelList.get(position).getTotalItems();
+//                String totalItemsPrice= myCartItemModelList.get(position).getTotalItemsPrice();
+//                String discountItemsPrice= myCartItemModelList.get(position).getDiscountItemsPrice();
+//                String shippingCharges= myCartItemModelList.get(position).getShippingCharges();
+//                String subTotal= myCartItemModelList.get(position).getSubTotal();
+                ((CartTotalPriceViewHolder)holder).setPriceDetails(totalItems,totalItemPrice,discountItemsPrice,couponDiscountPrice,shippingCharges,subTotal);
                 break;
             default:
                 return;
@@ -136,7 +179,8 @@ public class MyCartAdapter extends RecyclerView.Adapter {
         private Spinner spinnerQty,spinnerQtyType;
         private Dialog quantityDialog;
         private TextView saveForLaterBtn,removeBtn;
-
+        private FrameLayout productQtySL;
+        private FrameLayout productQtyTypeSL;
         private boolean is123=true;
 ////////////
 
@@ -160,14 +204,28 @@ public class MyCartAdapter extends RecyclerView.Adapter {
 
             removeBtn=itemView.findViewById(R.id.remove_item_btn);
             saveForLaterBtn=itemView.findViewById(R.id.save_for_later_btn);
+
+            productQtySL=itemView.findViewById(R.id.productQtySL);
+            productQtyTypeSL=itemView.findViewById(R.id.productQtyTypeSL);
+
+            int totalItemPrice=0;
+            for (int x = 0; x<myCartItemModelList.size(); x++){
+
+                if (myCartItemModelList.get(x).getType() == MyCartItemModel.CART_ITEM && myCartItemModelList.get(x).isInStock()){
+                    totalItemPrice = totalItemPrice + Integer.parseInt(myCartItemModelList.get(x).getProductPrice());
+                }
+            }
+
+            MyCartActivity.totalAmount.setText("₹"+totalItemPrice);
+
         }
+
         private void setItemDetails(String productId,boolean inStock, String resource, String title, String subtitle, final String price, final String initialPrice, Long couponAvailableNo, Long offerAppliedNo, final int position){
 //            productImage.setImageResource(resource);
             Glide.with(itemView.getContext()).load(resource).apply(new RequestOptions().placeholder(R.drawable.square_placeholder)).into(productImage);
             productTitle.setText(title);
             productSubtitle.setText(subtitle);
             if (inStock) {
-
                 productPrice.setVisibility(View.VISIBLE);
                 productInitialPrice.setVisibility(View.VISIBLE);
 
@@ -266,7 +324,7 @@ public class MyCartAdapter extends RecyclerView.Adapter {
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         mSelectedIndex = position;
                         String item = parent.getItemAtPosition(position).toString();
-                        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+//                        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
 
                         if (position == 0) {
                             is123=true;
@@ -447,7 +505,7 @@ public class MyCartAdapter extends RecyclerView.Adapter {
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         mSelectedIndex2 = position;
                         String item = parent.getItemAtPosition(position).toString();
-                        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
+//                        Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_LONG).show();
                     }
 
                     @Override
@@ -460,12 +518,21 @@ public class MyCartAdapter extends RecyclerView.Adapter {
 
             }else{
                 productPrice.setText("OUT OF STOCK");
-                productPrice.setTextColor(Color.parseColor("#FFAB91"));
+                productPrice.setTextSize(TypedValue.COMPLEX_UNIT_SP,15);
+//                productPrice.setTextColor(Color.parseColor("#FFAB91"));
                 productInitialPrice.setText("");
+//                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(110, 110);
+                productImage.getLayoutParams().height=300;
+//                productImage.getLayoutParams().width=300;
+//                productImage.requestLayout();
+                productTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
+                productSubtitle.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
                 productInitialPrice.setVisibility(View.INVISIBLE);
                 productDiscountAmount.setVisibility(View.INVISIBLE);
-                spinnerQty.setVisibility(View.INVISIBLE);
-                spinnerQtyType.setVisibility(View.INVISIBLE);
+                couponsApplied.setVisibility(View.GONE);
+                offerApplied.setVisibility(View.GONE);
+                productQtySL.setVisibility(View.GONE);
+                productQtyTypeSL.setVisibility(View.GONE);
                 couponRedemptionLayout.setVisibility(View.GONE);
 
             }
@@ -474,8 +541,9 @@ public class MyCartAdapter extends RecyclerView.Adapter {
                 public void onClick(View v) {
                     if(!ProductDetailsActivity.running_cart_query){
                         ProductDetailsActivity.running_cart_query = true;
-
                         DBqueries.removeFromCart(position,itemView.getContext(),cartTotalAmount);
+                        MyCartActivity.cartTitle.setText("Cart (" + DBqueries.cartList.size() + ")");
+
                     }
                 }
             });
@@ -495,6 +563,8 @@ public class MyCartAdapter extends RecyclerView.Adapter {
         private TextView totalItems;
         private TextView totalItemsPrice;
         private TextView totalItemsDiscount;
+        private TextView couponDiscountTxt;
+        private TextView totalCouponDiscount;
         private TextView shippingCharges;
         private TextView subTotal;
 
@@ -503,18 +573,40 @@ public class MyCartAdapter extends RecyclerView.Adapter {
             totalItems=itemView.findViewById(R.id.total_items);
             totalItemsPrice=itemView.findViewById(R.id.total_items_price);
             totalItemsDiscount=itemView.findViewById(R.id.saved_or_discount_price);
+            couponDiscountTxt=itemView.findViewById(R.id.couponDiscountText);
+            totalCouponDiscount=itemView.findViewById(R.id.coupon_discount_price);
             shippingCharges=itemView.findViewById(R.id.shipping_price);
             subTotal=itemView.findViewById(R.id.total_or_subTotal_price);
         }
 
-        private void setPriceDetails(String totalItemText,String totalItemsPriceText,String totalItemsDiscountText,String shippingChargesText,String subTotalText){
-            totalItems.setText(totalItemText);
-            totalItemsPrice.setText(totalItemsPriceText);
-            totalItemsDiscount.setText(totalItemsDiscountText);
-            shippingCharges.setText(shippingChargesText);
-            subTotal.setText(subTotalText);
+        private void setPriceDetails(int totalItemText,int totalItemsPriceText,int totalItemsDiscountText,String totalCouponDiscountText, String  shippingChargesText,int subTotalText){
+            if (totalItemText==1){
+                totalItems.setText("Price ( "+totalItemText+" Item )");
+            }else{
+                totalItems.setText("Price ( "+totalItemText+" Items )");
+            }
+            totalItemsPrice.setText("₹"+totalItemsPriceText);
+            totalItemsDiscount.setText("₹"+totalItemsDiscountText);
+            if (totalCouponDiscountText.equals("")){
+                couponDiscountTxt.setVisibility(View.GONE);
+                totalCouponDiscount.setVisibility(View.GONE);
+            }else{
+                couponDiscountTxt.setVisibility(View.VISIBLE);
+                totalCouponDiscount.setVisibility(View.VISIBLE);
+                totalCouponDiscount.setText(totalCouponDiscountText);
+            }
+            if (!shippingChargesText.equals("Free")||!shippingChargesText.equals("Extra*")){
+                shippingCharges.setText(shippingChargesText);
+            }
+            else{
+                shippingCharges.setText("₹"+shippingChargesText);
+            }
+            subTotal.setText("₹"+subTotalText);
+            cartTotalAmount.setText("₹"+subTotalText);
+
 
         }
+
     }
 }
 

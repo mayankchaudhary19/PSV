@@ -14,10 +14,16 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.StyleSpan;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -383,7 +389,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                                         running_cart_query = true;
                                         if (ALREADY_ADDED_TO_CART) {
                                             running_cart_query = false;
-                                            Toast.makeText(ProductDetailsActivity.this, "Already In Cart", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(ProductDetailsActivity.this, "Already Added To Cart!", Toast.LENGTH_SHORT).show();
                                         } else {
                                             Map<String, Object> addProduct = new HashMap<>();
                                             addProduct.put("productId" + String.valueOf(DBqueries.cartList.size()), productId);
@@ -411,8 +417,13 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
                                                         ALREADY_ADDED_TO_CART = true;
                                                         DBqueries.cartList.add(productId);
-                                                        Toast.makeText(ProductDetailsActivity.this, "Added To Cart", Toast.LENGTH_SHORT).show();
-                                                        invalidateOptionsMenu();//todo: why used this?
+//                                                        if ((boolean) documentSnapshot.get("inStock")){
+//                                                            LinearLayout parent = (LinearLayout) MyCartActivity.totalAmount.getParent().getParent();
+//                                                            parent.setVisibility(View.VISIBLE);
+//                                                        }
+                                                        Toast.makeText(ProductDetailsActivity.this, "Added To Cart!", Toast.LENGTH_SHORT).show();
+
+//                                                        invalidateOptionsMenu();    // why used this? this is for badge icon of cart
                                                         running_cart_query = false;
                                                     }
 
@@ -427,20 +438,33 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
                                         }
                                         /////////////////////////////////////click listener
-                                    }else{
-                                    butNowBtn.setVisibility(View.GONE);
-                                    TextView outOfStock = (TextView) addtoCartBtn;
-                                    outOfStock.setText("Out of Stock");
-                                    outOfStock.setTextColor(getResources().getColor(R.color.lightOrange));
-                                    outOfStock.setCompoundDrawables(null,null,null,null);
-                                }
+                                    }
                                 }
 
                             }
                         });
                     }
                     //////////////////// add to cart btn
+                    else{
+                        String boldText = "Sorry\n";
+                        String normalText = "Product Is Unavailable";
+                        SpannableString str = new SpannableString(boldText + normalText);
+                        str.setSpan(new StyleSpan(Typeface.BOLD), 0, boldText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        str.setSpan(new RelativeSizeSpan(1.3f), 0,6, 0); // set size
+                        str.setSpan(new RelativeSizeSpan(0.9f), 7,28 , 0);// set color
+                        addtoCartBtn.setText(str);
+                        addtoCartBtn.setAllCaps(false);
+                        addtoCartBtn.setGravity(Gravity.START);
+                        addtoCartBtn.setTypeface(null,Typeface.NORMAL);
+                        addtoCartBtn.setPadding(12,0,50,0);
+                        addtoCartBtn.setBackground(null);
+                        TextView outOfStock = (TextView) butNowBtn;
+                        outOfStock.setText("Out of Stock");
+                        outOfStock.setWidth(300);
+                        outOfStock.setTextColor(getResources().getColor(R.color.white));
 
+                        outOfStock.setCompoundDrawables(null,null,null,null);
+                    }
                 }else{
                     loadingDialog.dismiss();
                     String error= task.getException().getMessage();
@@ -915,7 +939,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
         if (DBqueries.wishList.contains(productId)){
             wishlist_btn.setImageTintList(getResources().getColorStateList(R.color.lightOrange,null));
             ALREADY_ADDED_TO_WISHLIST=true;
-
         }else {
             wishlist_btn.setImageTintList(ColorStateList.valueOf(Color.parseColor("#14000000")));
             ALREADY_ADDED_TO_WISHLIST = false;
