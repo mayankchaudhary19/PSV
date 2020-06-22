@@ -339,15 +339,13 @@ public class ProductDetailsActivity extends AppCompatActivity {
                             DBqueries.loadRatingList(ProductDetailsActivity.this);
                         }
                         if (DBqueries.cartList.size() == 0) {
-                            DBqueries.loadCartList(ProductDetailsActivity.this, loadingDialog, false,new TextView(ProductDetailsActivity.this));
+                            DBqueries.loadCartList(ProductDetailsActivity.this, loadingDialog, false);
                         }
                         if (DBqueries.wishList.size() == 0) {
                             DBqueries.loadWishlist(ProductDetailsActivity.this, loadingDialog, false);
                         } else {
                             loadingDialog.dismiss();
                         }
-
-
                     } else {
                         loadingDialog.dismiss();
                     }
@@ -401,8 +399,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     if (task.isSuccessful()) {
                                                         if (DBqueries.cartItemModelList.size() != 0) {
-                                                            DBqueries.cartItemModelList.add(0,new MyCartItemModel(MyCartItemModel.CART_ITEM,                                             //  index 0 isliye diya h taki jo bhi product add kare hum,wo index value 0 ya top ya first position pr hi aaye.......
-                                                                    productId,
+                                                            DBqueries.cartItemModelList.add(new MyCartItemModel(productId,
                                                                     (boolean) documentSnapshot.get("inStock"),
                                                                     documentSnapshot.get("productImage1").toString(),
                                                                     documentSnapshot.get("productTitle").toString(),
@@ -411,8 +408,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                                                                     documentSnapshot.get("productInitialPrice").toString(),
                                                                     (long)1,    //productQuantity
                                                                     (long)0,   //offerApplied
-                                                                    (long) documentSnapshot.get("freeCoupons")
-                                                            ));
+                                                                    (long) documentSnapshot.get("freeCoupons")));
                                                         }
 
                                                         ALREADY_ADDED_TO_CART = true;
@@ -437,7 +433,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
                                             });
 
                                         }
-                                        /////////////////////////////////////click listener
                                     }
                                 }
 
@@ -465,6 +460,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
                         outOfStock.setCompoundDrawables(null,null,null,null);
                     }
+
+
                 }else{
                     loadingDialog.dismiss();
                     String error= task.getException().getMessage();
@@ -920,7 +917,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 DBqueries.loadRatingList(ProductDetailsActivity.this);
             }
             if (DBqueries.cartList.size() == 0) {
-                DBqueries.loadCartList(ProductDetailsActivity.this, loadingDialog, false,new TextView(ProductDetailsActivity.this));
+                DBqueries.loadCartList(ProductDetailsActivity.this, loadingDialog, false);
             }
             if (DBqueries.wishList.size()==0){
                 DBqueries.loadWishlist(ProductDetailsActivity.this,loadingDialog,false);

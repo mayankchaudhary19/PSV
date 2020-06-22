@@ -85,12 +85,11 @@ public class WishlistActivity extends AppCompatActivity {
 //        wishlistModelList.add(new WishlistModel(R.drawable.unknown1,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
 //        wishlistModelList.add(new WishlistModel(R.drawable.unknown4,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
 //        wishlistModelList.add(new WishlistModel(R.drawable.unknown2,"200ml Jug","Easy to handle grip, Pink color","₹170","₹160","₹10"));
-        if (DBqueries.wishlistModelList.size()==0){
-            DBqueries.wishList.clear();
-            DBqueries.loadWishlist(getApplicationContext(),loadingDialog,true);
-        }else {
-            loadingDialog.dismiss();
-        }
+
+
+
+
+
 //        String currentProductId=getIntent().getStringExtra("currentProductId");
 //        Boolean PDtoW=getIntent().getBooleanExtra("PDtoW",false);
 
@@ -125,6 +124,31 @@ public class WishlistActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         wishlistTitle.setText("Wishlist ("+DBqueries.wishList.size()+")");
+        if (DBqueries.wishlistModelList.size()==0){
+            DBqueries.wishList.clear();
+            DBqueries.loadWishlist(getApplicationContext(),loadingDialog,true);
+
+        }if (DBqueries.cartList.size() == 0) {
+            DBqueries.cartList.clear();
+            DBqueries.loadCartList(getApplicationContext(), loadingDialog, false);
+        }
+        else {
+            loadingDialog.dismiss();
+        }
+
+
+
+////            if (DBqueries.myRating.size() == 0) {
+////                DBqueries.loadRatingList(getApplicationContext());
+////            }
+//            if (DBqueries.cartList.size() == 0) {
+//                DBqueries.loadCartList(getApplicationContext(), loadingDialog, false);
+////            }
+////            if (DBqueries.wishList.size() == 0) {
+////                DBqueries.loadWishlist(getApplicationContext(), loadingDialog, false);
+//            } else {
+//                loadingDialog.dismiss();
+//            }
 
 
 

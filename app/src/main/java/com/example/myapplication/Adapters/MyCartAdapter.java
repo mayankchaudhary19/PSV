@@ -42,112 +42,41 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyCartAdapter extends RecyclerView.Adapter {
-    private List<MyCartItemModel> myCartItemModelList;
+    public static List<MyCartItemModel> myCartItemModelList;
     private int lastPosition = -1;
-    private TextView cartTotalAmount;
     Context context;
 
 
-    public MyCartAdapter(List<MyCartItemModel> myCartItemModelList,Context context,TextView cartTotalAmount){
+    public MyCartAdapter(List<MyCartItemModel> myCartItemModelList,Context context){
         this.myCartItemModelList = myCartItemModelList;
         this.context = context;
-        this.cartTotalAmount = cartTotalAmount;
-
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        switch (myCartItemModelList.get(position).getType()){
-            case 0:
-                return MyCartItemModel.CART_ITEM;
-            case 1:
-                return MyCartItemModel.TOTAL_AMOUNT;
-            default:
-                return -1;
-        }
-    }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        switch (viewType){
-            case MyCartItemModel.CART_ITEM:
-                View cartItemView= LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_item_layout,parent,false);
-                return new CartItemViewHolder(cartItemView);
-            case MyCartItemModel.TOTAL_AMOUNT:
-                View cartTotalView= LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_total_amount_layout,parent,false);
-                return new CartTotalPriceViewHolder(cartTotalView);
-            default:
-                return null;
-        }
-    }
 
+        View cartItemView= LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_item_layout,parent,false);
+        return new CartItemViewHolder(cartItemView);
+    }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        switch (myCartItemModelList.get(position).getType()){
-            case MyCartItemModel.CART_ITEM:
-                String productId= myCartItemModelList.get(position).getProductId();
-                boolean inStock = myCartItemModelList.get(position).isInStock();
-                String resource= myCartItemModelList.get(position).getProductImage();
-                String title= myCartItemModelList.get(position).getProductTitle();
-                String subTitle= myCartItemModelList.get(position).getProductSubtitle();
-                String price= myCartItemModelList.get(position).getProductPrice();
-                String initialPrice= myCartItemModelList.get(position).getProductInitialPrice();
-                Long offerApplied=myCartItemModelList.get(position).getOffersApplied();
-                Long couponAvailableNo=myCartItemModelList.get(position).getFreeCouponsAvailable();
+
+        String productId= myCartItemModelList.get(position).getProductId();
+        boolean inStock = myCartItemModelList.get(position).isInStock();
+        String resource= myCartItemModelList.get(position).getProductImage();
+        String title= myCartItemModelList.get(position).getProductTitle();
+        String subTitle= myCartItemModelList.get(position).getProductSubtitle();
+        String price= myCartItemModelList.get(position).getProductPrice();
+        String initialPrice= myCartItemModelList.get(position).getProductInitialPrice();
+        Long offerApplied=myCartItemModelList.get(position).getOffersApplied();
+        Long couponAvailableNo=myCartItemModelList.get(position).getFreeCouponsAvailable();
 //                Long couponsApplied=myCartItemModelList.get(position).getCouponApplied();
 
-                ((CartItemViewHolder)holder).setItemDetails(productId,inStock,resource,title,subTitle,price,initialPrice,couponAvailableNo,offerApplied,position);
-                break;
-            case MyCartItemModel.TOTAL_AMOUNT:
-                int totalItems = 0;
-                int totalItemPrice = 0;
-                int discountItemsPrice=0;
-                int discountInitialItemsPrice=0;
-                String couponDiscountPrice;
-                String shippingCharges;
-                int subTotal=0;
-                long couponAvailable=0;
+        ((CartItemViewHolder)holder).setItemDetails(productId,inStock,resource,title,subTitle,price,initialPrice,couponAvailableNo,offerApplied,position);
 
-                for (int x = 0; x<myCartItemModelList.size(); x++){
-
-                    if (myCartItemModelList.get(x).getType() == MyCartItemModel.CART_ITEM && myCartItemModelList.get(x).isInStock()){
-                        totalItems++;
-                        totalItemPrice = totalItemPrice + Integer.parseInt(myCartItemModelList.get(x).getProductPrice());
-                        discountInitialItemsPrice=discountInitialItemsPrice+Integer.parseInt(myCartItemModelList.get(x).getProductInitialPrice());
-                        discountItemsPrice=discountInitialItemsPrice-totalItemPrice;
-                        couponAvailable=couponAvailable+Long.parseLong(String.valueOf(myCartItemModelList.get(x).getFreeCouponsAvailable()));
-                    }
-
-                }
-                //todo: amount for delivery
-                if (totalItemPrice > 20000){
-                    shippingCharges = "Free";
-                    subTotal = totalItemPrice;
-                }
-                else{
-                    shippingCharges = "Extra*";
-                    subTotal = totalItemPrice ;
-                }
-                //todo: amount for coupon
-
-                if (couponAvailable!=0){
-                    couponDiscountPrice="Apply Coupon";
-                }else{
-                    couponDiscountPrice="";
-                }
-
-//                String totalItems= myCartItemModelList.get(position).getTotalItems();
-//                String totalItemsPrice= myCartItemModelList.get(position).getTotalItemsPrice();
-//                String discountItemsPrice= myCartItemModelList.get(position).getDiscountItemsPrice();
-//                String shippingCharges= myCartItemModelList.get(position).getShippingCharges();
-//                String subTotal= myCartItemModelList.get(position).getSubTotal();
-                ((CartTotalPriceViewHolder)holder).setPriceDetails(totalItems,totalItemPrice,discountItemsPrice,couponDiscountPrice,shippingCharges,subTotal);
-                break;
-            default:
-                return;
-        }
         if (lastPosition < position) {
             Animation animation = AnimationUtils.loadAnimation(holder.itemView.getContext(), R.anim.fade_in);
             holder.itemView.setAnimation(animation);
@@ -184,7 +113,6 @@ public class MyCartAdapter extends RecyclerView.Adapter {
         private boolean is123=true;
 ////////////
 
-
         public CartItemViewHolder(@NonNull View itemView) {
             super(itemView);
             productImage=itemView.findViewById(R.id.product_image);
@@ -208,16 +136,50 @@ public class MyCartAdapter extends RecyclerView.Adapter {
             productQtySL=itemView.findViewById(R.id.productQtySL);
             productQtyTypeSL=itemView.findViewById(R.id.productQtyTypeSL);
 
-            int totalItemPrice=0;
+            int totalItems = 0;
+            int totalItemPrice = 0;
+            int discountItemsPrice=0;
+            int discountInitialItemsPrice=0;
+            long couponAvailable=0;
+
             for (int x = 0; x<myCartItemModelList.size(); x++){
 
-                if (myCartItemModelList.get(x).getType() == MyCartItemModel.CART_ITEM && myCartItemModelList.get(x).isInStock()){
+                if ( myCartItemModelList.get(x).isInStock()){
+                    totalItems++;
                     totalItemPrice = totalItemPrice + Integer.parseInt(myCartItemModelList.get(x).getProductPrice());
+                    discountInitialItemsPrice=discountInitialItemsPrice+Integer.parseInt(myCartItemModelList.get(x).getProductInitialPrice());
+                    discountItemsPrice=discountInitialItemsPrice-totalItemPrice;
+                    couponAvailable=couponAvailable+Long.parseLong(String.valueOf(myCartItemModelList.get(x).getFreeCouponsAvailable()));
                 }
             }
 
-            MyCartActivity.totalAmount.setText("₹"+totalItemPrice);
 
+            if (totalItems==1){
+                MyCartActivity.totalItems.setText("Price ( "+totalItems+" Item )");
+            }else{
+                MyCartActivity.totalItems.setText("Price ( "+totalItems+" Items )");
+            }
+            MyCartActivity.totalItemsPrice.setText("₹"+discountInitialItemsPrice);
+            MyCartActivity.totalItemsDiscount.setText("₹"+discountItemsPrice);
+            //todo: amount for coupon
+            if (couponAvailable!=0){
+                MyCartActivity.totalCouponDiscount.setText("Apply Coupon");
+                MyCartActivity.couponDiscountTxt .setVisibility(View.VISIBLE);
+                MyCartActivity.totalCouponDiscount.setVisibility(View.VISIBLE);
+            }else{
+                MyCartActivity.totalCouponDiscount.setText("");
+                MyCartActivity.couponDiscountTxt .setVisibility(View.GONE);
+                MyCartActivity.totalCouponDiscount.setVisibility(View.GONE);
+            }
+            //todo: amount for delivery
+            if (totalItemPrice > 20000){
+                MyCartActivity.shippingCharges.setText("Free");
+            }
+            else{
+                MyCartActivity.shippingCharges.setText("Extra*");
+            }
+                MyCartActivity.subTotal.setText("₹"+totalItemPrice);
+                MyCartActivity.totalAmount.setText("₹"+totalItemPrice);
         }
 
         private void setItemDetails(String productId,boolean inStock, String resource, String title, String subtitle, final String price, final String initialPrice, Long couponAvailableNo, Long offerAppliedNo, final int position){
@@ -541,284 +503,16 @@ public class MyCartAdapter extends RecyclerView.Adapter {
                 public void onClick(View v) {
                     if(!ProductDetailsActivity.running_cart_query){
                         ProductDetailsActivity.running_cart_query = true;
-                        DBqueries.removeFromCart(position,itemView.getContext(),cartTotalAmount);
+                        DBqueries.removeFromCart(position,itemView.getContext());
                         MyCartActivity.cartTitle.setText("Cart (" + DBqueries.cartList.size() + ")");
+//
 
                     }
                 }
             });
-
-//            productPrice.setText(price);
-//            productInitialPrice.setText(initialPrice);
-//            productDiscountAmount.setText(discountAmount);
-
-
-
-        }
-
-    }
-
-    class CartTotalPriceViewHolder extends RecyclerView.ViewHolder{
-
-        private TextView totalItems;
-        private TextView totalItemsPrice;
-        private TextView totalItemsDiscount;
-        private TextView couponDiscountTxt;
-        private TextView totalCouponDiscount;
-        private TextView shippingCharges;
-        private TextView subTotal;
-
-        public CartTotalPriceViewHolder(@NonNull View itemView) {
-            super(itemView);
-            totalItems=itemView.findViewById(R.id.total_items);
-            totalItemsPrice=itemView.findViewById(R.id.total_items_price);
-            totalItemsDiscount=itemView.findViewById(R.id.saved_or_discount_price);
-            couponDiscountTxt=itemView.findViewById(R.id.couponDiscountText);
-            totalCouponDiscount=itemView.findViewById(R.id.coupon_discount_price);
-            shippingCharges=itemView.findViewById(R.id.shipping_price);
-            subTotal=itemView.findViewById(R.id.total_or_subTotal_price);
-        }
-
-        private void setPriceDetails(int totalItemText,int totalItemsPriceText,int totalItemsDiscountText,String totalCouponDiscountText, String  shippingChargesText,int subTotalText){
-            if (totalItemText==1){
-                totalItems.setText("Price ( "+totalItemText+" Item )");
-            }else{
-                totalItems.setText("Price ( "+totalItemText+" Items )");
-            }
-            totalItemsPrice.setText("₹"+totalItemsPriceText);
-            totalItemsDiscount.setText("₹"+totalItemsDiscountText);
-            if (totalCouponDiscountText.equals("")){
-                couponDiscountTxt.setVisibility(View.GONE);
-                totalCouponDiscount.setVisibility(View.GONE);
-            }else{
-                couponDiscountTxt.setVisibility(View.VISIBLE);
-                totalCouponDiscount.setVisibility(View.VISIBLE);
-                totalCouponDiscount.setText(totalCouponDiscountText);
-            }
-            if (!shippingChargesText.equals("Free")||!shippingChargesText.equals("Extra*")){
-                shippingCharges.setText(shippingChargesText);
-            }
-            else{
-                shippingCharges.setText("₹"+shippingChargesText);
-            }
-            subTotal.setText("₹"+subTotalText);
-            cartTotalAmount.setText("₹"+subTotalText);
-
 
         }
 
     }
 }
 
-
-
-
-
-
-
-//
-//            spinnerLayout.setVisibility(View.GONE);
-//            final String productQty=productQuantity.getText().toString();
-//
-//
-//            if (productQty.equals("Qty:  1")){
-//                qty_spinner_1.setTextColor(Color.parseColor("#FF8A65"));
-//                qty_spinner_2.setTextColor(Color.parseColor("#80000000"));
-//                qty_spinner_3.setTextColor(Color.parseColor("#80000000"));
-//            }else if (productQty.equals("Qty:  2")){
-//                qty_spinner_2.setTextColor(Color.parseColor("#FF8A65"));
-//                qty_spinner_1.setTextColor(Color.parseColor("#80000000"));
-//                qty_spinner_3.setTextColor(Color.parseColor("#80000000"));
-//
-//            }else if  (productQty.equals("Qty:  3")){
-//                qty_spinner_3.setTextColor(Color.parseColor("#FF8A65"));
-//                qty_spinner_2.setTextColor(Color.parseColor("#80000000"));
-//                qty_spinner_1.setTextColor(Color.parseColor("#80000000"));
-//            }
-//            else {
-//                qty_spinner_3.setTextColor(Color.parseColor("#80000000"));
-//                qty_spinner_2.setTextColor(Color.parseColor("#80000000"));
-//                qty_spinner_1.setTextColor(Color.parseColor("#80000000"));
-//
-//            }
-//            productQuantity.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    spinnerLayout.setVisibility(View.VISIBLE);
-//                    spinnerIsOpen=true;
-//                    spinnerLayout.postDelayed(new Runnable() {
-//                        public void run() {
-//                            spinnerIsOpen=false;
-//                            spinnerLayout.setVisibility(View.GONE);
-//                        }
-//                    }, 4000);
-////                    mCallback.onClick(spinnerIsOpen);
-//
-//                    qty_spinner_1.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            qty_spinner_1.setTextColor(Color.parseColor("#FF8A65"));
-//                            qty_spinner_2.setTextColor(Color.parseColor("#80000000"));
-//                            qty_spinner_3.setTextColor(Color.parseColor("#80000000"));
-//                            spinnerLayout.setVisibility(View.GONE);
-//                            productQuantity.setText("Qty:  "+ "1");
-//                            spinnerIsOpen=false;
-//                        }
-//                    });
-//                    qty_spinner_2.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            qty_spinner_2.setTextColor(Color.parseColor("#FF8A65"));
-//                            qty_spinner_1.setTextColor(Color.parseColor("#80000000"));
-//                            qty_spinner_3.setTextColor(Color.parseColor("#80000000"));
-//                            spinnerLayout.setVisibility(View.GONE);
-//                            productQuantity.setText("Qty:  "+ "2");
-//                            spinnerIsOpen=false;
-//                        }
-//                    });
-//                    qty_spinner_3.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            qty_spinner_3.setTextColor(Color.parseColor("#FF8A65"));
-//                            qty_spinner_2.setTextColor(Color.parseColor("#80000000"));
-//                            qty_spinner_1.setTextColor(Color.parseColor("#80000000"));
-//                            spinnerLayout.setVisibility(View.GONE);
-//                            productQuantity.setText("Qty:  "+ "3");
-//                            spinnerIsOpen=false;
-//                        }
-//                    });
-//                    qty_spinner_more.setOnClickListener(new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//                            spinnerLayout.setVisibility(View.GONE);
-//                            spinnerIsOpen=false;
-//
-//                           final Dialog quantityDilog=new Dialog(itemView.getContext());
-//                           quantityDilog.setContentView(R.layout.quantity_dialog);
-//                           quantityDilog.setCancelable(true);
-//                           quantityDilog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-//                           quantityDilog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//                           final EditText quantityNo =quantityDilog.findViewById(R.id.editTextQuantity);
-//                           //todo: quantityNo Code
-//                           TextView cancelBtn=quantityDilog.findViewById(R.id.cancelQuantityDialogButton);
-//                           TextView applyBtn=quantityDilog.findViewById(R.id.applyQuantityDialogButton);
-//
-//                           cancelBtn.setOnClickListener(new View.OnClickListener() {
-//                               @Override
-//                               public void onClick(View v) {
-//                                    quantityDilog.dismiss();
-//                               }
-//                           });
-//                           applyBtn.setOnClickListener(new View.OnClickListener() {
-//                               @Override
-//                               public void onClick(View v) {
-//                                   String specifiedQuantity=quantityNo.getText().toString();
-//                                   productQuantity.setText("Qty:  "+ specifiedQuantity);
-//                                   if (specifiedQuantity.equals("1")){
-//                                       qty_spinner_1.setTextColor(Color.parseColor("#FF8A65"));
-//                                       qty_spinner_2.setTextColor(Color.parseColor("#66000000"));
-//                                       qty_spinner_3.setTextColor(Color.parseColor("#66000000"));
-//                                   }
-//                                   else if (specifiedQuantity.equals("2")){
-//                                       qty_spinner_2.setTextColor(Color.parseColor("#FF8A65"));
-//                                       qty_spinner_1.setTextColor(Color.parseColor("#66000000"));
-//                                       qty_spinner_3.setTextColor(Color.parseColor("#66000000"));
-//                                   }
-//                                   else if (specifiedQuantity.equals("3")){
-//                                       qty_spinner_3.setTextColor(Color.parseColor("#FF8A65"));
-//                                       qty_spinner_2.setTextColor(Color.parseColor("#66000000"));
-//                                       qty_spinner_1.setTextColor(Color.parseColor("#66000000"));
-//
-//                                   }else {
-//                                       qty_spinner_3.setTextColor(Color.parseColor("#66000000"));
-//                                       qty_spinner_2.setTextColor(Color.parseColor("#66000000"));
-//                                       qty_spinner_1.setTextColor(Color.parseColor("#66000000"));
-//
-//                                   }
-//                                   quantityDilog.dismiss();
-//
-//                               }
-//                           });
-//                           quantityDilog.show();
-//                            }
-//                        });
-//                    }
-//                });
-//            cartItemLL.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    if (spinnerIsOpen){
-//                        spinnerLayout.setVisibility(View.GONE);
-//                    }
-//
-//                }
-//            });
-
-
-
-//            productQuantitySpinner.setOnItemSelectedListener(this);
-//            final List<String> quantity = new ArrayList<>();
-//            quantity.add("1");
-//            quantity.add("2");
-//            quantity.add("3");
-//            quantity.add("More");
-//
-//            // Creating adapter for spinner
-//            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, quantity);
-//
-//            // Drop down layout style - list view with radio button
-//            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//
-//            // attaching data adapter to spinner
-//            productQuantitySpinner.setAdapter(dataAdapter);
-////            productQuantitySpinner.onI
-//           productQuantitySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//               @Override
-//               public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                   final String selectedItem = parent.getItemAtPosition(position).toString();
-//                   if(selectedItem.equals("More"))
-//                   {
-//                       final Dialog quantityDilog=new Dialog(itemView.getContext());
-//                       quantityDilog.setContentView(R.layout.quantity_dialog);
-//                       quantityDilog.setCancelable(false);
-//                       final EditText quantityNo =quantityDilog.findViewById(R.id.editTextQuantity);
-//                       //todo: quantityNo Code
-//                       TextView cancelBtn=quantityDilog.findViewById(R.id.cancelQuantityDialogButton);
-//                       TextView applyBtn=quantityDilog.findViewById(R.id.applyQuantityDialogButton);
-//                       cancelBtn.setOnClickListener(new View.OnClickListener() {
-//                           @Override
-//                           public void onClick(View v) {
-//                                quantityDilog.dismiss();
-//                           }
-//                       });
-//                       applyBtn.setOnClickListener(new View.OnClickListener() {
-//                           @Override
-//                           public void onClick(View v) {
-//                               String specifiedQty = quantityNo.getText().toString();
-//                               quantity.add(specifiedQty);
-//
-//
-//                               quantityDilog.dismiss();
-//
-//                           }
-//                       });
-//                       quantityDilog.show();
-//
-//                   }
-//               }
-//
-//               @Override
-//               public void onNothingSelected(AdapterView<?> parent) {
-//
-//               }
-//           });
-//// int coupons applied
-//        }
-//
-//
-//        @Override
-//        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//        }
-//
-//        @Override
-//        public void onNothingSelected(AdapterView<?> parent) {

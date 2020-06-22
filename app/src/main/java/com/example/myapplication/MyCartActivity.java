@@ -43,13 +43,15 @@ import java.util.List;
 
 public class MyCartActivity extends AppCompatActivity  {
     public static TextView cartTitle;
+    public static LinearLayout priceDetailsLL,continueBtnLL;
     private Dialog loadingDialog;
 
     private RecyclerView cartItemRecyclerView ,wishlistCartRecylerView;
     public static MyCartAdapter cartAdapter;
     private int no_of_items;
     private TextView cartContinueBtn;
-    public static TextView totalAmount;
+
+    public static TextView totalAmount, totalItems,totalItemsPrice,totalItemsDiscount,couponDiscountTxt,totalCouponDiscount,shippingCharges,subTotal;
 
     private LinearLayout shipping_details_layout,shipping_details_layout_background,address_container;
 
@@ -97,7 +99,21 @@ public class MyCartActivity extends AppCompatActivity  {
         cartContinueBtn = findViewById(R.id.cart_continue_btn);
         totalAmount =findViewById(R.id.cart_total_amount);
 
+        priceDetailsLL=findViewById(R.id.PriceDetailsLL);
+        continueBtnLL=findViewById(R.id.continueLL);
 
+        totalItems=findViewById(R.id.total_items);
+        totalItemsPrice=findViewById(R.id.total_items_price);
+        totalItemsDiscount=findViewById(R.id.saved_or_discount_price);
+        couponDiscountTxt=findViewById(R.id.couponDiscountText);
+        totalCouponDiscount=findViewById(R.id.coupon_discount_price);
+        shippingCharges=findViewById(R.id.shipping_price);
+        subTotal=findViewById(R.id.total_or_subTotal_price);
+//        totalItemsTxtActivity=findViewById(R.id.totalItemsTxtActivity);
+
+
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+        priceDetailsLL.setAnimation(animation);
 
         LinearLayoutManager layoutManager=new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -105,47 +121,17 @@ public class MyCartActivity extends AppCompatActivity  {
 
         if(DBqueries.cartItemModelList.size() == 0){
             DBqueries.cartList.clear();
-            DBqueries.loadCartList(this,loadingDialog,true,totalAmount);
-//            Toast.makeText(this, "1", Toast.LENGTH_SHORT).show();
-
+            DBqueries.loadCartList(this,loadingDialog,true);
         }
         else{
-//            Toast.makeText(this, "2", Toast.LENGTH_SHORT).show();
-            if (DBqueries.cartItemModelList.get(DBqueries.cartItemModelList.size()-1).getType() == MyCartItemModel.TOTAL_AMOUNT){
-                LinearLayout parent = (LinearLayout) totalAmount.getParent().getParent();
-                parent.setVisibility(View.VISIBLE);
-            }
+            MyCartActivity.continueBtnLL.setVisibility(View.VISIBLE);
+            MyCartActivity.priceDetailsLL.setVisibility(View.VISIBLE);
             loadingDialog.dismiss();
         }
-//        List<MyCartItemModel> myCartItemModelList =new ArrayList<>();
-//        myCartItemModelList.add(new MyCartItemModel(0,R.drawable.sampleproductone,"Round container [small height] with anti water leakage lid ","Transparent color, with dotted texture","₹150","₹160","[ 10% OFF ]"));
-//        myCartItemModelList.add(new MyCartItemModel(0,R.drawable.sampleproductone,"Square Bowl [small size]","Transparent color, with dotted texture","₹170","₹160","₹10"));
 
-        cartAdapter =new MyCartAdapter(DBqueries.cartItemModelList,getApplicationContext(),totalAmount);
+        cartAdapter =new MyCartAdapter(DBqueries.cartItemModelList,getApplicationContext());
         cartItemRecyclerView.setAdapter(cartAdapter);
-        cartItemRecyclerView.smoothScrollToPosition(1);
         cartAdapter.notifyDataSetChanged();
-
-
-//        totalAmount.setText(Integer.valueOf(MyCartItemModel.CART_ITEM));
-
-//        FirebaseFirestore firebaseFirestore=FirebaseFirestore.getInstance();
-//        firebaseFirestore.collection("Users").document(FirebaseAuth.getInstance().getUid())
-//                .collection("UserData").document("Cart")
-//                .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                if (task.isSuccessful()){
-//                    cartTitle.setText("Cart ("+task.getResult().getLong("cartListSize")+")");
-//                    Toast.makeText(MyCartActivity.this, "set ", Toast.LENGTH_SHORT).show();
-//
-//                }else{
-//                    cartTitle.setText("Cart");
-//                    String error= task.getException().getMessage();
-//                    Toast.makeText(MyCartActivity.this, error, Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
 
 
 
@@ -428,6 +414,67 @@ public class MyCartActivity extends AppCompatActivity  {
         super.onStart();
         no_of_items= DBqueries.cartList.size();
         cartTitle.setText("Cart ("+no_of_items+")");
+        if (no_of_items>0){
+            continueBtnLL.setVisibility(View.VISIBLE);
+            priceDetailsLL.setVisibility(View.VISIBLE);
+        } else  {
+            continueBtnLL.setVisibility(View.GONE);
+            priceDetailsLL.setVisibility(View.GONE);
+        }
+
+        int totalItems = 0;
+        int totalItemPrice = 0;
+        int discountItemsPrice=0;
+        int discountInitialItemsPrice=0;
+        long couponAvailable=0;
+
+        for (int x = 0; x<MyCartAdapter.myCartItemModelList.size(); x++){
+
+            if (MyCartAdapter.myCartItemModelList.get(x).isInStock()){
+                totalItems++;
+                totalItemPrice = totalItemPrice + Integer.parseInt(MyCartAdapter.myCartItemModelList.get(x).getProductPrice());
+                discountInitialItemsPrice=discountInitialItemsPrice+Integer.parseInt(MyCartAdapter.myCartItemModelList.get(x).getProductInitialPrice());
+                discountItemsPrice=discountInitialItemsPrice-totalItemPrice;
+                couponAvailable=couponAvailable+Long.parseLong(String.valueOf(MyCartAdapter.myCartItemModelList.get(x).getFreeCouponsAvailable()));
+            }
+        }
+
+
+        if (totalItems==1){
+            MyCartActivity.totalItems.setText("Price ( "+totalItems+" Item )");
+        }else{
+            MyCartActivity.totalItems.setText("Price ( "+totalItems+" Items )");
+        }
+        MyCartActivity.totalItemsPrice.setText("₹"+discountInitialItemsPrice);
+        MyCartActivity.totalItemsDiscount.setText("₹"+discountItemsPrice);
+        //todo: amount for coupon
+        if (couponAvailable!=0){
+            MyCartActivity.totalCouponDiscount.setText("Apply Coupon");
+            MyCartActivity.couponDiscountTxt .setVisibility(View.VISIBLE);
+            MyCartActivity.totalCouponDiscount.setVisibility(View.VISIBLE);
+        }else{
+            MyCartActivity.totalCouponDiscount.setText("");
+            MyCartActivity.couponDiscountTxt .setVisibility(View.GONE);
+            MyCartActivity.totalCouponDiscount.setVisibility(View.GONE);
+        }
+        //todo: amount for delivery
+        if (totalItemPrice > 20000){
+            MyCartActivity.shippingCharges.setText("Free");
+        }
+        else{
+            MyCartActivity.shippingCharges.setText("Extra*");
+        }
+        MyCartActivity.subTotal.setText("₹"+totalItemPrice);
+        MyCartActivity.totalAmount.setText("₹"+totalItemPrice);
+
+
+
+//        MyCartActivity.totalAmount.setText("₹"+totalItemPrice);
+//        if (totalItems==1){
+//            MyCartActivity.totalItemsTxtActivity.setText("Price ( "+totalItemPrice+" Item )");
+//        }else{
+//            MyCartActivity.totalItemsTxtActivity.setText("Price ( "+totalItemPrice+" Items )");
+//        }
 
 
     }

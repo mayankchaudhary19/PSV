@@ -69,6 +69,7 @@
         android:layout_height="32dp"
         android:hapticFeedbackEnabled="true"
         android:padding="10dp"
+        android:clickable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_cancel" />
@@ -126,6 +127,7 @@
         android:orientation="vertical"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
+        android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -135,13 +137,15 @@
         <TextView
             android:id="@+id/move_to_cart_tv"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:drawableStart="@drawable/ic_shopping_cart_3"
             android:drawablePadding="10dp"
+            android:drawableTint="#B3000000"
             android:gravity="center"
-            android:text="Move to cart"
-            android:textColor="#282828" />
+            android:text="Move to Cart"
+            android:textColor="#CC282828"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <View

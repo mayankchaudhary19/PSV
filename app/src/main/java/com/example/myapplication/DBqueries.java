@@ -328,7 +328,7 @@ public class DBqueries {
     }
 
 
-    public static void loadCartList(final Context context, final Dialog dialog , final boolean loadProductData, final TextView cartTotalAmount){
+    public static void loadCartList(final Context context, final Dialog dialog , final boolean loadProductData){
 
         cartList.clear();
         firebaseFirestore.collection("Users")
@@ -341,7 +341,7 @@ public class DBqueries {
                 if(task.isSuccessful()) {
 
                     for (long x = 0; x < (long) task.getResult().get("cartListSize"); x++) {
-                        cartList.add(task.getResult().get("productId" + x).toString());
+                        cartList.add(0,task.getResult().get("productId"+ x).toString());
 
                         if (DBqueries.cartList.contains(ProductDetailsActivity.productId)) {
                             ProductDetailsActivity.ALREADY_ADDED_TO_CART = true;
@@ -357,12 +357,12 @@ public class DBqueries {
                                 @Override
                                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                     if (task.isSuccessful()) {
-                                        int index = 0;
-                                        if (cartList.size() >= 2) {
-                                            index = cartList.size() - 2;
-                                        }
-                                        cartItemModelList.add( index,new MyCartItemModel(MyCartItemModel.CART_ITEM,
-                                                productId, (boolean) task.getResult().get("inStock"),
+//                                        int index = 0;
+//                                        if (cartList.size() >= 2) {
+//                                            index = cartList.size() - 2;
+//                                        }
+                                        cartItemModelList.add(new MyCartItemModel(productId,
+                                                (boolean) task.getResult().get("inStock"),
                                                 task.getResult().get("productImage1").toString(),
                                                 task.getResult().get("productTitle").toString(),
                                                 task.getResult().get("productSubtitle").toString(),
@@ -370,15 +370,14 @@ public class DBqueries {
                                                 task.getResult().get("productInitialPrice").toString(),
                                                 (long) 1,    //productQuantity
                                                 (long) 0,   //offerApplied
-                                                (long) task.getResult().get("freeCoupons")
-                                        ));
+                                                (long) task.getResult().get("freeCoupons")));
 
-                                        if (cartList.size() == 1) {
+//                                        if (cartList.size() == 1) {
 //                                            cartItemModelList.add(new MyCartItemModel(MyCartItemModel.TOTAL_AMOUNT));
 
 //                                            LinearLayout parent = (LinearLayout) cartTotalAmount.getParent().getParent();
 //                                            parent.setVisibility(View.VISIBLE);
-                                        }
+//                                        }
                                         if (cartList.size() == 0) {
                                             cartItemModelList.clear();
                                         }
@@ -394,14 +393,13 @@ public class DBqueries {
                     }
                     if (loadProductData) {
                         if (cartList.size() > 0) {
+                            MyCartActivity.continueBtnLL.setVisibility(View.VISIBLE);
+                            MyCartActivity.priceDetailsLL.setVisibility(View.VISIBLE);
                             MyCartActivity.cartTitle.setText("Cart (" + task.getResult().getLong("cartListSize") + ")");
-                            cartItemModelList.add(new MyCartItemModel(MyCartItemModel.TOTAL_AMOUNT));
-                            LinearLayout parent = (LinearLayout) cartTotalAmount.getParent().getParent();
-                            parent.setVisibility(View.VISIBLE);
                         } else {
-                            MyCartActivity.cartTitle.setText("Cart");
-                            LinearLayout parent = (LinearLayout) cartTotalAmount.getParent().getParent();
-                            parent.setVisibility(View.GONE);
+//                            MyCartActivity.cartTitle.setText("Cart");
+                            MyCartActivity.continueBtnLL.setVisibility(View.GONE);
+                            MyCartActivity.priceDetailsLL.setVisibility(View.GONE);
                         }
                     }
                 }
@@ -415,7 +413,7 @@ public class DBqueries {
     }
 
 
-    public static void removeFromCart(final int index, final Context context, final TextView cartTotalAmount){
+    public static void removeFromCart(final int index, final Context context){
 
         final String removedProductId = cartList.get(index);
         cartList.remove(index);
@@ -438,16 +436,67 @@ public class DBqueries {
                     if(cartItemModelList.size() !=0 ){
                         cartItemModelList.remove(index);
                         MyCartActivity.cartAdapter.notifyDataSetChanged();
+
+                        int totalItems = 0;
+                        int totalItemPrice = 0;
+                        int discountItemsPrice=0;
+                        int discountInitialItemsPrice=0;
+                        long couponAvailable=0;
+
+                        for (int x = 0; x<MyCartAdapter.myCartItemModelList.size(); x++){
+
+                            if ( MyCartAdapter.myCartItemModelList.get(x).isInStock()){
+                                totalItems++;
+                                totalItemPrice = totalItemPrice + Integer.parseInt(MyCartAdapter.myCartItemModelList.get(x).getProductPrice());
+                                discountInitialItemsPrice=discountInitialItemsPrice+Integer.parseInt(MyCartAdapter.myCartItemModelList.get(x).getProductInitialPrice());
+                                discountItemsPrice=discountInitialItemsPrice-totalItemPrice;
+                                couponAvailable=couponAvailable+Long.parseLong(String.valueOf(MyCartAdapter.myCartItemModelList.get(x).getFreeCouponsAvailable()));
+                            }
+                        }
+
+
+                        if (totalItems==1){
+                            MyCartActivity.totalItems.setText("Price ( "+totalItems+" Item )");
+                        }else{
+                            MyCartActivity.totalItems.setText("Price ( "+totalItems+" Items )");
+                        }
+                        MyCartActivity.totalItemsPrice.setText("₹"+discountInitialItemsPrice);
+                        MyCartActivity.totalItemsDiscount.setText("₹"+discountItemsPrice);
+                        //todo: amount for coupon
+                        if (couponAvailable!=0){
+                            MyCartActivity.totalCouponDiscount.setText("Apply Coupon");
+                            MyCartActivity.couponDiscountTxt .setVisibility(View.VISIBLE);
+                            MyCartActivity.totalCouponDiscount.setVisibility(View.VISIBLE);
+                        }else{
+                            MyCartActivity.totalCouponDiscount.setText("");
+                            MyCartActivity.couponDiscountTxt .setVisibility(View.GONE);
+                            MyCartActivity.totalCouponDiscount.setVisibility(View.GONE);
+                        }
+                        //todo: amount for delivery
+                        if (totalItemPrice > 20000){
+                            MyCartActivity.shippingCharges.setText("Free");
+                        }
+                        else{
+                            MyCartActivity.shippingCharges.setText("Extra*");
+                        }
+                        MyCartActivity.subTotal.setText("₹"+totalItemPrice);
+                        MyCartActivity.totalAmount.setText("₹"+totalItemPrice);
+
+
+
                     }
+
                     if (cartList.size() == 0 ){
                         cartItemModelList.clear();
-                        LinearLayout parent = (LinearLayout) cartTotalAmount.getParent().getParent();
-                        parent.setVisibility(View.GONE);
+                        MyCartActivity.continueBtnLL.setVisibility(View.GONE);
+                        MyCartActivity.priceDetailsLL.setVisibility(View.GONE);
                     }
                     Toast.makeText(context, "Removed Successfully!", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     cartList.add(index,removedProductId);
+                    MyCartActivity.continueBtnLL.setVisibility(View.VISIBLE);
+                    MyCartActivity.priceDetailsLL.setVisibility(View.VISIBLE);
                     String error = task.getException().getMessage();
                     Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
                 }

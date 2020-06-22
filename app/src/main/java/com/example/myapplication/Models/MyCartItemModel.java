@@ -2,19 +2,6 @@ package com.example.myapplication.Models;
 
 
 public class MyCartItemModel {
-    public static final int CART_ITEM=0;
-    public static final int TOTAL_AMOUNT=1;
-    private int type;
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    /////////////////cartItem
 
     private String productId;
     private boolean inStock;
@@ -23,17 +10,13 @@ public class MyCartItemModel {
     private String productSubtitle;
     private String productPrice;
     private String productInitialPrice;
-    private String productDiscount;
     private Long productQuantity;
     private String productQuantityType;
     private Long offersApplied;
     private Long couponsApplied;
     private Long freeCouponsAvailable;
 
-
-
-    public MyCartItemModel(int type, String productId, boolean inStock, String productImage, String productTitle, String productSubtitle, String productPrice, String productInitialPrice, Long productQuantity, Long offersApplied, Long freeCoupons) {
-        this.type = type;
+    public MyCartItemModel(String productId, boolean inStock, String productImage, String productTitle, String productSubtitle, String productPrice, String productInitialPrice, Long productQuantity, Long offersApplied, Long freeCouponsAvailable) {
         this.productId = productId;
         this.inStock = inStock;
         this.productImage = productImage;
@@ -41,13 +24,27 @@ public class MyCartItemModel {
         this.productSubtitle = productSubtitle;
         this.productPrice = productPrice;
         this.productInitialPrice = productInitialPrice;
-//        this.productDiscount = productDiscount;
         this.productQuantity = productQuantity;
+//        this.productQuantityType = productQuantityType;
         this.offersApplied = offersApplied;
 //        this.couponsApplied = couponsApplied;
-        this.freeCouponsAvailable=freeCoupons;
-        //todo:productQtyType
-//        this.productQuantityType = productQuantityType;
+        this.freeCouponsAvailable = freeCouponsAvailable;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
+    public boolean isInStock() {
+        return inStock;
+    }
+
+    public void setInStock(boolean inStock) {
+        this.inStock = inStock;
     }
 
     public String getProductImage() {
@@ -90,22 +87,6 @@ public class MyCartItemModel {
         this.productInitialPrice = productInitialPrice;
     }
 
-    public String getProductId() {
-        return productId;
-    }
-
-    public void setProductId(String productId) {
-        this.productId = productId;
-    }
-
-    public boolean isInStock() {
-        return inStock;
-    }
-
-    public void setInStock(boolean inStock) {
-        this.inStock = inStock;
-    }
-
     public Long getProductQuantity() {
         return productQuantity;
     }
@@ -129,81 +110,6 @@ public class MyCartItemModel {
     public void setFreeCouponsAvailable(Long freeCouponsAvailable) {
         this.freeCouponsAvailable = freeCouponsAvailable;
     }
-
-//    public Long getCouponsApplied() {
-//        return couponsApplied;
-//    }
-//    public void setCouponsApplied(Long couponsApplied) {
-//        this.couponsApplied = couponsApplied;
-//    }
-    /////////////////cartItem
-
-    /////////////////cartTotalPrice
-    public MyCartItemModel(int type) {
-        this.type = type;
-    }
-    /////////////////cartTotalPrice
-
-
-
-
-
-    /////////////////cartTotalPrice
-//    private String totalItems;
-//    private String totalItemsPrice;
-//    private String discountItemsPrice;
-//    private String ShippingCharges;
-//    private String SubTotal;
-//
-//    public MyCartItemModel(int type, String totalItems, String totalItemsPrice, String discountItemsPrice, String shippingCharges, String subTotal) {
-//        this.type = type;
-//        this.totalItems = totalItems;
-//        this.totalItemsPrice = totalItemsPrice;
-//        this.discountItemsPrice = discountItemsPrice;
-//        this.ShippingCharges = shippingCharges;
-//        this.SubTotal = subTotal;
-//    }
-//
-//    public String getTotalItems() {
-//        return totalItems;
-//    }
-//
-//    public void setTotalItems(String totalItems) {
-//        this.totalItems = totalItems;
-//    }
-//
-//    public String getTotalItemsPrice() {
-//        return totalItemsPrice;
-//    }
-//
-//    public void setTotalItemsPrice(String totalItemsPrice) {
-//        this.totalItemsPrice = totalItemsPrice;
-//    }
-//
-//    public String getDiscountItemsPrice() {
-//        return discountItemsPrice;
-//    }
-//
-//    public void setDiscountItemsPrice(String discountItemsPrice) {
-//        this.discountItemsPrice = discountItemsPrice;
-//    }
-//
-//    public String getShippingCharges() {
-//        return ShippingCharges;
-//    }
-//
-//    public void setShippingCharges(String shippingCharges) {
-//        ShippingCharges = shippingCharges;
-//    }
-//
-//    public String getSubTotal() {
-//        return SubTotal;
-//    }
-//
-//    public void setSubTotal(String subTotal) {
-//        SubTotal = subTotal;
-//    }
-    /////////////////cartTotalPrice
 
 
 
