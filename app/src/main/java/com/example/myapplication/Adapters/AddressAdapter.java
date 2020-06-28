@@ -43,13 +43,13 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull AddressAdapter.ViewHolder holder, int position) {
         String name=addressModelList.get(position).getFullName();
-        String mobile_number=addressModelList.get(position).getPhoneNumber();
+        String mobile_number=addressModelList.get(position).getContactNumber();
         String addressLine1=addressModelList.get(position).getAddressLine1();
         String addressLine2=addressModelList.get(position).getAddressLine2();
-        String state=addressModelList.get(position).getState();
-        String pinCode=addressModelList.get(position).getPinCode();
-        Boolean selectedAdd =addressModelList.get(position).getSelectedAddress();
-        holder.setData(name,mobile_number,addressLine1,addressLine2,state,pinCode,selectedAdd,position);
+//        String state=addressModelList.get(position).getState();
+//        String pinCode=addressModelList.get(position).getPinCode();
+        Boolean selectedAdd =addressModelList.get(position).isSelectedAddress();
+        holder.setData(name,mobile_number,addressLine1,addressLine2,selectedAdd,position);
     }
 
     @Override
@@ -79,13 +79,13 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
 
         }
 
-        private void setData(String full_name, String mobile_number , String address_Line1 , String address_Line2 , String State , String PinCode, final Boolean selectedAddress, final int position){
+        private void setData(String full_name, String mobile_number , String address_Line1 , String address_Line2 , final Boolean selectedAddress, final int position){
             fullName.setText(full_name);
             mobileNumber.setText(mobile_number);
             addressLine1.setText(address_Line1);
             addressLine2.setText(address_Line2);
-            state.setText(State);
-            pinCode.setText(PinCode);
+//            state.setText(State);
+//            pinCode.setText(PinCode);
             if (MODE==SELECT_ADDRESS) {
                 icon.setImageResource(R.drawable.ic_check_black_24dp);
                 if (selectedAddress) {

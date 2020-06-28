@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cartPriceDetails"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -28,7 +29,7 @@
 
         <View
             android:id="@+id/divider7"
-            android:layout_width="409dp"
+            android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_marginTop="14dp"
             android:background="?android:attr/listDivider"
@@ -136,6 +137,7 @@
             android:layerType="software"
             android:paddingStart="3dp"
             android:src="@drawable/dotted_line"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView51" />
@@ -173,6 +175,16 @@
             app:layout_constraintBottom_toBottomOf="@+id/couponDiscountText"
             app:layout_constraintEnd_toEndOf="@+id/saved_or_discount_price"
             app:layout_constraintTop_toTopOf="@+id/couponDiscountText" />
+
+        <View
+            android:id="@+id/divider31"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintEnd_toEndOf="@+id/shipping_price"
+            app:layout_constraintStart_toStartOf="@+id/textView51"
+            app:layout_constraintTop_toBottomOf="@+id/textView51" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -201,7 +213,7 @@
 
         <View
             android:id="@+id/divider12"
-            android:layout_width="409dp"
+            android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_marginTop="14dp"
             android:background="?android:attr/listDivider"

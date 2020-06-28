@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import androidx.annotation.DimenRes;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -7,12 +8,15 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -67,8 +71,12 @@ public class WishlistActivity extends AppCompatActivity {
 
         wishlistItemRecyclerView=findViewById(R.id.wishlist_item_RecyclerView);
         GridLayoutManager layoutManager =new GridLayoutManager(this,2);
+//        ItemOffsetDecoration itemDecoration = new ItemOffsetDecoration(this, 20);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         wishlistItemRecyclerView.setLayoutManager(layoutManager);
+
+
+
 
 //        if (DBqueries.wishlistModelList.size()==0){
 //            DBqueries.wishlistModelList.clear();
@@ -120,6 +128,7 @@ public class WishlistActivity extends AppCompatActivity {
 //        wishlistTitle.setText("Wishlist ("+DBqueries.wishList.size()+")");
     }
 
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -127,11 +136,14 @@ public class WishlistActivity extends AppCompatActivity {
         if (DBqueries.wishlistModelList.size()==0){
             DBqueries.wishList.clear();
             DBqueries.loadWishlist(getApplicationContext(),loadingDialog,true);
+//////////////////////////////////move to cart end
 
         }if (DBqueries.cartList.size() == 0) {
-            DBqueries.cartList.clear();
+//            DBqueries.cartList.clear();
             DBqueries.loadCartList(getApplicationContext(), loadingDialog, false);
         }
+//////////////////////////////////move to cart end
+
         else {
             loadingDialog.dismiss();
         }

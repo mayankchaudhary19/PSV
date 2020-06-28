@@ -12,25 +12,26 @@
         android:id="@+id/imageView26"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
+        android:layout_marginTop="10dp"
+        android:scaleType="centerCrop"
         android:src="@drawable/splash_logo"
-        android:paddingTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
 
-       />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView45"
         android:layout_width="match_parent"
         android:layout_height="72dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
         android:fontFamily="sans-serif-smallcaps"
         android:gravity="center"
-        android:letterSpacing="0.20"
+        android:letterSpacing="0.15"
         android:text="Redefining Plastics"
-        android:textSize="28sp"
+        android:textSize="26sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView26"
         app:layout_constraintEnd_toEndOf="@+id/imageView26"
         app:layout_constraintHorizontal_bias="0.495"

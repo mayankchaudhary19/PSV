@@ -110,6 +110,7 @@ public class MyCartAdapter extends RecyclerView.Adapter {
         private TextView saveForLaterBtn,removeBtn;
         private FrameLayout productQtySL;
         private FrameLayout productQtyTypeSL;
+        private ImageView productQtyImg;
         private boolean is123=true;
 ////////////
 
@@ -135,6 +136,7 @@ public class MyCartAdapter extends RecyclerView.Adapter {
 
             productQtySL=itemView.findViewById(R.id.productQtySL);
             productQtyTypeSL=itemView.findViewById(R.id.productQtyTypeSL);
+            productQtyImg=itemView.findViewById(R.id.productQtyImg);
 
             int totalItems = 0;
             int totalItemPrice = 0;
@@ -152,6 +154,7 @@ public class MyCartAdapter extends RecyclerView.Adapter {
                     couponAvailable=couponAvailable+Long.parseLong(String.valueOf(myCartItemModelList.get(x).getFreeCouponsAvailable()));
                 }
             }
+
 
 
             if (totalItems==1){
@@ -180,6 +183,14 @@ public class MyCartAdapter extends RecyclerView.Adapter {
             }
                 MyCartActivity.subTotal.setText("₹"+totalItemPrice);
                 MyCartActivity.totalAmount.setText("₹"+totalItemPrice);
+
+            if (totalItemPrice==0){
+                MyCartActivity.priceDetailsLL.setVisibility(View.GONE);
+                MyCartActivity.continueBtnLL.setVisibility(View.GONE);
+            }else {
+                MyCartActivity.priceDetailsLL.setVisibility(View.VISIBLE);
+                MyCartActivity.continueBtnLL.setVisibility(View.VISIBLE);
+            }
         }
 
         private void setItemDetails(String productId,boolean inStock, String resource, String title, String subtitle, final String price, final String initialPrice, Long couponAvailableNo, Long offerAppliedNo, final int position){
@@ -447,7 +458,7 @@ public class MyCartAdapter extends RecyclerView.Adapter {
                         View v = super.getDropDownView(position, convertView, parent);
                         ((TextView) v).setGravity(Gravity.START);
                         v.setPadding(30,0,0,5);
-                        ((TextView) v).setWidth(250);
+//                        ((TextView) v).setWidth(250);
 //                    ((TextView) v).setHeight(62);
 
                         if (position == mSelectedIndex2)
@@ -494,6 +505,7 @@ public class MyCartAdapter extends RecyclerView.Adapter {
                 couponsApplied.setVisibility(View.GONE);
                 offerApplied.setVisibility(View.GONE);
                 productQtySL.setVisibility(View.GONE);
+                productQtyImg.setVisibility(View.GONE);
                 productQtyTypeSL.setVisibility(View.GONE);
                 couponRedemptionLayout.setVisibility(View.GONE);
 

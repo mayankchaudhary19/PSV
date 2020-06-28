@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
@@ -29,11 +31,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.Adapters.WishlistAdapter;
+import com.example.myapplication.Fragments.AddNewAddressFragment;
+import com.example.myapplication.Fragments.DeliveryFragment;
 import com.example.myapplication.Models.MyCartItemModel;
 import com.example.myapplication.Adapters.MyCartAdapter;
 import com.example.myapplication.Models.WishlistModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -42,9 +47,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyCartActivity extends AppCompatActivity  {
+
+    public static  boolean openSelectedAdd=false;
     public static TextView cartTitle;
     public static LinearLayout priceDetailsLL,continueBtnLL;
     private Dialog loadingDialog;
+    public static FirebaseFirestore firebaseFirestore= FirebaseFirestore.getInstance();
+
 
     private RecyclerView cartItemRecyclerView ,wishlistCartRecylerView;
     public static MyCartAdapter cartAdapter;
@@ -67,6 +76,7 @@ public class MyCartActivity extends AppCompatActivity  {
     private ConstraintLayout wishlistCartLayout;
     private ConstraintLayout activityMyCartLayout;
     private static boolean isSpinnerClosed;
+    Context  context;
 
 
 
@@ -112,26 +122,52 @@ public class MyCartActivity extends AppCompatActivity  {
 //        totalItemsTxtActivity=findViewById(R.id.totalItemsTxtActivity);
 
 
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.fade_in);
-        priceDetailsLL.setAnimation(animation);
+//        Animation animation = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+//        priceDetailsLL.setAnimation(animation);
+
+
+
 
         LinearLayoutManager layoutManager=new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         cartItemRecyclerView.setLayoutManager(layoutManager);
 
-        if(DBqueries.cartItemModelList.size() == 0){
-            DBqueries.cartList.clear();
-            DBqueries.loadCartList(this,loadingDialog,true);
-        }
-        else{
-            MyCartActivity.continueBtnLL.setVisibility(View.VISIBLE);
-            MyCartActivity.priceDetailsLL.setVisibility(View.VISIBLE);
-            loadingDialog.dismiss();
-        }
+
 
         cartAdapter =new MyCartAdapter(DBqueries.cartItemModelList,getApplicationContext());
         cartItemRecyclerView.setAdapter(cartAdapter);
         cartAdapter.notifyDataSetChanged();
+
+
+
+//        int totalItemPrice = 0;
+//        for (int x = 0; x<MyCartAdapter.myCartItemModelList.size(); x++){
+//
+//            if (MyCartAdapter.myCartItemModelList.get(x).isInStock()){
+//                totalItemPrice = totalItemPrice + Integer.parseInt(MyCartAdapter.myCartItemModelList.get(x).getProductPrice());
+//            }
+//        }
+//        MyCartActivity.totalAmount.setText("₹"+totalItemPrice);
+
+//        Toast.makeText(this, totalItemPrice, Toast.LENGTH_SHORT).show();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -222,93 +258,93 @@ public class MyCartActivity extends AppCompatActivity  {
         final Animation bounce = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.bounce);
         final Animation anim_out = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_out);
 
-        cartContinueBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Toast.makeText(MyCartActivity.this, "vdgv", Toast.LENGTH_SHORT).show();
-                count++;
-                if(newUser){
-                    if(count==1){
-                        newAdd.setVisibility(View.VISIBLE);
-                        new_shipping_details_layout_background.startAnimation(anim_in);
-                        new_shipping_details_layout_background.setVisibility(View.VISIBLE);
-                        slideUp(new_shipping_details_layout);
-                        new_shipping_details_layout.startAnimation(bounce);
-
-                    }
-                    else if(count==2){
-                        newUser=false;
-                        newAdd.setVisibility(View.GONE);
-                        new_shipping_details_layout.setVisibility(View.GONE);
-                        new_shipping_details_layout_background.setVisibility(View.GONE);
-//                        Toast.makeText(MyCartActivity.this, "nkn", Toast.LENGTH_SHORT).show();
-                        slideUp(shipping_details_layout);
-                        shipping_details_layout_background.startAnimation(anim_in);
-                        shipping_details_layout_background.setVisibility(View.VISIBLE);
-                        shipping_details_layout.setVisibility(View.VISIBLE);
-
-                    }else{
-                        count=0;
-                        newAdd.setVisibility(View.INVISIBLE);
-                        new_shipping_details_layout.setVisibility(View.INVISIBLE);
-                        new_shipping_details_layout_background.setVisibility(View.INVISIBLE);
-                        shipping_details_layout.setVisibility(View.INVISIBLE);
-                        shipping_details_layout_background.setVisibility(View.INVISIBLE);
-                        Intent intent=new Intent(MyCartActivity.this,AddAddressActivity.class);
-                        startActivity(intent);
-                    }
-
-                }else{
-                    if(count==1){
-                        slideUp(shipping_details_layout);
-                        shipping_details_layout_background.startAnimation(anim_in);
-                        shipping_details_layout_background.setVisibility(View.VISIBLE);
-                        shipping_details_layout.setVisibility(View.VISIBLE);
-
-                    }else {
-                        count=0;
-//                        Toast.makeText(MyCartActivity.this, "b c", Toast.LENGTH_SHORT).show();
-                        shipping_details_layout.setVisibility(View.INVISIBLE);
-                        shipping_details_layout_background.setVisibility(View.INVISIBLE);
-                        Intent intent=new Intent(MyCartActivity.this,AddAddressActivity.class);
-                        startActivity(intent);
-                    }
-                }
-//                if (count == 1) {
-//                    if (!newUser){
-//                        shipping_details_layout_background.startAnimation(anim_in);
-//                        shipping_details_layout_background.setVisibility(View.VISIBLE);
-//                        slideUp(shipping_details_layout);
-//
-//                    }
-//                    else{
+//        cartContinueBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                Toast.makeText(MyCartActivity.this, "vdgv", Toast.LENGTH_SHORT).show();
+//                count++;
+//                if(newUser){
+//                    if(count==1){
+//                        newAdd.setVisibility(View.VISIBLE);
 //                        new_shipping_details_layout_background.startAnimation(anim_in);
 //                        new_shipping_details_layout_background.setVisibility(View.VISIBLE);
 //                        slideUp(new_shipping_details_layout);
-//                        Animation bounce = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.bounce);
 //                        new_shipping_details_layout.startAnimation(bounce);
 //
 //                    }
+//                    else if(count==2){
+//                        newUser=false;
+//                        newAdd.setVisibility(View.GONE);
+//                        new_shipping_details_layout.setVisibility(View.GONE);
+//                        new_shipping_details_layout_background.setVisibility(View.GONE);
+////                        Toast.makeText(MyCartActivity.this, "nkn", Toast.LENGTH_SHORT).show();
+//                        slideUp(shipping_details_layout);
+//                        shipping_details_layout_background.startAnimation(anim_in);
+//                        shipping_details_layout_background.setVisibility(View.VISIBLE);
+//                        shipping_details_layout.setVisibility(View.VISIBLE);
 //
+//                    }else{
+//                        count=0;
+//                        newAdd.setVisibility(View.INVISIBLE);
+//                        new_shipping_details_layout.setVisibility(View.INVISIBLE);
+//                        new_shipping_details_layout_background.setVisibility(View.INVISIBLE);
+//                        shipping_details_layout.setVisibility(View.INVISIBLE);
+//                        shipping_details_layout_background.setVisibility(View.INVISIBLE);
+//                        Intent intent=new Intent(MyCartActivity.this,AddAddressActivity.class);
+//                        startActivity(intent);
+//                    }
+//
+//                }else{
+//                    if(count==1){
+//                        slideUp(shipping_details_layout);
+//                        shipping_details_layout_background.startAnimation(anim_in);
+//                        shipping_details_layout_background.setVisibility(View.VISIBLE);
+//                        shipping_details_layout.setVisibility(View.VISIBLE);
+//
+//                    }else {
+//                        count=0;
+////                        Toast.makeText(MyCartActivity.this, "b c", Toast.LENGTH_SHORT).show();
+//                        shipping_details_layout.setVisibility(View.INVISIBLE);
+//                        shipping_details_layout_background.setVisibility(View.INVISIBLE);
+//                        Intent intent=new Intent(MyCartActivity.this,AddAddressActivity.class);
+//                        startActivity(intent);
+//                    }
 //                }
+////                if (count == 1) {
+////                    if (!newUser){
+////                        shipping_details_layout_background.startAnimation(anim_in);
+////                        shipping_details_layout_background.setVisibility(View.VISIBLE);
+////                        slideUp(shipping_details_layout);
+////
+////                    }
+////                    else{
+////                        new_shipping_details_layout_background.startAnimation(anim_in);
+////                        new_shipping_details_layout_background.setVisibility(View.VISIBLE);
+////                        slideUp(new_shipping_details_layout);
+////                        Animation bounce = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.bounce);
+////                        new_shipping_details_layout.startAnimation(bounce);
+////
+////                    }
+////
+////                }
+////
+////                else{
+////                    new_shipping_details_layout.setVisibility(View.GONE);
+////                    new_shipping_details_layout_background.setVisibility(View.GONE);
+////                    shipping_details_layout.setVisibility(View.GONE);
+////                    shipping_details_layout_background.setVisibility(View.GONE);
+////                    Intent intent=new Intent(MyCartActivity.this,AddAddressActivity.class);
+////                    startActivity(intent);
+////                    count=0;
+////
+////
+////                }
+////
+//////                onSlideViewButtonClick(shipping_details_layout);
+////
 //
-//                else{
-//                    new_shipping_details_layout.setVisibility(View.GONE);
-//                    new_shipping_details_layout_background.setVisibility(View.GONE);
-//                    shipping_details_layout.setVisibility(View.GONE);
-//                    shipping_details_layout_background.setVisibility(View.GONE);
-//                    Intent intent=new Intent(MyCartActivity.this,AddAddressActivity.class);
-//                    startActivity(intent);
-//                    count=0;
-//
-//
-//                }
-//
-////                onSlideViewButtonClick(shipping_details_layout);
-//
-
-            }
-        });
+//            }
+//        });
 
         address_container.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -409,18 +445,34 @@ public class MyCartActivity extends AppCompatActivity  {
 //    }
 
 
+    public Context getContext() {
+        return context;
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
         no_of_items= DBqueries.cartList.size();
         cartTitle.setText("Cart ("+no_of_items+")");
-        if (no_of_items>0){
-            continueBtnLL.setVisibility(View.VISIBLE);
-            priceDetailsLL.setVisibility(View.VISIBLE);
-        } else  {
-            continueBtnLL.setVisibility(View.GONE);
-            priceDetailsLL.setVisibility(View.GONE);
+
+        if(DBqueries.cartItemModelList.size() == 0){
+            DBqueries.cartList.clear();
+            DBqueries.loadCartList(this,loadingDialog,true);
         }
+        else{
+            MyCartActivity.continueBtnLL.setVisibility(View.VISIBLE);
+            MyCartActivity.priceDetailsLL.setVisibility(View.VISIBLE);
+            loadingDialog.dismiss();
+        }
+
+//
+//        if (no_of_items>0){
+//            continueBtnLL.setVisibility(View.VISIBLE);
+//            priceDetailsLL.setVisibility(View.VISIBLE);
+//        } else  {
+//            continueBtnLL.setVisibility(View.GONE);
+//            priceDetailsLL.setVisibility(View.GONE);
+//        }
 
         int totalItems = 0;
         int totalItemPrice = 0;
@@ -439,6 +491,12 @@ public class MyCartActivity extends AppCompatActivity  {
             }
         }
 
+//
+//        Bundle bundle = new Bundle();
+//        bundle.putString("params", "₹"+totalItemPrice);
+//// set MyFragment Arguments
+//        AddNewAddressFragment myObj = new AddNewAddressFragment();
+//        myObj.setArguments(bundle);
 
         if (totalItems==1){
             MyCartActivity.totalItems.setText("Price ( "+totalItems+" Item )");
@@ -467,6 +525,83 @@ public class MyCartActivity extends AppCompatActivity  {
         MyCartActivity.subTotal.setText("₹"+totalItemPrice);
         MyCartActivity.totalAmount.setText("₹"+totalItemPrice);
 
+        Toast.makeText(this, totalAmount.getText(), Toast.LENGTH_SHORT).show();
+
+        if (totalItemPrice==0){
+            priceDetailsLL.setVisibility(View.GONE);
+            continueBtnLL.setVisibility(View.GONE);
+        }else {
+            priceDetailsLL.setVisibility(View.VISIBLE);
+            continueBtnLL.setVisibility(View.VISIBLE);
+
+        }
+
+
+        cartContinueBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firebaseFirestore.collection("Users")
+                        .document(FirebaseAuth.getInstance().getUid())
+                        .collection("UserData")
+                        .document("Addresses")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()){
+                                    if((long) task.getResult().get("addressListSize") == 0){
+                                        AddNewAddressFragment bottomSheet = new AddNewAddressFragment();
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("params", totalAmount.getText().toString());
+                                        bottomSheet.setArguments(bundle);
+                                        bottomSheet.show(getSupportFragmentManager(),"TAG");
+                                    }
+                                    else {
+                                        Intent intent =new Intent(getApplicationContext(),OrderSummaryActivity.class);
+                                        startActivity(intent);
+                                    }
+                                }
+                                 else{
+                                    String error = task.getException().getMessage();
+                                    Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
+
+//                if (!openSelectedAdd){
+//                    if (DBqueries.addressesModelList.size() == 0) {
+//    //                    DBqueries.loadAddress(getContext(), loadingDialog);
+//                        AddNewAddressFragment bottomSheet = new AddNewAddressFragment();
+//                        Bundle bundle = new Bundle();
+//                        bundle.putString("params", totalAmount.getText().toString());
+//                        bottomSheet.setArguments(bundle);
+//                        bottomSheet.show(getSupportFragmentManager(),"TAG");
+//                    }
+////                    else{
+////                    }
+//                }
+            }
+
+        });
+
+        if  (openSelectedAdd){
+            DeliveryFragment bottomSheet2 = new DeliveryFragment();
+            bottomSheet2.show(getSupportFragmentManager(),"TAG");
+        }
+//                    AddNewAddressFragment bottomSheet = new AddNewAddressFragment();
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString("params", totalAmount.getText().toString());
+//                    bottomSheet.setArguments(bundle);
+//                    bottomSheet.show(getSupportFragmentManager(),"TAG");
+
+//                for (int x =0 ;x<DBqueries.cartItemModelList.size(); x++){
+//
+//                    MyCartItemModel cartItemModel = DBqueries.cartItemModelList.get(x);
+//                    if(cartItemModel.isInStock()){
+////                        OrderSummaryActivity.cartItemModelList.add(cartItemModel);
+//                    }
+//                }
 
 
 //        MyCartActivity.totalAmount.setText("₹"+totalItemPrice);
@@ -478,6 +613,7 @@ public class MyCartActivity extends AppCompatActivity  {
 
 
     }
+
 
     public void slideUp(View view){
         view.setVisibility(View.VISIBLE);

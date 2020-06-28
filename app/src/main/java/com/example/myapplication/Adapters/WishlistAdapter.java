@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -15,6 +16,8 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -115,7 +118,7 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
         private TextView productTitle,productSubtitle,productPrice,productInitialPrice,productDiscount,moveToCart_tv;
         private ImageView deleteFromWishlistBtn;
         private View wishlistDivider;
-        private LinearLayout moveToCarBtn;
+        private ConstraintLayout moveToCarBtn;
         private ConstraintLayout wishlistItemLayoutContainer;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -130,6 +133,8 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
             wishlistDivider=itemView.findViewById(R.id.wishlistDivider);
             moveToCart_tv=itemView.findViewById(R.id.move_to_cart_tv);
             wishlistItemLayoutContainer=itemView.findViewById(R.id.wishlistItemLayoutContainer);
+
+
         }
         private void setData(final String productId, String resource, String title, String subtitle, final String price, String initialPrice, final int index){
 //            productImage.setImageResource(resource);
@@ -139,7 +144,14 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
             productPrice.setText("₹"+price+"/pc");
             productInitialPrice.setText("₹"+initialPrice);
 //            productDiscount.setText(discount);
-
+//            public int getScreenWidth() {
+//                WindowManager wm = (WindowManager) ((WishlistActivity)context).getSystemService(Context.WINDOW_SERVICE);
+//
+//                Display display = wm.getDefaultDisplay();
+//                Point size = new Point();
+//                display.getSize(size);
+//                return size.x;
+//            }
             if (!price.isEmpty()&&!initialPrice.isEmpty()){
                 int intPrice=Integer.parseInt(price);
                 int intInitialPrice=Integer.parseInt(initialPrice);
@@ -164,6 +176,7 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
                     public void onClick(View v) {
 //                        deleteFromWishlistBtn.setEnabled(false);
                         if (!ProductDetailsActivity.running_wishlist_query) {
+
                             if (DBqueries.wishList.contains(productId)) {
                                 ProductDetailsActivity.running_wishlist_query = true;
                                 DBqueries.removeFromWishlist(index, itemView.getContext());
@@ -369,7 +382,8 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
                                     productSubcategory2Dialog.setVisibility(View.GONE);
 
                                 } else productSubcategory2Dialog.setText(productSubcategory2Str);
-
+////////////////////
+//                                todo:
                                 if (DBqueries.cartList.contains(productId)) {
                                     ProductDetailsActivity.ALREADY_ADDED_TO_CART = true;
                                 } else {
@@ -437,9 +451,8 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
                             else{
                                     moveToCart_tv.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                                     moveToCart_tv.setText("Out of Stock");
-
                             }
-
+//////////////////////////////////move to cart end
                                 loadingDialog.dismiss();
 
 

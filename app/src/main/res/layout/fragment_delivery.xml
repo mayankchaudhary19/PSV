@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bg_bottom_dialog_box"
+    android:clickable="true"
+    android:orientation="vertical"
+    tools:context=".Fragments.DeliveryFragment">
+    <View
+        android:id="@+id/view2"
+        android:layout_width="35dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_buy_now_outline_box"
+        android:backgroundTint="#4D333232"
+        android:backgroundTintMode="src_in" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView40"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="22dp"
+            android:layout_marginTop="16dp"
+            android:text="Shipping Address"
+            android:textColor="#232323"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/address_full_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="35dp"
+            android:text="Mr.Mukesh Kumar"
+            android:textColor="#383838 "
+            android:textSize="15sp"
+            android:textStyle="bold|italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView40" />
+
+        <TextView
+            android:id="@+id/address_line1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="H.No. 9577, Library Road, Azad Market"
+            app:layout_constraintEnd_toEndOf="@+id/address_full_name"
+            app:layout_constraintStart_toStartOf="@+id/address_full_name"
+            app:layout_constraintTop_toBottomOf="@+id/address_full_name" />
+
+        <TextView
+            android:id="@+id/address_line2_with_pincode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="Near Sanatan Dharam Mandir, New Delhi-110006"
+            app:layout_constraintEnd_toEndOf="@+id/address_full_name"
+            app:layout_constraintStart_toStartOf="@+id/address_line1"
+            app:layout_constraintTop_toBottomOf="@+id/address_line1" />
+
+        <TextView
+            android:id="@+id/textView60"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Mob.:"
+            android:textColor="#3C3C3C"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/address_line2_with_pincode"
+            app:layout_constraintTop_toBottomOf="@+id/address_line2_with_pincode" />
+
+        <TextView
+            android:id="@+id/address_mobile_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="+91 9968887670"
+            android:textColor="#3C3C3C"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView60"
+            app:layout_constraintStart_toEndOf="@+id/textView60"
+            app:layout_constraintTop_toTopOf="@+id/textView60" />
+
+<!--        <Button-->
+<!--            android:id="@+id/change_add_address"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="38dp"-->
+<!--            android:layout_marginTop="16dp"-->
+<!--            android:background="@drawable/bg_black_outline_btn"-->
+<!--            android:paddingStart="40dp"-->
+<!--            android:paddingEnd="40dp"-->
+<!--            android:text="Change / Add Address"-->
+<!--            android:textAllCaps="true"-->
+<!--            android:textColor="#000000"-->
+<!--            app:layout_constraintEnd_toEndOf="@+id/address_full_name"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/address_full_name"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/address_mobile_number" />-->
+
+        <LinearLayout
+            android:id="@+id/continueLL"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/bg_add_to_cart_andbuy_now_background"
+            android:elevation="10dp"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/address_mobile_number">
+
+            <TextView
+                android:id="@+id/changeAddress"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="11dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_black_outline_btn"
+                android:gravity="center"
+                android:paddingBottom="1dp"
+                android:text="Change Address"
+                android:textAllCaps="true"
+                android:textColor="#000000"
+                android:textStyle="bold" />
+
+            <!--            <LinearLayout-->
+            <!--                android:id="@+id/linearLayout3"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="match_parent"-->
+            <!--                android:layout_marginStart="11dp"-->
+            <!--                android:layout_marginTop="10dp"-->
+            <!--                android:layout_marginEnd="5dp"-->
+            <!--                android:layout_marginBottom="10dp"-->
+            <!--                android:layout_weight="1"-->
+            <!--                android:orientation="vertical">-->
+
+            <!--                <TextView-->
+            <!--                    android:id="@+id/cart_total_amount"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginStart="4dp"-->
+            <!--                    android:text="₹"-->
+            <!--                    android:textColor="#000000"-->
+            <!--                    android:textSize="20sp"-->
+            <!--                    android:textStyle="bold" />-->
+
+            <!--                <TextView-->
+            <!--                    android:id="@+id/textView41"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_marginBottom="1dp"-->
+            <!--                    android:text="Total Amount"-->
+            <!--                    android:textColor="#C9000000"-->
+            <!--                    android:textSize="12sp" />-->
+            <!--            </LinearLayout>-->
+
+
+            <TextView
+                android:id="@+id/addAddressContinueBtn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_buy_now_outline_box"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="Continue"
+                android:textAllCaps="true"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</LinearLayout>

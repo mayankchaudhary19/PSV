@@ -2,12 +2,17 @@ package com.example.myapplication;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +25,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.myapplication.Adapters.CategoryAdapter;
 import com.example.myapplication.Adapters.HomePageAdapter;
 import com.example.myapplication.Adapters.MyCartAdapter;
+import com.example.myapplication.Fragments.AddNewAddressFragment;
+import com.example.myapplication.Models.AddressModel;
 import com.example.myapplication.Models.CategoryModel;
 import com.example.myapplication.Models.GridProductModel;
 import com.example.myapplication.Models.HomePageModel;
@@ -67,6 +74,9 @@ public class DBqueries {
 
     public static List<String> cartList = new ArrayList<>();
     public static List<MyCartItemModel> cartItemModelList = new ArrayList<>();
+
+    public static int selectedAddress = -1;
+    public static List<AddressModel> addressesModelList = new ArrayList<>();
 
 
 
@@ -240,8 +250,10 @@ public class DBqueries {
 
 
     public static void removeFromWishlist(final int index, final Context context ) {
+
         final String removedProductId = wishList.get(index);
         wishList.remove(index);
+
         Map<String, Object> updateWishlist = new HashMap<>();
         for (int x = 0; x < wishList.size(); x++) {
             updateWishlist.put("productId" + x, wishList.get(x));
@@ -257,6 +269,10 @@ public class DBqueries {
                         wishlistModelList.remove(index);
                         WishlistActivity.wishlistAdapter.notifyDataSetChanged();
                     }
+//                    if (wishlistModelList.size()==0){
+//                        wishList.clear();
+////                        wishlistModelList.clear();
+//                    }
                     ProductDetailsActivity.ALREADY_ADDED_TO_WISHLIST =false;
 
                     LayoutInflater inflater = LayoutInflater.from(context);
@@ -341,7 +357,7 @@ public class DBqueries {
                 if(task.isSuccessful()) {
 
                     for (long x = 0; x < (long) task.getResult().get("cartListSize"); x++) {
-                        cartList.add(0,task.getResult().get("productId"+ x).toString());
+                        cartList.add(task.getResult().get("productId"+ x).toString());
 
                         if (DBqueries.cartList.contains(ProductDetailsActivity.productId)) {
                             ProductDetailsActivity.ALREADY_ADDED_TO_CART = true;
@@ -393,8 +409,35 @@ public class DBqueries {
                     }
                     if (loadProductData) {
                         if (cartList.size() > 0) {
-                            MyCartActivity.continueBtnLL.setVisibility(View.VISIBLE);
-                            MyCartActivity.priceDetailsLL.setVisibility(View.VISIBLE);
+
+                            new CountDownTimer(500, 500) {
+
+                                public void onTick(long millisUntilFinished) {
+                                }
+
+                                public void onFinish() {
+                                    Animation animation = AnimationUtils.loadAnimation(context, R.anim.fade_in);
+                                    MyCartActivity.priceDetailsLL.startAnimation(animation);
+
+
+                                    int totalItemPrice = 0;
+                                    for (int x = 0; x<MyCartAdapter.myCartItemModelList.size(); x++){
+
+                                        if (MyCartAdapter.myCartItemModelList.get(x).isInStock()){
+                                            totalItemPrice = totalItemPrice + Integer.parseInt(MyCartAdapter.myCartItemModelList.get(x).getProductPrice());
+                                        }
+                                    }
+                                    if (totalItemPrice==0) {
+                                        MyCartActivity.continueBtnLL.setVisibility(View.GONE);
+                                        MyCartActivity.priceDetailsLL.setVisibility(View.GONE);
+                                    } else {
+                                        MyCartActivity.continueBtnLL.setVisibility(View.VISIBLE);
+                                        MyCartActivity.priceDetailsLL.setVisibility(View.VISIBLE);
+                                    }
+                                }
+                            }.start();
+
+
                             MyCartActivity.cartTitle.setText("Cart (" + task.getResult().getLong("cartListSize") + ")");
                         } else {
 //                            MyCartActivity.cartTitle.setText("Cart");
@@ -414,9 +457,9 @@ public class DBqueries {
 
 
     public static void removeFromCart(final int index, final Context context){
-
         final String removedProductId = cartList.get(index);
         cartList.remove(index);
+
         Map<String,Object> updateCartList = new HashMap<>();
 
         for(int x=0; x<cartList.size();x++){
@@ -482,8 +525,13 @@ public class DBqueries {
                         MyCartActivity.subTotal.setText("₹"+totalItemPrice);
                         MyCartActivity.totalAmount.setText("₹"+totalItemPrice);
 
-
-
+                        if (totalItemPrice==0){
+                            MyCartActivity.continueBtnLL.setVisibility(View.GONE);
+                            MyCartActivity.priceDetailsLL.setVisibility(View.GONE);
+                        }else{
+                            MyCartActivity.continueBtnLL.setVisibility(View.VISIBLE);
+                            MyCartActivity.priceDetailsLL.setVisibility(View.VISIBLE);
+                        }
                     }
 
                     if (cartList.size() == 0 ){
@@ -506,6 +554,62 @@ public class DBqueries {
         });
 
     }
+
+
+    public static void loadAddress(final Context context, final Dialog loadingDialog){
+
+        addressesModelList.clear();
+        firebaseFirestore.collection("Users")
+                .document(FirebaseAuth.getInstance().getUid())
+                .collection("UserData")
+                .document("Addresses")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()){
+
+                            if((long) task.getResult().get("addressListSize") == 0){
+                                AddNewAddressFragment bottomSheet = new AddNewAddressFragment();
+                                Bundle bundle = new Bundle();
+                                bundle.putString("params", MyCartActivity.totalAmount.getText().toString());
+                                bottomSheet.setArguments(bundle);
+                                bottomSheet.show(((MyCartActivity) context.getApplicationContext()).getSupportFragmentManager(),"TAG");
+
+                                // matlab user ke pass agar koi address nhi h to list size zero hoga
+//                                deliveryIntent = new Intent(context,AddAddressActivity.class);
+                                // to agar size zero h to addressactivity pr bhej dena
+//                                deliveryIntent.putExtra("INTENT","deliveryIntent");
+                            }
+                            else{
+                                for (long x = 1; x< (long) task.getResult().get("addressListSize")+1; x++){
+
+                                    addressesModelList.add(new AddressModel(task.getResult().get("fullName"+x).toString(),
+                                            task.getResult().get("contactNo"+x).toString(),
+                                            task.getResult().get("addressLineOne"+x).toString(),
+                                            task.getResult().get("addressLineTwo"+x).toString(),
+                                            task.getResult().get("additionalInfo"+x).toString(),
+                                            (boolean) task.getResult().get("selectedAddress"+x)
+                                            ));
+
+                                    if ((boolean) task.getResult().get("selectedAddress"+x)){
+                                        selectedAddress = Integer.parseInt(String.valueOf(x-1));
+                                    }
+                                }
+//                                deliveryIntent = new Intent(context,DeliveryActivity.class);
+
+                            }
+//                            context.startActivity(deliveryIntent);
+                        }
+                        else{
+                            String error = task.getException().getMessage();
+                            Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
+                        }
+                        loadingDialog.dismiss();
+                    }
+                });
+    }
+
 
 
     public static void clearData(){

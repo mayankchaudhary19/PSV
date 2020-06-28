@@ -55,12 +55,12 @@ public class MyAddressActivity extends AppCompatActivity {
         addressRecyclerView.setLayoutManager(layoutManager);
 
         List<AddressModel> addressModelList =new ArrayList<>();
-        addressModelList.add(new AddressModel("Mukesh Chaudhary","9211397674","H.No.-9577, Library Road, Azad Market,","Near Sanatan Dharam Mandir","Delhi","110009",true));
-        addressModelList.add(new AddressModel("Mukesh Chaudhary","9211397674","H.No.-9577, Library Road, Azad Market,","Near Sanatan Dharam Mandir","Delhi","110009",false));
-        addressModelList.add(new AddressModel("Mukesh Chaudhary","9211397674","H.No.-9577, Library Road, Azad Market,","Near Sanatan Dharam Mandir","Delhi","110009",false));
-        addressModelList.add(new AddressModel("Mukesh Chaudhary","9211397674","H.No.-9577, Library Road, Azad Market,","Near Sanatan Dharam Mandir","Delhi","110009",false));
-        addressModelList.add(new AddressModel("Mukesh Chaudhary","9211397674","H.No.-9577, Library Road, Azad Market,","Near Sanatan Dharam Mandir","Delhi","110009",false));
-        addressModelList.add(new AddressModel("Mukesh Chaudhary","9211397674","H.No.-9577, Library Road, Azad Market,","Near Sanatan Dharam Mandir","Delhi","110009",false));
+//        addressModelList.add(new AddressModel("Mukesh Chaudhary","9211397674","H.No.-9577, Library Road, Azad Market,","Near Sanatan Dharam Mandir","Delhi","110009",true));
+//        addressModelList.add(new AddressModel("Mukesh Chaudhary","9211397674","H.No.-9577, Library Road, Azad Market,","Near Sanatan Dharam Mandir","Delhi","110009",false));
+//        addressModelList.add(new AddressModel("Mukesh Chaudhary","9211397674","H.No.-9577, Library Road, Azad Market,","Near Sanatan Dharam Mandir","Delhi","110009",false));
+//        addressModelList.add(new AddressModel("Mukesh Chaudhary","9211397674","H.No.-9577, Library Road, Azad Market,","Near Sanatan Dharam Mandir","Delhi","110009",false));
+//        addressModelList.add(new AddressModel("Mukesh Chaudhary","9211397674","H.No.-9577, Library Road, Azad Market,","Near Sanatan Dharam Mandir","Delhi","110009",false));
+//        addressModelList.add(new AddressModel("Mukesh Chaudhary","9211397674","H.No.-9577, Library Road, Azad Market,","Near Sanatan Dharam Mandir","Delhi","110009",false));
 
         int mode =getIntent().getIntExtra("MODE",-1);
         if (mode==SELECT_ADDRESS){

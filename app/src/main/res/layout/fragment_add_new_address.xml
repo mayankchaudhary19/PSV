@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_bottom_dialog_box"
+    android:clickable="true"
+    android:orientation="vertical"
+    tools:context=".Fragments.AddNewAddressFragment">
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="35dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_buy_now_outline_box"
+        android:backgroundTint="#4D333232"
+        android:backgroundTintMode="src_in" />
+
+<!--    <androidx.core.widget.NestedScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:fillViewport="true">-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:orientation="vertical">-->
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/bottomSheetBackground"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/textView71"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="22dp"
+                    android:layout_marginTop="12dp"
+                    android:text="Add Shipping Address"
+                    android:textColor="#232323"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/divider7"
+                    android:layout_width="409dp"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="?android:attr/listDivider"
+                    android:visibility="invisible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView71" />
+
+
+                <TextView
+                    android:id="@+id/textView69"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:layout_marginStart="35dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center|start"
+                    android:text="Full Name :"
+                    android:textColor="#000000"
+                    android:textSize="13sp"
+                    app:backgroundTint="#464545"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/divider7" />
+
+                <EditText
+                    android:id="@+id/nameAdd"
+                    android:layout_width="0dp"
+                    android:layout_height="35dp"
+                    android:layout_marginEnd="35dp"
+                    android:ems="10"
+                    android:hint="First Name  -  Last Name"
+                    android:inputType="textPersonName"
+                    android:textSize="13sp"
+                    android:theme="@style/MyEditTextTheme"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView69"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textView69" />
+
+                <TextView
+                    android:id="@+id/textView70"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center|start"
+                    android:text="Contact No. :"
+                    android:textColor="#000000"
+                    android:textSize="13sp"
+                    app:layout_constraintStart_toStartOf="@+id/textView69"
+                    app:layout_constraintTop_toBottomOf="@+id/textView69" />
+
+                <EditText
+                    android:id="@+id/contactAdd"
+                    android:layout_width="0dp"
+                    android:layout_height="35dp"
+                    android:ems="10"
+                    android:hint="Mobile [10]  -  Landline [8]"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:textSize="13sp"
+                    android:theme="@style/MyEditTextTheme"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView70"
+                    app:layout_constraintEnd_toEndOf="@+id/nameAdd"
+                    app:layout_constraintStart_toEndOf="@+id/textView69" />
+
+
+                <TextView
+                    android:id="@+id/textView85"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center|start"
+                    android:text="Address Line 1 :"
+                    android:textColor="#000000"
+                    android:textSize="13sp"
+                    app:layout_constraintStart_toStartOf="@+id/textView70"
+                    app:layout_constraintTop_toBottomOf="@+id/textView70" />
+
+                <TextView
+                    android:id="@+id/textView86"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center|start"
+                    android:text="Address Line 2 :"
+                    android:textColor="#000000"
+                    android:textSize="13sp"
+                    app:layout_constraintStart_toStartOf="@+id/textView85"
+                    app:layout_constraintTop_toBottomOf="@+id/textView85" />
+
+                <EditText
+                    android:id="@+id/addressLine2Add"
+                    android:layout_width="0dp"
+                    android:layout_height="35dp"
+                    android:ems="10"
+                    android:gravity="center_vertical"
+                    android:hint="City  -  State  -  Pincode"
+                    android:inputType="textPostalAddress"
+                    android:textSize="13sp"
+                    android:theme="@style/MyEditTextTheme"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView86"
+                    app:layout_constraintEnd_toEndOf="@+id/addressLine1Add"
+                    app:layout_constraintStart_toEndOf="@+id/textView86" />
+
+                <EditText
+                    android:id="@+id/addressLine1Add"
+                    android:layout_width="0dp"
+                    android:layout_height="35dp"
+                    android:ems="10"
+                    android:hint="Plot Number  -  Street  -  Locality"
+                    android:inputType="textPostalAddress"
+                    android:textSize="13sp"
+                    android:theme="@style/MyEditTextTheme"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView85"
+                    app:layout_constraintEnd_toEndOf="@+id/contactAdd"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/textView70" />
+
+                <TextView
+                    android:id="@+id/textView88"
+                    android:layout_width="100dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center|start"
+                    android:text="Additional Info. :"
+                    android:textColor="#000000"
+                    android:textSize="13sp"
+                    app:layout_constraintEnd_toEndOf="@+id/textView86"
+                    app:layout_constraintStart_toStartOf="@+id/textView86"
+                    app:layout_constraintTop_toBottomOf="@+id/textView86" />
+
+                <LinearLayout
+                    android:id="@+id/continueLL"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/bg_add_to_cart_andbuy_now_background"
+                    android:elevation="10dp"
+                    android:orientation="horizontal"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView88">
+
+<!--                    <LinearLayout-->
+<!--                        android:id="@+id/linearLayout3"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_marginStart="11dp"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:layout_marginEnd="5dp"-->
+<!--                        android:layout_marginBottom="10dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:orientation="vertical">-->
+
+<!--                        <TextView-->
+<!--                            android:id="@+id/cart_total_amount"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginStart="4dp"-->
+<!--                            android:text="₹"-->
+<!--                            android:textColor="#000000"-->
+<!--                            android:textSize="20sp"-->
+<!--                            android:textStyle="bold" />-->
+
+<!--                        <TextView-->
+<!--                            android:id="@+id/textView41"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginBottom="1dp"-->
+<!--                            android:text="Total Amount"-->
+<!--                            android:textColor="#C9000000"-->
+<!--                            android:textSize="12sp" />-->
+<!--                    </LinearLayout>-->
+                    <TextView
+                        android:id="@+id/changeAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="11dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_black_outline_btn"
+                        android:gravity="center"
+                        android:paddingBottom="1dp"
+                        android:text="Save Address"
+                        android:textAllCaps="true"
+                        android:textColor="#000000"
+                        android:textStyle="bold" />
+
+
+                    <TextView
+                        android:id="@+id/addAddressContinueBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_buy_now_outline_box"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:text="Continue"
+                        android:textAllCaps="true"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/additionalInfoAdd"
+                    android:layout_width="0dp"
+                    android:layout_height="35dp"
+                    android:ems="10"
+                    android:hint="Alternate Number  -  Landmark [Optional] "
+                    android:inputType="text"
+                    android:textSize="13sp"
+                    android:theme="@style/MyEditTextTheme"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView88"
+                    app:layout_constraintEnd_toEndOf="@+id/addressLine2Add"
+                    app:layout_constraintStart_toEndOf="@+id/textView88" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+<!--        </LinearLayout>-->
+<!--    </androidx.core.widget.NestedScrollView>-->
+
+</LinearLayout>

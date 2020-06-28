@@ -63,11 +63,11 @@
                             app:sliderAutoCycleEnabled="true"
                             app:sliderCircularHandlerEnabled="false"
                             app:sliderIndicatorAnimationDuration="600"
-                            app:sliderIndicatorGravity="center_horizontal|bottom"
+                            app:sliderIndicatorGravity="bottom|center_horizontal"
                             app:sliderIndicatorMargin="15dp"
                             app:sliderIndicatorOrientation="horizontal"
                             app:sliderIndicatorPadding="3dp"
-                            app:sliderIndicatorRadius="1.7dp"
+                            app:sliderIndicatorRadius="1.2dp"
                             app:sliderIndicatorSelectedColor="#5A5A5A"
                             app:sliderIndicatorUnselectedColor="#FFFFFF"
                             app:sliderScrollTimeInSec="2"
@@ -87,7 +87,7 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="3dp"
                             android:text="Shop By Category"
-                            android:textSize="16sp"
+                            android:textSize="15sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -112,10 +112,11 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginLeft="10dp"
 
-                        android:layout_marginEnd="10dp"
+                        android:layout_marginEnd="0dp"
                         android:layout_marginRight="10dp"
                         android:layout_marginBottom="10dp"
-                        app:cardCornerRadius="6dp">
+                        app:cardCornerRadius="5dp"
+                        app:cardElevation="1dp">
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/categoryhome_recyclerView"

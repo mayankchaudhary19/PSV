@@ -8,103 +8,113 @@
     android:id="@+id/frag_login"
     android:background="@drawable/splash_gradient3">
 
-<TextView
-    android:id="@+id/textView56"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="75dp"
-    android:fontFamily="sans-serif-smallcaps"
-    android:text="Puran Singh Verma"
-    android:textColor="#94FAFAFA"
-    android:textSize="40sp"
-    android:textStyle="normal|bold"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.485"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent" />
-
-<TextView
-    android:id="@+id/textView57"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:fontFamily="sans-serif-smallcaps"
-    android:letterSpacing="0.30"
-    android:textColor="#94FAFAFA"
-    android:text="Plastic Works"
-    android:textSize="25sp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/textView56" />
-
-<androidx.cardview.widget.CardView
-    android:id="@+id/cardView5"
-    android:layout_width="350dp"
-    android:layout_height="50dp"
-    android:layout_gravity="center"
-    android:layout_marginTop="70dp"
-    app:cardBackgroundColor="#2CFFFFFF"
-    app:cardCornerRadius="5dp"
-    app:cardElevation="0dp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/textView57">
-
-    <EditText
-        android:id="@+id/username_or_phone"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <TextView
+        android:id="@+id/textView56"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:background="@null"
-        android:gravity="start|center_vertical"
-        android:hint="Email/Phone"
-        android:paddingEnd="10dp"
-        android:textColor="#DAFDFDFD"
-        android:textColorHint="#C1FDFDFD"
-        android:textSize="18sp" />
-</androidx.cardview.widget.CardView>
+        android:layout_marginTop="75dp"
+        android:layout_marginEnd="20dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="Puran Singh Verma"
+        android:textColor="#94FAFAFA"
+        android:textSize="35sp"
+        android:textStyle="normal|bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.485"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-<androidx.cardview.widget.CardView
-    android:id="@+id/cardView6"
-    android:layout_width="350dp"
-    android:layout_height="50dp"
-    android:layout_gravity="center"
-    android:layout_marginTop="20dp"
-    app:cardBackgroundColor="#36FFFFFF"
-    app:cardCornerRadius="5dp"
-    app:cardElevation="0dp"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/cardView5">
+    <TextView
+        android:id="@+id/textView57"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:letterSpacing="0.30"
+        android:text="Plastic Works"
+        android:textColor="#94FAFAFA"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView56" />
 
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="20dp"
-        android:background="@null"
-        android:gravity="start|center_vertical"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:paddingEnd="10dp"
-        android:textColor="#DAFDFDFD"
-        android:textColorHint="#C1FDFDFD"
-        android:textSize="18sp" />
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView5"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="30dp"
+        app:cardBackgroundColor="#2CFFFFFF"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView57">
 
-</androidx.cardview.widget.CardView>
+        <EditText
+            android:id="@+id/username_or_phone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:background="@null"
+            android:gravity="start|center_vertical"
+            android:hint="Email/Phone"
+            android:paddingEnd="10dp"
+            android:textColor="#DAFDFDFD"
+            android:textColorHint="#C1FDFDFD"
+            android:textSize="18sp" />
+    </androidx.cardview.widget.CardView>
 
-<Button
-    android:id="@+id/btn_login"
-    android:layout_width="350dp"
-    android:layout_height="50dp"
-    android:layout_marginTop="55dp"
-    android:background="@drawable/btn_bg"
-    android:text="Login Here"
-    android:textAllCaps="false"
-    android:textColor="#C1FDFDFD"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.508"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/forgot_password_txt" />
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView6"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="30dp"
+        app:cardBackgroundColor="#36FFFFFF"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView5">
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:background="@null"
+            android:gravity="start|center_vertical"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:paddingEnd="10dp"
+            android:textColor="#DAFDFDFD"
+            android:textColorHint="#C1FDFDFD"
+            android:textSize="18sp" />
+
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/btn_bg"
+        android:text="Login Here"
+        android:textAllCaps="false"
+        android:textColor="#C1FDFDFD"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/forgot_password_txt" />
 
 <TextView
     android:id="@+id/forgot_password_txt"

@@ -3,25 +3,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/wishlistItemLayoutContainer"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="14dp"
     android:layout_marginEnd="14dp"
     android:background="#FFFFFF">
 
-    <ImageView
-        android:id="@+id/product_image"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        android:layout_marginStart="16dp"
+    <LinearLayout
+        android:id="@+id/linearLayout13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="#FFFFFF"
-        android:scaleType="fitCenter"
+        android:layout_marginEnd="14dp"
+        android:orientation="horizontal"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/unknown2" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/product_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="#FFFFFF"
+            android:elevation="0dp"
+            android:minWidth="140dp"
+            android:minHeight="140dp"
+            android:scaleType="centerCrop"
+            android:visibility="visible"
+            app:srcCompat="@drawable/unknown2" />
+    </LinearLayout>
 
     <!--    <View-->
     <!--        android:id="@+id/divider13"-->
@@ -48,7 +61,7 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/product_image" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout13" />
 
     <TextView
         android:id="@+id/product_subtitle"
@@ -67,9 +80,10 @@
         android:id="@+id/delete_btn"
         android:layout_width="30dp"
         android:layout_height="32dp"
+        android:clickable="true"
+        android:elevation="1dp"
         android:hapticFeedbackEnabled="true"
         android:padding="10dp"
-        android:clickable="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_cancel" />
@@ -81,7 +95,7 @@
         android:layout_marginTop="8dp"
         android:text="₹1600/pc"
         android:textColor="#484848"
-        android:textSize="15sp"
+        android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/product_subtitle"
         app:layout_constraintTop_toBottomOf="@+id/product_subtitle" />
@@ -120,14 +134,13 @@
         app:layout_constraintStart_toStartOf="@+id/product_initial_price"
         app:layout_constraintTop_toTopOf="@+id/product_initial_price" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/move_to_cart_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
         android:clickable="true"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -137,16 +150,21 @@
         <TextView
             android:id="@+id/move_to_cart_tv"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
             android:drawableStart="@drawable/ic_shopping_cart_3"
             android:drawablePadding="10dp"
             android:drawableTint="#B3000000"
             android:gravity="center"
             android:text="Move to Cart"
             android:textColor="#CC282828"
-            android:textStyle="bold" />
-    </LinearLayout>
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
         android:id="@+id/wishlistDivider"

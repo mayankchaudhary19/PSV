@@ -48,11 +48,9 @@
                 android:layout_height="29dp"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="371dp"
                 android:layout_marginBottom="8dp"
                 android:src="@drawable/ic_keyboard_arrow_left_black_24dp"
                 app:layout_constraintBottom_toTopOf="@+id/divider17"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -114,7 +112,7 @@
                             android:id="@+id/profile_image"
                             android:layout_width="95dp"
                             android:layout_height="95dp"
-                            android:layout_marginStart="35dp"
+                            android:layout_marginStart="30dp"
                             android:layout_marginTop="35dp"
 
 
@@ -155,7 +153,7 @@
                             android:id="@+id/divider18"
                             android:layout_width="0.5dp"
                             android:layout_height="0dp"
-                            android:layout_marginStart="35dp"
+                            android:layout_marginStart="29dp"
                             android:layout_marginTop="3dp"
                             android:layout_marginBottom="3dp"
                             android:background="#FFFFFF"
@@ -165,34 +163,38 @@
 
                         <TextView
                             android:id="@+id/profile_title_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="32dp"
+                            android:layout_width="0dp"
+                            android:layout_height="26dp"
+                            android:layout_marginStart="30dp"
+                            android:layout_marginEnd="25dp"
                             android:layout_marginBottom="14dp"
                             android:text="Mayank Chaudhary"
                             android:textColor="#FFFFFF"
-                            android:textSize="20sp"
                             android:textStyle="bold|italic"
+                            app:autoSizeMinTextSize="18sp"
+                            app:autoSizeTextType="uniform"
                             app:layout_constraintBottom_toTopOf="@+id/email"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/divider18" />
 
                         <TextView
                             android:id="@+id/email"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_height="20dp"
                             android:layout_marginBottom="2dp"
-                            android:fontFamily="sans-serif-condensed-light"
+                            android:fontFamily="sans-serif-light"
                             android:text="mayank1991999@gmail.com"
                             android:textColor="#FFFFFF"
-                            android:textSize="13.5sp"
+                            app:autoSizeTextType="uniform"
                             app:layout_constraintBottom_toTopOf="@+id/phone"
+                            app:layout_constraintEnd_toEndOf="@+id/profile_title_name"
                             app:layout_constraintStart_toStartOf="@+id/profile_title_name" />
 
                         <TextView
                             android:id="@+id/phone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-condensed-light"
+                            android:fontFamily="sans-serif-light"
                             android:text="+91 9968887670"
                             android:textColor="#FBFBFB"
                             android:textSize="13.5sp"
@@ -211,14 +213,16 @@
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/cardView2"
-                            android:layout_width="350dp"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginStart="30dp"
                             android:layout_marginTop="33dp"
+                            android:layout_marginEnd="30dp"
                             app:cardBackgroundColor="#2CFFFFFF"
                             app:cardCornerRadius="6dp"
                             app:cardElevation="0dp"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/divider16">
 
@@ -405,13 +409,14 @@
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/cardView13"
-                            android:layout_width="350dp"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="20dp"
                             app:cardBackgroundColor="#2CFFFFFF"
                             app:cardCornerRadius="6dp"
                             app:cardElevation="0dp"
+                            app:layout_constraintEnd_toEndOf="@+id/cardView2"
                             app:layout_constraintStart_toStartOf="@+id/cardView2"
                             app:layout_constraintTop_toBottomOf="@+id/cardView2">
 
@@ -562,13 +567,14 @@
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/cardView12"
-                            android:layout_width="350dp"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="20dp"
                             app:cardBackgroundColor="#2CFFFFFF"
                             app:cardCornerRadius="6dp"
                             app:cardElevation="0dp"
+                            app:layout_constraintEnd_toEndOf="@+id/cardView13"
                             app:layout_constraintStart_toStartOf="@+id/cardView13"
                             app:layout_constraintTop_toBottomOf="@+id/cardView13">
 
@@ -919,13 +925,14 @@
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/changePassword"
-                            android:layout_width="350dp"
+                            android:layout_width="0dp"
                             android:layout_height="45dp"
                             android:layout_gravity="center"
                             android:layout_marginTop="20dp"
                             app:cardBackgroundColor="#2CFFFFFF"
                             app:cardCornerRadius="6dp"
                             app:cardElevation="0dp"
+                            app:layout_constraintEnd_toEndOf="@+id/cardView12"
                             app:layout_constraintStart_toStartOf="@+id/cardView12"
                             app:layout_constraintTop_toBottomOf="@+id/cardView12">
 

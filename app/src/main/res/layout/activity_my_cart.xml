@@ -69,7 +69,6 @@
                 android:id="@+id/cart_items_recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clickable="true"
                 android:nestedScrollingEnabled="false">
 
             </androidx.recyclerview.widget.RecyclerView>
@@ -224,6 +223,7 @@
             android:background="@drawable/bg_buy_now_outline_box"
             android:gravity="center"
             android:text="Continue"
+            android:textStyle="bold"
             android:textAllCaps="true"
             android:textColor="#FFFFFF"
             android:textSize="14sp" />

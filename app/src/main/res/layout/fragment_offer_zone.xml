@@ -159,7 +159,7 @@
                     android:layout_marginTop="180dp"
                     android:rotation="-80"
                     android:tint="#FFFFFF"
-                    android:translationX="-15dp"
+                    android:translationX="-20dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_commerce" />
@@ -169,7 +169,7 @@
                     android:layout_width="155dp"
                     android:layout_height="171dp"
                     android:layout_marginTop="178dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginEnd="8dp"
                     android:tint="#FFFFFF"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -177,13 +177,18 @@
 
                 <ImageView
                     android:id="@+id/imageView44"
-                    android:layout_width="139dp"
-                    android:layout_height="103dp"
-                    android:layout_marginStart="110dp"
-                    android:layout_marginTop="240dp"
+                    android:layout_width="0dp"
+                    android:layout_height="95dp"
+                    android:layout_marginStart="120dp"
+                    android:layout_marginEnd="155dp"
+                    android:layout_marginBottom="5dp"
                     android:tint="#FFFFFF"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:translationX="-10dp"
+                    android:translationY="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/imageView42"
                     app:srcCompat="@drawable/ic_shopping_cart_2" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
