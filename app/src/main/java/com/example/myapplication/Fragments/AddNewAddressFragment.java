@@ -28,6 +28,7 @@ import com.example.myapplication.DBqueries;
 import com.example.myapplication.Models.AddressModel;
 import com.example.myapplication.MyAddressActivity;
 import com.example.myapplication.MyCartActivity;
+import com.example.myapplication.OrderSummaryActivity;
 import com.example.myapplication.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -42,7 +43,7 @@ import java.util.Map;
 public class AddNewAddressFragment extends BottomSheetDialogFragment {
 
     private ConstraintLayout bottomSheetBackground;
-    private TextView totalAmount,addAddressContinueBtn;
+    private TextView saveAddress,addAddressContinueBtn;
     private EditText name,contactNo,addressLine1,addressLine2,additionalInfo;
     private Dialog loadingDialog;
     private String totalAmt;
@@ -65,15 +66,14 @@ public class AddNewAddressFragment extends BottomSheetDialogFragment {
         contactNo=view.findViewById(R.id.contactAdd);
         addressLine1=view.findViewById(R.id.addressLine1Add);
         addressLine2=view.findViewById(R.id.addressLine2Add);
-        totalAmount=view.findViewById(R.id.cart_total_amount);
+        saveAddress=view.findViewById(R.id.saveAddress);
         addAddressContinueBtn=view.findViewById(R.id.addAddressContinueBtn);
         additionalInfo=view.findViewById(R.id.additionalInfoAdd);
 
         Bundle bundle = getArguments();
         String totalAmt = bundle.getString("params");
 
-        totalAmount.setText(totalAmt);
-
+//        totalAmount.setText(totalAmt);
         bottomSheetBackground.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,92 +89,20 @@ public class AddNewAddressFragment extends BottomSheetDialogFragment {
         loadingDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
 
+        saveAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveAddress();
+
+            }
+        });
 
         addAddressContinueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                name.setError(null);
-                contactNo.setError(null);
-                addressLine1.setError(null);
-                addressLine2.setError(null);
-
-                if (name.getText().toString().isEmpty()) {
-                    name.setError("Required!");
-                    return;
-                }
-                if (contactNo.getText().toString().isEmpty()) {
-                    contactNo.setError("Required!");
-                    return;
-                }
-                if (contactNo.getText().toString().length() <8 ) {
-                    contactNo.setError("Invalid Phone Number");
-                    return;
-                }
-                if (addressLine1.getText().toString().isEmpty()) {
-                    addressLine1.setError("Required!");
-                    return;
-                }
-                if (addressLine2.getText().toString().isEmpty()) {
-                    addressLine2.setError("Required!");
-                    return;
-                }
-
-                loadingDialog.show();
-
-
-                Map<String, Object> addAddress = new HashMap();
-                addAddress.put("addressListSize", (long) DBqueries.addressesModelList.size()+1);
-                addAddress.put("fullName"+String.valueOf((long)DBqueries.addressesModelList.size()+1),name.getText().toString());
-                addAddress.put("contactNo"+String.valueOf((long)DBqueries.addressesModelList.size()+1),contactNo.getText().toString());
-                addAddress.put("addressLineOne"+String.valueOf((long)DBqueries.addressesModelList.size()+1),addressLine1.getText().toString());
-                addAddress.put("addressLineTwo"+String.valueOf((long)DBqueries.addressesModelList.size()+1),addressLine2.getText().toString());
-                addAddress.put("additionalInfo"+String.valueOf((long)DBqueries.addressesModelList.size()+1),additionalInfo.getText().toString());
-                addAddress.put("selectedAddress"+String.valueOf((long)DBqueries.addressesModelList.size()+1),true);
-
-
-                if (DBqueries.addressesModelList.size() > 0) {
-
-                    addAddress.put("selectedAddress" + (DBqueries.selectedAddress + 1), false);
-                }
-
-                FirebaseFirestore.getInstance().collection("Users")
-                    .document(FirebaseAuth.getInstance().getUid())
-                    .collection("UserData")
-                    .document("Addresses")
-                    .update(addAddress)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
-
-                                if (DBqueries.addressesModelList.size() > 0) {
-                                    DBqueries.addressesModelList.get(DBqueries.selectedAddress).setSelectedAddress(false);
-                                }
-                                DBqueries.addressesModelList.add(new AddressModel(name.getText().toString(),
-                                        contactNo.getText().toString(),addressLine1.getText().toString(),
-                                        addressLine2.getText().toString(),additionalInfo.getText().toString(),true));
-
-//                                if (getIntent().getStringExtra("INTENT").equals("deliveryIntent")) {
-//                                    Intent deliveryIntent = new Intent(AddAddressActivity.this, DeliveryActivity.class);
-//                                    startActivity(deliveryIntent);
-//                                }
-//                                else{
-//                                    MyAddressActivity.refreshItem(DBqueries.selectedAddress, DBqueries.addressesModelList.size()-1);
-//                                }
-//                                DBqueries.selectedAddress = DBqueries.addressesModelList.size() - 1;
-//                                finish();
-                                MyCartActivity.openSelectedAdd=true;
-                                dismiss();
-
-                            }
-                            else{
-                                MyCartActivity.openSelectedAdd=false;
-                                String error = task.getException().getMessage();
-                                Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
-                            }
-                        loadingDialog.dismiss();
-                    }
-                });
+                saveAddress();
+                Intent intent =new Intent(getContext(), OrderSummaryActivity.class);
+                startActivity(intent);
 
             }
         });
@@ -187,6 +115,165 @@ public class AddNewAddressFragment extends BottomSheetDialogFragment {
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
+    private void saveAddress(){
+        name.setError(null);
+        contactNo.setError(null);
+        addressLine1.setError(null);
+        addressLine2.setError(null);
+
+        if (name.getText().toString().isEmpty()) {
+            name.setError("Required!");
+            return;
+        }
+        if (contactNo.getText().toString().isEmpty()) {
+            contactNo.setError("Required!");
+            return;
+        }
+        if (contactNo.getText().toString().length() <8 ) {
+            contactNo.setError("Invalid Phone Number");
+            return;
+        }
+        if (addressLine1.getText().toString().isEmpty()) {
+            addressLine1.setError("Required!");
+            return;
+        }
+        if (addressLine2.getText().toString().isEmpty()) {
+            addressLine2.setError("Required!");
+            return;
+        }
+
+        loadingDialog.show();
 
 
+        Map<String, Object> addAddress = new HashMap();
+        addAddress.put("addressListSize", (long) DBqueries.addressesModelList.size()+1);
+        addAddress.put("fullName"+String.valueOf((long)DBqueries.addressesModelList.size()+1),name.getText().toString());
+        addAddress.put("contactNo"+String.valueOf((long)DBqueries.addressesModelList.size()+1),contactNo.getText().toString());
+        addAddress.put("addressLineOne"+String.valueOf((long)DBqueries.addressesModelList.size()+1),addressLine1.getText().toString());
+        addAddress.put("addressLineTwo"+String.valueOf((long)DBqueries.addressesModelList.size()+1),addressLine2.getText().toString());
+        addAddress.put("additionalInfo"+String.valueOf((long)DBqueries.addressesModelList.size()+1),additionalInfo.getText().toString());
+        addAddress.put("selectedAddress"+String.valueOf((long)DBqueries.addressesModelList.size()+1),true);
+
+
+        FirebaseFirestore.getInstance().collection("Users")
+                .document(FirebaseAuth.getInstance().getUid())
+                .collection("UserData")
+                .document("Addresses")
+                .update(addAddress)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+
+//                            if (DBqueries.addressesModelList.size() > 0) {
+//                                DBqueries.addressesModelList.get(DBqueries.selectedAddress).setSelectedAddress(false);
+//                            }
+                            DBqueries.addressesModelList.add(new AddressModel(name.getText().toString(),
+                                    contactNo.getText().toString(),addressLine1.getText().toString(),
+                                    addressLine2.getText().toString(),additionalInfo.getText().toString(),true));
+
+//                                if (getIntent().getStringExtra("INTENT").equals("deliveryIntent")) {
+//                                    Intent deliveryIntent = new Intent(AddAddressActivity.this, DeliveryActivity.class);
+//                                    startActivity(deliveryIntent);
+//                                }
+//                                else{
+//                                    MyAddressActivity.refreshItem(DBqueries.selectedAddress, DBqueries.addressesModelList.size()-1);
+//                                }
+//                                DBqueries.selectedAddress = DBqueries.addressesModelList.size() - 1;
+//                                finish();
+                            dismiss();
+
+                        }
+                        else{
+                            String error = task.getException().getMessage();
+                            Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+                        }
+                        loadingDialog.dismiss();
+                    }
+                });
+
+    }
 }
+
+
+
+//                name.setError(null);
+//                contactNo.setError(null);
+//                addressLine1.setError(null);
+//                addressLine2.setError(null);
+//
+//                if (name.getText().toString().isEmpty()) {
+//                    name.setError("Required!");
+//                    return;
+//                }
+//                if (contactNo.getText().toString().isEmpty()) {
+//                    contactNo.setError("Required!");
+//                    return;
+//                }
+//                if (contactNo.getText().toString().length() <8 ) {
+//                    contactNo.setError("Invalid Phone Number");
+//                    return;
+//                }
+//                if (addressLine1.getText().toString().isEmpty()) {
+//                    addressLine1.setError("Required!");
+//                    return;
+//                }
+//                if (addressLine2.getText().toString().isEmpty()) {
+//                    addressLine2.setError("Required!");
+//                    return;
+//                }
+//
+//                loadingDialog.show();
+//
+//
+//                Map<String, Object> addAddress = new HashMap();
+//                addAddress.put("addressListSize", (long) DBqueries.addressesModelList.size()+1);
+//                addAddress.put("fullName"+String.valueOf((long)DBqueries.addressesModelList.size()+1),name.getText().toString());
+//                addAddress.put("contactNo"+String.valueOf((long)DBqueries.addressesModelList.size()+1),contactNo.getText().toString());
+//                addAddress.put("addressLineOne"+String.valueOf((long)DBqueries.addressesModelList.size()+1),addressLine1.getText().toString());
+//                addAddress.put("addressLineTwo"+String.valueOf((long)DBqueries.addressesModelList.size()+1),addressLine2.getText().toString());
+//                addAddress.put("additionalInfo"+String.valueOf((long)DBqueries.addressesModelList.size()+1),additionalInfo.getText().toString());
+//                addAddress.put("selectedAddress"+String.valueOf((long)DBqueries.addressesModelList.size()+1),true);
+//
+//
+//                if (DBqueries.addressesModelList.size() > 0) {
+//
+//                    addAddress.put("selectedAddress" + (DBqueries.selectedAddress + 1), false);
+//                }
+//
+//                FirebaseFirestore.getInstance().collection("Users")
+//                    .document(FirebaseAuth.getInstance().getUid())
+//                    .collection("UserData")
+//                    .document("Addresses")
+//                    .update(addAddress)
+//                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<Void> task) {
+//                            if(task.isSuccessful()){
+//
+//                                if (DBqueries.addressesModelList.size() > 0) {
+//                                    DBqueries.addressesModelList.get(DBqueries.selectedAddress).setSelectedAddress(false);
+//                                }
+//                                DBqueries.addressesModelList.add(new AddressModel(name.getText().toString(),
+//                                        contactNo.getText().toString(),addressLine1.getText().toString(),
+//                                        addressLine2.getText().toString(),additionalInfo.getText().toString(),true));
+//
+////                                if (getIntent().getStringExtra("INTENT").equals("deliveryIntent")) {
+////                                    Intent deliveryIntent = new Intent(AddAddressActivity.this, DeliveryActivity.class);
+////                                    startActivity(deliveryIntent);
+////                                }
+////                                else{
+////                                    MyAddressActivity.refreshItem(DBqueries.selectedAddress, DBqueries.addressesModelList.size()-1);
+////                                }
+////                                DBqueries.selectedAddress = DBqueries.addressesModelList.size() - 1;
+////                                finish();
+//                                dismiss();
+//
+//                            }
+//                            else{
+//                                String error = task.getException().getMessage();
+//                                Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
+//                            }
+//                        loadingDialog.dismiss();
+//                    }
+//                });

@@ -48,7 +48,6 @@ import java.util.List;
 
 public class MyCartActivity extends AppCompatActivity  {
 
-    public static  boolean openSelectedAdd=false;
     public static TextView cartTitle;
     public static LinearLayout priceDetailsLL,continueBtnLL;
     private Dialog loadingDialog;
@@ -585,10 +584,10 @@ public class MyCartActivity extends AppCompatActivity  {
 
         });
 
-        if  (openSelectedAdd){
-            DeliveryFragment bottomSheet2 = new DeliveryFragment();
-            bottomSheet2.show(getSupportFragmentManager(),"TAG");
-        }
+//        if  (openSelectedAdd){
+//            DeliveryFragment bottomSheet2 = new DeliveryFragment();
+//            bottomSheet2.show(getSupportFragmentManager(),"TAG");
+//        }
 //                    AddNewAddressFragment bottomSheet = new AddNewAddressFragment();
 //                    Bundle bundle = new Bundle();
 //                    bundle.putString("params", totalAmount.getText().toString());

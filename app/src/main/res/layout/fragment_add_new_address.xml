@@ -227,7 +227,7 @@
 <!--                            android:textSize="12sp" />-->
 <!--                    </LinearLayout>-->
                     <TextView
-                        android:id="@+id/changeAddress"
+                        android:id="@+id/saveAddress"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
