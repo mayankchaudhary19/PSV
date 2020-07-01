@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,6 +22,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,25 +33,29 @@ import com.example.myapplication.Models.AddressModel;
 import com.example.myapplication.MyAddressActivity;
 import com.example.myapplication.MyCartActivity;
 import com.example.myapplication.OrderSummaryActivity;
+import com.example.myapplication.ProductDetailsActivity;
 import com.example.myapplication.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class AddNewAddressFragment extends BottomSheetDialogFragment {
 
     private ConstraintLayout bottomSheetBackground;
-    private TextView saveAddress,addAddressContinueBtn;
-    private EditText name,contactNo,addressLine1,addressLine2,additionalInfo;
+    private TextView saveAddress,addAddressContinueBtn,addressType;
+    private TextInputEditText name,contactNo,addressLine1,addressLine2,state,pincode;
     private Dialog loadingDialog;
     private String totalAmt;
-
+    private LinearLayout addressSaveAsContainer;
+    private final int initialPosition=0;
 
 
     public AddNewAddressFragment() {
@@ -66,12 +74,15 @@ public class AddNewAddressFragment extends BottomSheetDialogFragment {
         contactNo=view.findViewById(R.id.contactAdd);
         addressLine1=view.findViewById(R.id.addressLine1Add);
         addressLine2=view.findViewById(R.id.addressLine2Add);
+        state=view.findViewById(R.id.stateAdd);
+        pincode=view.findViewById(R.id.pincodeAdd);
         saveAddress=view.findViewById(R.id.saveAddress);
         addAddressContinueBtn=view.findViewById(R.id.addAddressContinueBtn);
-        additionalInfo=view.findViewById(R.id.additionalInfoAdd);
+        addressSaveAsContainer=view.findViewById(R.id.addressSaveAsContainer);
+//        additionalInfo=view.findViewById(R.id.additionalInfoAdd);
 
-        Bundle bundle = getArguments();
-        String totalAmt = bundle.getString("params");
+//        Bundle bundle = getArguments();
+//        String totalAmt = bundle.getString("params");
 
 //        totalAmount.setText(totalAmt);
         bottomSheetBackground.setOnClickListener(new View.OnClickListener() {
@@ -106,6 +117,52 @@ public class AddNewAddressFragment extends BottomSheetDialogFragment {
 
             }
         });
+/////////
+        final View[] previousView = {view.findViewById(R.id.shop_Add)};
+        final String[] saveAsAddressType = new String[1];
+        TextView shopAdd=view.findViewById(R.id.shop_Add);
+        shopAdd.setSelected(true);
+        shopAdd.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFAB91")));
+        saveAsAddressType[0]="SHOP";
+
+
+        View.OnClickListener clickListener=new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                TextView previousText = (TextView) previousView[0];
+                TextView curText = (TextView) v;
+
+                // If the clicked view is selected, deselect it
+                if (curText.isSelected()) {
+                    curText.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFAB91")));
+                    curText.setSelected(true);
+                } else { // If this isn't selected, deselect  the previous one (if any)
+                    if (previousText != null && previousText.isSelected()) {
+                        previousText.setTextColor(ColorStateList.valueOf(Color.parseColor("#747474")));
+                        previousText.setSelected(false);
+                    }
+                    curText.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFAB91")));
+                    curText.setSelected(true);
+                    previousView[0] = v;
+                    saveAsAddressType[0] =((TextView) v).getText().toString();
+//                    Toast.makeText(getContext(), saveAsAddressType[0], Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+        view.findViewById(R.id.shop_Add).setOnClickListener(clickListener);
+        view.findViewById(R.id.godown_Add).setOnClickListener(clickListener);
+        view.findViewById(R.id.home_Add).setOnClickListener(clickListener);
+        view.findViewById(R.id.office_Add).setOnClickListener(clickListener);
+
+        addressSaveAsContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), saveAsAddressType[0], Toast.LENGTH_SHORT).show();
+            }
+        });
+
+//////
 
         return view;
     }
@@ -120,6 +177,9 @@ public class AddNewAddressFragment extends BottomSheetDialogFragment {
         contactNo.setError(null);
         addressLine1.setError(null);
         addressLine2.setError(null);
+        state.setError(null);
+        pincode.setError(null);
+
 
         if (name.getText().toString().isEmpty()) {
             name.setError("Required!");
@@ -141,7 +201,14 @@ public class AddNewAddressFragment extends BottomSheetDialogFragment {
             addressLine2.setError("Required!");
             return;
         }
-
+        if (state.getText().toString().isEmpty()) {
+            state.setError("Required!");
+            return;
+        }
+        if (pincode.getText().toString().isEmpty()) {
+            pincode.setError("Required!");
+            return;
+        }
         loadingDialog.show();
 
 
@@ -151,7 +218,10 @@ public class AddNewAddressFragment extends BottomSheetDialogFragment {
         addAddress.put("contactNo"+String.valueOf((long)DBqueries.addressesModelList.size()+1),contactNo.getText().toString());
         addAddress.put("addressLineOne"+String.valueOf((long)DBqueries.addressesModelList.size()+1),addressLine1.getText().toString());
         addAddress.put("addressLineTwo"+String.valueOf((long)DBqueries.addressesModelList.size()+1),addressLine2.getText().toString());
-        addAddress.put("additionalInfo"+String.valueOf((long)DBqueries.addressesModelList.size()+1),additionalInfo.getText().toString());
+        addAddress.put("state"+String.valueOf((long)DBqueries.addressesModelList.size()+1),state.getText().toString());
+        addAddress.put("pincode"+String.valueOf((long)DBqueries.addressesModelList.size()+1),pincode.getText().toString());
+        addAddress.put("addressType"+String.valueOf((long)DBqueries.addressesModelList.size()+1),initialPosition);
+//        addAddress.put("additionalInfo"+String.valueOf((long)DBqueries.addressesModelList.size()+1),additionalInfo.getText().toString());
         addAddress.put("selectedAddress"+String.valueOf((long)DBqueries.addressesModelList.size()+1),true);
 
 
@@ -164,13 +234,15 @@ public class AddNewAddressFragment extends BottomSheetDialogFragment {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
+//                            initialPosition = (Integer.parseInt(String.valueOf((long) task.getResult().get("" + x)))) - 1;
 
 //                            if (DBqueries.addressesModelList.size() > 0) {
 //                                DBqueries.addressesModelList.get(DBqueries.selectedAddress).setSelectedAddress(false);
 //                            }
                             DBqueries.addressesModelList.add(new AddressModel(name.getText().toString(),
                                     contactNo.getText().toString(),addressLine1.getText().toString(),
-                                    addressLine2.getText().toString(),additionalInfo.getText().toString(),true));
+                                    addressLine2.getText().toString(), state.getText().toString(),
+                                    pincode.getText().toString(),initialPosition,true));
 
 //                                if (getIntent().getStringExtra("INTENT").equals("deliveryIntent")) {
 //                                    Intent deliveryIntent = new Intent(AddAddressActivity.this, DeliveryActivity.class);

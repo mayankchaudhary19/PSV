@@ -5,16 +5,22 @@ public class AddressModel {
     private String contactNumber;
     private String addressLine1;
     private String addressLine2;
-    private String additionalInfo;
+//    private String additionalInfo;
+    private String state;
+    private String pincode;
+    private long addressType;
     private boolean selectedAddress;
 
-    public AddressModel(String fullName, String contactNumber, String addressLine1, String addressLine2,String additionalInfo, boolean selectedAddress) {
+    public AddressModel(String fullName, String contactNumber, String addressLine1, String addressLine2, String state, String pincode, long addressType, boolean selectedAddress) {
         this.fullName = fullName;
         this.contactNumber = contactNumber;
         this.addressLine1 = addressLine1;
         this.addressLine2 = addressLine2;
-        this.additionalInfo=additionalInfo;
+        this.state = state;
+        this.pincode = pincode;
+        this.addressType=addressType;
         this.selectedAddress = selectedAddress;
+
     }
 
     public String getFullName() {
@@ -49,12 +55,28 @@ public class AddressModel {
         this.addressLine2 = addressLine2;
     }
 
-    public String getAdditionalInfo() {
-        return additionalInfo;
+    public String getState() {
+        return state;
     }
 
-    public void setAdditionalInfo(String additionalInfo) {
-        this.additionalInfo = additionalInfo;
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getPincode() {
+        return pincode;
+    }
+
+    public void setPincode(String pincode) {
+        this.pincode = pincode;
+    }
+
+    public long getAddressType() {
+        return addressType;
+    }
+
+    public void setAddressType(long addressType) {
+        this.addressType = addressType;
     }
 
     public boolean isSelectedAddress() {

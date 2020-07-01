@@ -588,7 +588,9 @@ public class DBqueries {
                                             task.getResult().get("contactNo"+x).toString(),
                                             task.getResult().get("addressLineOne"+x).toString(),
                                             task.getResult().get("addressLineTwo"+x).toString(),
-                                            task.getResult().get("additionalInfo"+x).toString(),
+                                            task.getResult().get("state"+x).toString(),
+                                            task.getResult().get("pincode"+x).toString(),
+                                            (long)task.getResult().get("addressType"+x),
                                             (boolean) task.getResult().get("selectedAddress"+x)
                                             ));
 
