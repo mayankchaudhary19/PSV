@@ -46,6 +46,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class AddNewAddressFragment extends BottomSheetDialogFragment {
 
@@ -56,6 +57,10 @@ public class AddNewAddressFragment extends BottomSheetDialogFragment {
     private String totalAmt;
     private LinearLayout addressSaveAsContainer;
     private final int initialPosition=0;
+
+    private String[] saveAsAddressType = new String[1];
+
+    public static final Pattern VALID_MOBILE_NUMBER__REGEX = Pattern.compile("^((?!(0))[0-9]{10})$");
 
 
     public AddNewAddressFragment() {
@@ -81,9 +86,18 @@ public class AddNewAddressFragment extends BottomSheetDialogFragment {
         addressSaveAsContainer=view.findViewById(R.id.addressSaveAsContainer);
 //        additionalInfo=view.findViewById(R.id.additionalInfoAdd);
 
-//        Bundle bundle = getArguments();
-//        String totalAmt = bundle.getString("params");
+        Bundle bundle = getArguments();
+        boolean toShowContinueBtn = bundle.getBoolean("showContinueBtn");
 
+        if (toShowContinueBtn){
+            addAddressContinueBtn.setVisibility(View.VISIBLE);
+        }
+        else {
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            params.setMargins(28,30,28,28);
+            saveAddress.setLayoutParams(params);
+            addAddressContinueBtn.setVisibility(View.GONE);
+        }
 //        totalAmount.setText(totalAmt);
         bottomSheetBackground.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,26 +114,9 @@ public class AddNewAddressFragment extends BottomSheetDialogFragment {
         loadingDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
 
-        saveAddress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveAddress();
 
-            }
-        });
-
-        addAddressContinueBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveAddress();
-                Intent intent =new Intent(getContext(), OrderSummaryActivity.class);
-                startActivity(intent);
-
-            }
-        });
 /////////
         final View[] previousView = {view.findViewById(R.id.shop_Add)};
-        final String[] saveAsAddressType = new String[1];
         TextView shopAdd=view.findViewById(R.id.shop_Add);
         shopAdd.setSelected(true);
         shopAdd.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFAB91")));
@@ -162,7 +159,108 @@ public class AddNewAddressFragment extends BottomSheetDialogFragment {
             }
         });
 
-//////
+        saveAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                name.setError(null);
+                contactNo.setError(null);
+                addressLine1.setError(null);
+                addressLine2.setError(null);
+                state.setError(null);
+                pincode.setError(null);
+
+
+                if (name.getText().toString().isEmpty()) {
+                    name.setError("Required!");
+                    return;
+                }
+                if (contactNo.getText().toString().isEmpty()) {
+                    contactNo.setError("Required!");
+                    return;
+                }
+                if (contactNo.getText().toString().length() <8 ) {
+                    contactNo.setError("Invalid Phone Number");
+                    return;
+                }
+                if (!VALID_MOBILE_NUMBER__REGEX.matcher(contactNo.getText().toString()).find()) {
+                    contactNo.setError("Invalid Phone Number");
+                    return;
+                }
+                if (addressLine1.getText().toString().isEmpty()) {
+                    addressLine1.setError("Required!");
+                    return;
+                }
+                if (addressLine2.getText().toString().isEmpty()) {
+                    addressLine2.setError("Required!");
+                    return;
+                }
+                if (state.getText().toString().isEmpty()) {
+                    state.setError("Required!");
+                    return;
+                }
+                if (pincode.getText().toString().isEmpty()) {
+                    pincode.setError("Required!");
+                    return;
+                }
+                else{
+                    addData();
+                    Intent intent =new Intent(getContext(),OrderSummaryActivity.class);
+                    startActivity(intent);
+                }
+
+            }
+        });
+
+
+        addAddressContinueBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                name.setError(null);
+                contactNo.setError(null);
+                addressLine1.setError(null);
+                addressLine2.setError(null);
+                state.setError(null);
+                pincode.setError(null);
+
+
+                if (name.getText().toString().isEmpty()) {
+                    name.setError("Required!");
+                    return;
+                }
+                if (contactNo.getText().toString().isEmpty()) {
+                    contactNo.setError("Required!");
+                    return;
+                }
+                if (contactNo.getText().toString().length() <8 ) {
+                    contactNo.setError("Invalid Phone Number");
+                    return;
+                }
+                if (!VALID_MOBILE_NUMBER__REGEX.matcher(contactNo.getText().toString()).find()) {
+                    contactNo.setError("Invalid Phone Number");
+                    return;
+                }
+                if (addressLine1.getText().toString().isEmpty()) {
+                    addressLine1.setError("Required!");
+                    return;
+                }
+                if (addressLine2.getText().toString().isEmpty()) {
+                    addressLine2.setError("Required!");
+                    return;
+                }
+                if (state.getText().toString().isEmpty()) {
+                    state.setError("Required!");
+                    return;
+                }
+                if (pincode.getText().toString().isEmpty()) {
+                    pincode.setError("Required!");
+                    return;
+                }
+                else { addData();
+                }
+
+            }
+        });
+
 
         return view;
     }
@@ -172,43 +270,8 @@ public class AddNewAddressFragment extends BottomSheetDialogFragment {
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    private void saveAddress(){
-        name.setError(null);
-        contactNo.setError(null);
-        addressLine1.setError(null);
-        addressLine2.setError(null);
-        state.setError(null);
-        pincode.setError(null);
 
-
-        if (name.getText().toString().isEmpty()) {
-            name.setError("Required!");
-            return;
-        }
-        if (contactNo.getText().toString().isEmpty()) {
-            contactNo.setError("Required!");
-            return;
-        }
-        if (contactNo.getText().toString().length() <8 ) {
-            contactNo.setError("Invalid Phone Number");
-            return;
-        }
-        if (addressLine1.getText().toString().isEmpty()) {
-            addressLine1.setError("Required!");
-            return;
-        }
-        if (addressLine2.getText().toString().isEmpty()) {
-            addressLine2.setError("Required!");
-            return;
-        }
-        if (state.getText().toString().isEmpty()) {
-            state.setError("Required!");
-            return;
-        }
-        if (pincode.getText().toString().isEmpty()) {
-            pincode.setError("Required!");
-            return;
-        }
+    private void addData(){
         loadingDialog.show();
 
 
@@ -220,7 +283,7 @@ public class AddNewAddressFragment extends BottomSheetDialogFragment {
         addAddress.put("addressLineTwo"+String.valueOf((long)DBqueries.addressesModelList.size()+1),addressLine2.getText().toString());
         addAddress.put("state"+String.valueOf((long)DBqueries.addressesModelList.size()+1),state.getText().toString());
         addAddress.put("pincode"+String.valueOf((long)DBqueries.addressesModelList.size()+1),pincode.getText().toString());
-        addAddress.put("addressType"+String.valueOf((long)DBqueries.addressesModelList.size()+1),initialPosition);
+        addAddress.put("addressType"+String.valueOf((long)DBqueries.addressesModelList.size()+1),saveAsAddressType[0]);
 //        addAddress.put("additionalInfo"+String.valueOf((long)DBqueries.addressesModelList.size()+1),additionalInfo.getText().toString());
         addAddress.put("selectedAddress"+String.valueOf((long)DBqueries.addressesModelList.size()+1),true);
 
@@ -242,7 +305,8 @@ public class AddNewAddressFragment extends BottomSheetDialogFragment {
                             DBqueries.addressesModelList.add(new AddressModel(name.getText().toString(),
                                     contactNo.getText().toString(),addressLine1.getText().toString(),
                                     addressLine2.getText().toString(), state.getText().toString(),
-                                    pincode.getText().toString(),initialPosition,true));
+                                    pincode.getText().toString(),saveAsAddressType[0],true));
+
 
 //                                if (getIntent().getStringExtra("INTENT").equals("deliveryIntent")) {
 //                                    Intent deliveryIntent = new Intent(AddAddressActivity.this, DeliveryActivity.class);

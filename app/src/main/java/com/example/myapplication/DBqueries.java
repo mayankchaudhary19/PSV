@@ -574,7 +574,7 @@ public class DBqueries {
                                 Bundle bundle = new Bundle();
                                 bundle.putString("params", MyCartActivity.totalAmount.getText().toString());
                                 bottomSheet.setArguments(bundle);
-                                bottomSheet.show(((MyCartActivity) context.getApplicationContext()).getSupportFragmentManager(),"TAG");
+                                bottomSheet.show(((MyAddressActivity)context).getSupportFragmentManager(),"TAG");
 
                                 // matlab user ke pass agar koi address nhi h to list size zero hoga
 //                                deliveryIntent = new Intent(context,AddAddressActivity.class);
@@ -590,7 +590,7 @@ public class DBqueries {
                                             task.getResult().get("addressLineTwo"+x).toString(),
                                             task.getResult().get("state"+x).toString(),
                                             task.getResult().get("pincode"+x).toString(),
-                                            (long)task.getResult().get("addressType"+x),
+                                            (String) task.getResult().get("addressType"+x),
                                             (boolean) task.getResult().get("selectedAddress"+x)
                                             ));
 

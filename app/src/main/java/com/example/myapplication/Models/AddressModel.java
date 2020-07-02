@@ -8,10 +8,10 @@ public class AddressModel {
 //    private String additionalInfo;
     private String state;
     private String pincode;
-    private long addressType;
+    private String  addressType;
     private boolean selectedAddress;
 
-    public AddressModel(String fullName, String contactNumber, String addressLine1, String addressLine2, String state, String pincode, long addressType, boolean selectedAddress) {
+    public AddressModel(String fullName, String contactNumber, String addressLine1, String addressLine2, String state, String pincode, String addressType, boolean selectedAddress) {
         this.fullName = fullName;
         this.contactNumber = contactNumber;
         this.addressLine1 = addressLine1;
@@ -71,11 +71,11 @@ public class AddressModel {
         this.pincode = pincode;
     }
 
-    public long getAddressType() {
+    public String getAddressType() {
         return addressType;
     }
 
-    public void setAddressType(long addressType) {
+    public void setAddressType(String addressType) {
         this.addressType = addressType;
     }
 

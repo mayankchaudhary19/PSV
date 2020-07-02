@@ -44,6 +44,8 @@ public class RegisterFragment extends Fragment {
     }
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+    public static final Pattern VALID_MOBILE_NUMBER__REGEX =
+            Pattern.compile("^((?!(0))[0-9]{10})$");
 
 
     private TextView companyName,login_txt;
@@ -132,6 +134,10 @@ public class RegisterFragment extends Fragment {
                 }
                 if (!VALID_EMAIL_ADDRESS_REGEX.matcher(username.getText().toString()).find()) {
                     username.setError("Invalid  E-mail");
+                    return;
+                }
+                if (!VALID_MOBILE_NUMBER__REGEX.matcher(phone.getText().toString()).find()) {
+                    phone.setError("Invalid Phone Number");
                     return;
                 }
                 if (phone.getText().toString().length() != 10) {

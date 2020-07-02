@@ -590,334 +590,333 @@
                                     android:layout_gravity="center_vertical"
                                     android:layout_marginStart="20dp"
                                     android:layout_marginEnd="10dp"
-                                    android:drawableEnd="@drawable/ic_keyboard_arrow_down_black_24dp"
                                     android:fontFamily="sans-serif"
                                     android:paddingTop="10dp"
                                     android:paddingBottom="10dp"
-                                    android:text="Add Shipping Address"
+                                    android:text="Manage Shipping Addresses"
                                     android:textColor="#BFFDFDFD"
                                     android:textSize="15sp" />
 
-                                <androidx.constraintlayout.widget.ConstraintLayout
-                                    android:id="@+id/addShippingAddressConstraintLayout"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:visibility="gone">
+<!--                                <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                                    android:id="@+id/addShippingAddressConstraintLayout"-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:visibility="gone">-->
 
-                                    <LinearLayout
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginStart="18dp"
-                                        android:layout_marginTop="16dp"
-                                        android:layout_marginEnd="18dp"
-                                        android:layout_marginBottom="18dp"
-                                        android:orientation="horizontal"
-                                        app:layout_constraintBottom_toBottomOf="parent"
-                                        app:layout_constraintEnd_toEndOf="parent"
-                                        app:layout_constraintStart_toStartOf="parent"
-                                        app:layout_constraintTop_toBottomOf="@+id/cardView21">
+<!--                                    <LinearLayout-->
+<!--                                        android:layout_width="match_parent"-->
+<!--                                        android:layout_height="match_parent"-->
+<!--                                        android:layout_marginStart="18dp"-->
+<!--                                        android:layout_marginTop="16dp"-->
+<!--                                        android:layout_marginEnd="18dp"-->
+<!--                                        android:layout_marginBottom="18dp"-->
+<!--                                        android:orientation="horizontal"-->
+<!--                                        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                                        app:layout_constraintTop_toBottomOf="@+id/cardView21">-->
 
-                                        <Button
-                                            android:id="@+id/addNewAddressBtn"
-                                            android:layout_width="0dp"
-                                            android:layout_height="36dp"
-                                            android:layout_marginEnd="8dp"
-                                            android:layout_weight="1"
-                                            android:background="@drawable/btn_bg"
-                                            android:text="Add New"
-                                            android:textAllCaps="false"
-                                            android:textColor="#C1FDFDFD" />
+<!--                                        <Button-->
+<!--                                            android:id="@+id/addNewAddressBtn"-->
+<!--                                            android:layout_width="0dp"-->
+<!--                                            android:layout_height="36dp"-->
+<!--                                            android:layout_marginEnd="8dp"-->
+<!--                                            android:layout_weight="1"-->
+<!--                                            android:background="@drawable/btn_bg"-->
+<!--                                            android:text="Add New"-->
+<!--                                            android:textAllCaps="false"-->
+<!--                                            android:textColor="#C1FDFDFD" />-->
 
-                                        <Button
-                                            android:id="@+id/viewAllAddressBtn"
-                                            android:layout_width="0dp"
-                                            android:layout_height="36dp"
-                                            android:layout_marginStart="8dp"
-                                            android:layout_weight="1"
-                                            android:background="@drawable/btn_bg"
-                                            android:text="View All"
-                                            android:textAllCaps="false"
-                                            android:textColor="#C1FDFDFD" />
-                                    </LinearLayout>
+<!--                                        <Button-->
+<!--                                            android:id="@+id/viewAllAddressBtn"-->
+<!--                                            android:layout_width="0dp"-->
+<!--                                            android:layout_height="36dp"-->
+<!--                                            android:layout_marginStart="8dp"-->
+<!--                                            android:layout_weight="1"-->
+<!--                                            android:background="@drawable/btn_bg"-->
+<!--                                            android:text="View All"-->
+<!--                                            android:textAllCaps="false"-->
+<!--                                            android:textColor="#C1FDFDFD" />-->
+<!--                                    </LinearLayout>-->
 
-                                    <androidx.cardview.widget.CardView
-                                        android:id="@+id/cardView19"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginStart="16dp"
-                                        android:layout_marginTop="7dp"
-                                        android:layout_marginEnd="16dp"
-                                        android:layout_weight="1"
-                                        app:cardBackgroundColor="#0A000000"
-                                        app:cardCornerRadius="5dp"
-                                        app:cardElevation="0dp"
-                                        app:cardMaxElevation="0dp"
-                                        app:layout_constraintEnd_toEndOf="parent"
-                                        app:layout_constraintStart_toStartOf="parent"
-                                        app:layout_constraintTop_toTopOf="parent">
+<!--                                    <androidx.cardview.widget.CardView-->
+<!--                                        android:id="@+id/cardView19"-->
+<!--                                        android:layout_width="match_parent"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        android:layout_marginStart="16dp"-->
+<!--                                        android:layout_marginTop="7dp"-->
+<!--                                        android:layout_marginEnd="16dp"-->
+<!--                                        android:layout_weight="1"-->
+<!--                                        app:cardBackgroundColor="#0A000000"-->
+<!--                                        app:cardCornerRadius="5dp"-->
+<!--                                        app:cardElevation="0dp"-->
+<!--                                        app:cardMaxElevation="0dp"-->
+<!--                                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                                        app:layout_constraintTop_toTopOf="parent">-->
 
-                                        <androidx.constraintlayout.widget.ConstraintLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent">
+<!--                                        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                                            android:layout_width="match_parent"-->
+<!--                                            android:layout_height="match_parent">-->
 
-                                            <TextView
-                                                android:id="@+id/address_full_name"
-                                                android:layout_width="0dp"
-                                                android:layout_height="wrap_content"
-                                                android:layout_marginStart="14dp"
-                                                android:layout_marginTop="14dp"
-                                                android:layout_marginEnd="7dp"
-                                                android:text="Mayank Chaudhary"
-                                                android:textColor="#E4EDEDED"
-                                                android:textSize="15sp"
-                                                android:textStyle="bold|italic"
-                                                app:layout_constraintEnd_toEndOf="parent"
-                                                app:layout_constraintStart_toStartOf="parent"
-                                                app:layout_constraintTop_toTopOf="parent" />
+<!--                                            <TextView-->
+<!--                                                android:id="@+id/address_full_name"-->
+<!--                                                android:layout_width="0dp"-->
+<!--                                                android:layout_height="wrap_content"-->
+<!--                                                android:layout_marginStart="14dp"-->
+<!--                                                android:layout_marginTop="14dp"-->
+<!--                                                android:layout_marginEnd="7dp"-->
+<!--                                                android:text="Mayank Chaudhary"-->
+<!--                                                android:textColor="#E4EDEDED"-->
+<!--                                                android:textSize="15sp"-->
+<!--                                                android:textStyle="bold|italic"-->
+<!--                                                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                                                app:layout_constraintStart_toStartOf="parent"-->
+<!--                                                app:layout_constraintTop_toTopOf="parent" />-->
 
-                                            <TextView
-                                                android:id="@+id/address_line_1"
-                                                android:layout_width="0dp"
-                                                android:layout_height="wrap_content"
-                                                android:layout_marginTop="4dp"
-                                                android:layout_marginEnd="7dp"
-                                                android:text="H.No.-9577, Library Road, Azad Market,"
-                                                android:textColor="#E4EDEDED"
-                                                android:textSize="12sp"
-                                                app:layout_constraintEnd_toEndOf="parent"
-                                                app:layout_constraintStart_toStartOf="@+id/address_full_name"
-                                                app:layout_constraintTop_toBottomOf="@+id/address_full_name" />
+<!--                                            <TextView-->
+<!--                                                android:id="@+id/address_line_1"-->
+<!--                                                android:layout_width="0dp"-->
+<!--                                                android:layout_height="wrap_content"-->
+<!--                                                android:layout_marginTop="4dp"-->
+<!--                                                android:layout_marginEnd="7dp"-->
+<!--                                                android:text="H.No.-9577, Library Road, Azad Market,"-->
+<!--                                                android:textColor="#E4EDEDED"-->
+<!--                                                android:textSize="12sp"-->
+<!--                                                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                                                app:layout_constraintStart_toStartOf="@+id/address_full_name"-->
+<!--                                                app:layout_constraintTop_toBottomOf="@+id/address_full_name" />-->
 
-                                            <TextView
-                                                android:id="@+id/address_line_2_pincode"
-                                                android:layout_width="0dp"
-                                                android:layout_height="wrap_content"
-                                                android:layout_marginTop="3dp"
-                                                android:layout_marginEnd="7dp"
-                                                android:text="Near Sanatan Dharam Mandir, Delhi-110006"
-                                                android:textColor="#E4EDEDED"
-                                                android:textSize="12sp"
-                                                app:layout_constraintEnd_toEndOf="parent"
-                                                app:layout_constraintStart_toStartOf="@+id/address_line_1"
-                                                app:layout_constraintTop_toBottomOf="@+id/address_line_1" />
+<!--                                            <TextView-->
+<!--                                                android:id="@+id/address_line_2_pincode"-->
+<!--                                                android:layout_width="0dp"-->
+<!--                                                android:layout_height="wrap_content"-->
+<!--                                                android:layout_marginTop="3dp"-->
+<!--                                                android:layout_marginEnd="7dp"-->
+<!--                                                android:text="Near Sanatan Dharam Mandir, Delhi-110006"-->
+<!--                                                android:textColor="#E4EDEDED"-->
+<!--                                                android:textSize="12sp"-->
+<!--                                                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                                                app:layout_constraintStart_toStartOf="@+id/address_line_1"-->
+<!--                                                app:layout_constraintTop_toBottomOf="@+id/address_line_1" />-->
 
-                                            <TextView
-                                                android:id="@+id/address_phone_number1"
-                                                android:layout_width="0dp"
-                                                android:layout_height="wrap_content"
-                                                android:layout_marginTop="3dp"
-                                                android:layout_marginBottom="12dp"
-                                                android:text="+91 9968887670"
-                                                android:textColor="#E4EDEDED"
-                                                android:textSize="12sp"
-                                                app:layout_constraintBottom_toBottomOf="parent"
-                                                app:layout_constraintStart_toStartOf="@+id/address_line_2_pincode"
-                                                app:layout_constraintTop_toBottomOf="@+id/address_line_2_pincode"
-                                                app:layout_constraintVertical_bias="0.0" />
+<!--                                            <TextView-->
+<!--                                                android:id="@+id/address_phone_number1"-->
+<!--                                                android:layout_width="0dp"-->
+<!--                                                android:layout_height="wrap_content"-->
+<!--                                                android:layout_marginTop="3dp"-->
+<!--                                                android:layout_marginBottom="12dp"-->
+<!--                                                android:text="+91 9968887670"-->
+<!--                                                android:textColor="#E4EDEDED"-->
+<!--                                                android:textSize="12sp"-->
+<!--                                                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                                                app:layout_constraintStart_toStartOf="@+id/address_line_2_pincode"-->
+<!--                                                app:layout_constraintTop_toBottomOf="@+id/address_line_2_pincode"-->
+<!--                                                app:layout_constraintVertical_bias="0.0" />-->
 
-                                        </androidx.constraintlayout.widget.ConstraintLayout>
-                                    </androidx.cardview.widget.CardView>
+<!--                                        </androidx.constraintlayout.widget.ConstraintLayout>-->
+<!--                                    </androidx.cardview.widget.CardView>-->
 
-                                    <androidx.cardview.widget.CardView
-                                        android:id="@+id/cardView20"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginStart="16dp"
-                                        android:layout_marginTop="16dp"
-                                        android:layout_marginEnd="16dp"
-                                        android:layout_weight="1"
-                                        app:cardBackgroundColor="#0A000000"
-                                        app:cardCornerRadius="5dp"
-                                        app:cardElevation="0dp"
-                                        app:cardMaxElevation="0dp"
-                                        app:layout_constraintEnd_toEndOf="parent"
-                                        app:layout_constraintStart_toStartOf="parent"
-                                        app:layout_constraintTop_toBottomOf="@+id/cardView19">
+<!--                                    <androidx.cardview.widget.CardView-->
+<!--                                        android:id="@+id/cardView20"-->
+<!--                                        android:layout_width="match_parent"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        android:layout_marginStart="16dp"-->
+<!--                                        android:layout_marginTop="16dp"-->
+<!--                                        android:layout_marginEnd="16dp"-->
+<!--                                        android:layout_weight="1"-->
+<!--                                        app:cardBackgroundColor="#0A000000"-->
+<!--                                        app:cardCornerRadius="5dp"-->
+<!--                                        app:cardElevation="0dp"-->
+<!--                                        app:cardMaxElevation="0dp"-->
+<!--                                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                                        app:layout_constraintTop_toBottomOf="@+id/cardView19">-->
 
-                                        <androidx.constraintlayout.widget.ConstraintLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content">
+<!--                                        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                                            android:layout_width="match_parent"-->
+<!--                                            android:layout_height="wrap_content">-->
 
-                                            <TextView
-                                                android:id="@+id/address_phone_number2"
-                                                android:layout_width="0dp"
-                                                android:layout_height="wrap_content"
-                                                android:layout_gravity="center"
-                                                android:layout_marginTop="3dp"
-                                                android:layout_marginBottom="12dp"
-                                                android:text="+91 9968887670"
-                                                android:textColor="#E4EDEDED"
-                                                android:textSize="12sp"
-                                                app:layout_constraintBottom_toBottomOf="parent"
-                                                app:layout_constraintStart_toStartOf="@+id/address_line_2_pincode_ofAdd2"
-                                                app:layout_constraintTop_toBottomOf="@+id/address_line_2_pincode_ofAdd2"
-                                                app:layout_constraintVertical_bias="0.0" />
+<!--                                            <TextView-->
+<!--                                                android:id="@+id/address_phone_number2"-->
+<!--                                                android:layout_width="0dp"-->
+<!--                                                android:layout_height="wrap_content"-->
+<!--                                                android:layout_gravity="center"-->
+<!--                                                android:layout_marginTop="3dp"-->
+<!--                                                android:layout_marginBottom="12dp"-->
+<!--                                                android:text="+91 9968887670"-->
+<!--                                                android:textColor="#E4EDEDED"-->
+<!--                                                android:textSize="12sp"-->
+<!--                                                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                                                app:layout_constraintStart_toStartOf="@+id/address_line_2_pincode_ofAdd2"-->
+<!--                                                app:layout_constraintTop_toBottomOf="@+id/address_line_2_pincode_ofAdd2"-->
+<!--                                                app:layout_constraintVertical_bias="0.0" />-->
 
-                                            <TextView
-                                                android:id="@+id/address_full_name2"
-                                                android:layout_width="0dp"
-                                                android:layout_height="wrap_content"
-                                                android:layout_gravity="center"
-                                                android:layout_marginStart="14dp"
-                                                android:layout_marginTop="14dp"
-                                                android:layout_marginEnd="7dp"
-                                                android:text="Mayank Chaudhary"
-                                                android:textColor="#E4EDEDED"
-                                                android:textSize="15sp"
-                                                android:textStyle="bold|italic"
-                                                app:layout_constraintEnd_toEndOf="parent"
-                                                app:layout_constraintStart_toStartOf="parent"
-                                                app:layout_constraintTop_toTopOf="parent" />
+<!--                                            <TextView-->
+<!--                                                android:id="@+id/address_full_name2"-->
+<!--                                                android:layout_width="0dp"-->
+<!--                                                android:layout_height="wrap_content"-->
+<!--                                                android:layout_gravity="center"-->
+<!--                                                android:layout_marginStart="14dp"-->
+<!--                                                android:layout_marginTop="14dp"-->
+<!--                                                android:layout_marginEnd="7dp"-->
+<!--                                                android:text="Mayank Chaudhary"-->
+<!--                                                android:textColor="#E4EDEDED"-->
+<!--                                                android:textSize="15sp"-->
+<!--                                                android:textStyle="bold|italic"-->
+<!--                                                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                                                app:layout_constraintStart_toStartOf="parent"-->
+<!--                                                app:layout_constraintTop_toTopOf="parent" />-->
 
-                                            <TextView
-                                                android:id="@+id/address_line_1_ofAdd_2"
-                                                android:layout_width="0dp"
-                                                android:layout_height="wrap_content"
-                                                android:layout_gravity="center"
-                                                android:layout_marginTop="4dp"
-                                                android:layout_marginEnd="7dp"
-                                                android:text="H.No.-9577, Library Road, Azad Market,"
-                                                android:textColor="#E4EDEDED"
-                                                android:textSize="12sp"
-                                                app:layout_constraintEnd_toEndOf="parent"
-                                                app:layout_constraintStart_toStartOf="@+id/address_full_name2"
-                                                app:layout_constraintTop_toBottomOf="@+id/address_full_name2" />
+<!--                                            <TextView-->
+<!--                                                android:id="@+id/address_line_1_ofAdd_2"-->
+<!--                                                android:layout_width="0dp"-->
+<!--                                                android:layout_height="wrap_content"-->
+<!--                                                android:layout_gravity="center"-->
+<!--                                                android:layout_marginTop="4dp"-->
+<!--                                                android:layout_marginEnd="7dp"-->
+<!--                                                android:text="H.No.-9577, Library Road, Azad Market,"-->
+<!--                                                android:textColor="#E4EDEDED"-->
+<!--                                                android:textSize="12sp"-->
+<!--                                                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                                                app:layout_constraintStart_toStartOf="@+id/address_full_name2"-->
+<!--                                                app:layout_constraintTop_toBottomOf="@+id/address_full_name2" />-->
 
-                                            <TextView
-                                                android:id="@+id/address_line_2_pincode_ofAdd2"
-                                                android:layout_width="0dp"
-                                                android:layout_height="wrap_content"
-                                                android:layout_gravity="center"
-                                                android:layout_marginTop="3dp"
-                                                android:layout_marginEnd="7dp"
-                                                android:text="Near Sanatan Dharam Mandir, Delhi-110006"
-                                                android:textColor="#E4EDEDED"
-                                                android:textSize="12sp"
-                                                app:layout_constraintEnd_toEndOf="parent"
-                                                app:layout_constraintStart_toStartOf="@+id/address_line_1_ofAdd_2"
-                                                app:layout_constraintTop_toBottomOf="@+id/address_line_1_ofAdd_2" />
-                                        </androidx.constraintlayout.widget.ConstraintLayout>
-                                    </androidx.cardview.widget.CardView>
+<!--                                            <TextView-->
+<!--                                                android:id="@+id/address_line_2_pincode_ofAdd2"-->
+<!--                                                android:layout_width="0dp"-->
+<!--                                                android:layout_height="wrap_content"-->
+<!--                                                android:layout_gravity="center"-->
+<!--                                                android:layout_marginTop="3dp"-->
+<!--                                                android:layout_marginEnd="7dp"-->
+<!--                                                android:text="Near Sanatan Dharam Mandir, Delhi-110006"-->
+<!--                                                android:textColor="#E4EDEDED"-->
+<!--                                                android:textSize="12sp"-->
+<!--                                                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                                                app:layout_constraintStart_toStartOf="@+id/address_line_1_ofAdd_2"-->
+<!--                                                app:layout_constraintTop_toBottomOf="@+id/address_line_1_ofAdd_2" />-->
+<!--                                        </androidx.constraintlayout.widget.ConstraintLayout>-->
+<!--                                    </androidx.cardview.widget.CardView>-->
 
-                                    <androidx.cardview.widget.CardView
-                                        android:id="@+id/cardView21"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginStart="16dp"
-                                        android:layout_marginTop="16dp"
-                                        android:layout_marginEnd="16dp"
-                                        android:layout_weight="1"
-                                        android:visibility="gone"
-                                        app:cardBackgroundColor="#0A000000"
-                                        app:cardCornerRadius="5dp"
-                                        app:cardElevation="0dp"
-                                        app:cardMaxElevation="0dp"
-                                        app:layout_constraintEnd_toEndOf="parent"
-                                        app:layout_constraintStart_toStartOf="parent"
-                                        app:layout_constraintTop_toBottomOf="@+id/cardView20">
+<!--                                    <androidx.cardview.widget.CardView-->
+<!--                                        android:id="@+id/cardView21"-->
+<!--                                        android:layout_width="match_parent"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        android:layout_marginStart="16dp"-->
+<!--                                        android:layout_marginTop="16dp"-->
+<!--                                        android:layout_marginEnd="16dp"-->
+<!--                                        android:layout_weight="1"-->
+<!--                                        android:visibility="gone"-->
+<!--                                        app:cardBackgroundColor="#0A000000"-->
+<!--                                        app:cardCornerRadius="5dp"-->
+<!--                                        app:cardElevation="0dp"-->
+<!--                                        app:cardMaxElevation="0dp"-->
+<!--                                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                                        app:layout_constraintTop_toBottomOf="@+id/cardView20">-->
 
-                                        <androidx.constraintlayout.widget.ConstraintLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent">
+<!--                                        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                                            android:layout_width="match_parent"-->
+<!--                                            android:layout_height="match_parent">-->
 
-                                            <EditText
-                                                android:id="@+id/address_phone_number3"
-                                                android:layout_width="0dp"
-                                                android:layout_height="wrap_content"
-                                                android:layout_gravity="center"
-                                                android:layout_marginTop="3dp"
-                                                android:layout_marginBottom="12dp"
-                                                android:background="#01111111"
-                                                android:ems="10"
-                                                android:hint="Mobile Number"
-                                                android:inputType="phone"
-                                                android:singleLine="true"
-                                                android:text="+91 9968887670"
-                                                android:textColor="#E4EDEDED"
-                                                android:textColorHint="#B3EDEDED"
-                                                android:textSize="12sp"
-                                                app:layout_constraintBottom_toBottomOf="parent"
-                                                app:layout_constraintStart_toStartOf="@+id/address_line_2_pincode_ofAdd3"
-                                                app:layout_constraintTop_toBottomOf="@+id/address_line_2_pincode_ofAdd3"
-                                                app:layout_constraintVertical_bias="0.0" />
+<!--                                            <EditText-->
+<!--                                                android:id="@+id/address_phone_number3"-->
+<!--                                                android:layout_width="0dp"-->
+<!--                                                android:layout_height="wrap_content"-->
+<!--                                                android:layout_gravity="center"-->
+<!--                                                android:layout_marginTop="3dp"-->
+<!--                                                android:layout_marginBottom="12dp"-->
+<!--                                                android:background="#01111111"-->
+<!--                                                android:ems="10"-->
+<!--                                                android:hint="Mobile Number"-->
+<!--                                                android:inputType="phone"-->
+<!--                                                android:singleLine="true"-->
+<!--                                                android:text="+91 9968887670"-->
+<!--                                                android:textColor="#E4EDEDED"-->
+<!--                                                android:textColorHint="#B3EDEDED"-->
+<!--                                                android:textSize="12sp"-->
+<!--                                                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                                                app:layout_constraintStart_toStartOf="@+id/address_line_2_pincode_ofAdd3"-->
+<!--                                                app:layout_constraintTop_toBottomOf="@+id/address_line_2_pincode_ofAdd3"-->
+<!--                                                app:layout_constraintVertical_bias="0.0" />-->
 
-                                            <TextView
-                                                android:id="@+id/textView68"
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:layout_marginStart="14dp"
-                                                android:layout_marginTop="9dp"
-                                                android:text="Address 3"
-                                                android:textAllCaps="true"
-                                                android:textColor="#BFFDFDFD"
-                                                android:textStyle="bold"
-                                                app:layout_constraintStart_toStartOf="parent"
-                                                app:layout_constraintTop_toTopOf="parent" />
+<!--                                            <TextView-->
+<!--                                                android:id="@+id/textView68"-->
+<!--                                                android:layout_width="wrap_content"-->
+<!--                                                android:layout_height="wrap_content"-->
+<!--                                                android:layout_marginStart="14dp"-->
+<!--                                                android:layout_marginTop="9dp"-->
+<!--                                                android:text="Address 3"-->
+<!--                                                android:textAllCaps="true"-->
+<!--                                                android:textColor="#BFFDFDFD"-->
+<!--                                                android:textStyle="bold"-->
+<!--                                                app:layout_constraintStart_toStartOf="parent"-->
+<!--                                                app:layout_constraintTop_toTopOf="parent" />-->
 
-                                            <EditText
-                                                android:id="@+id/address_full_name3"
-                                                android:layout_width="0dp"
-                                                android:layout_height="wrap_content"
-                                                android:layout_gravity="center"
-                                                android:layout_marginStart="14dp"
-                                                android:layout_marginTop="6dp"
-                                                android:layout_marginEnd="7dp"
-                                                android:background="#01111111"
-                                                android:ems="10"
-                                                android:hint="Receiver's Name"
-                                                android:inputType="textPersonName"
-                                                android:singleLine="true"
-                                                android:text="Mayank Chaudhary"
-                                                android:textColor="#E4EDEDED"
-                                                android:textColorHint="#B3EDEDED"
-                                                android:textSize="13sp"
-                                                app:layout_constraintEnd_toEndOf="parent"
-                                                app:layout_constraintStart_toStartOf="parent"
-                                                app:layout_constraintTop_toBottomOf="@+id/textView68" />
+<!--                                            <EditText-->
+<!--                                                android:id="@+id/address_full_name3"-->
+<!--                                                android:layout_width="0dp"-->
+<!--                                                android:layout_height="wrap_content"-->
+<!--                                                android:layout_gravity="center"-->
+<!--                                                android:layout_marginStart="14dp"-->
+<!--                                                android:layout_marginTop="6dp"-->
+<!--                                                android:layout_marginEnd="7dp"-->
+<!--                                                android:background="#01111111"-->
+<!--                                                android:ems="10"-->
+<!--                                                android:hint="Receiver's Name"-->
+<!--                                                android:inputType="textPersonName"-->
+<!--                                                android:singleLine="true"-->
+<!--                                                android:text="Mayank Chaudhary"-->
+<!--                                                android:textColor="#E4EDEDED"-->
+<!--                                                android:textColorHint="#B3EDEDED"-->
+<!--                                                android:textSize="13sp"-->
+<!--                                                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                                                app:layout_constraintStart_toStartOf="parent"-->
+<!--                                                app:layout_constraintTop_toBottomOf="@+id/textView68" />-->
 
-                                            <EditText
-                                                android:id="@+id/address_line_1_ofAdd3"
-                                                android:layout_width="0dp"
-                                                android:layout_height="wrap_content"
-                                                android:layout_gravity="center"
-                                                android:layout_marginTop="4dp"
-                                                android:layout_marginEnd="7dp"
-                                                android:background="#01111111"
-                                                android:ems="10"
-                                                android:hint="Address Line 1"
-                                                android:inputType="textPersonName"
-                                                android:singleLine="true"
-                                                android:text="H.No.-9577, Library Road, Azad Market,"
-                                                android:textColor="#E4EDEDED"
-                                                android:textColorHint="#B3EDEDED"
-                                                android:textSize="12sp"
-                                                app:layout_constraintEnd_toEndOf="parent"
-                                                app:layout_constraintStart_toStartOf="@+id/address_full_name3"
-                                                app:layout_constraintTop_toBottomOf="@+id/address_full_name3" />
+<!--                                            <EditText-->
+<!--                                                android:id="@+id/address_line_1_ofAdd3"-->
+<!--                                                android:layout_width="0dp"-->
+<!--                                                android:layout_height="wrap_content"-->
+<!--                                                android:layout_gravity="center"-->
+<!--                                                android:layout_marginTop="4dp"-->
+<!--                                                android:layout_marginEnd="7dp"-->
+<!--                                                android:background="#01111111"-->
+<!--                                                android:ems="10"-->
+<!--                                                android:hint="Address Line 1"-->
+<!--                                                android:inputType="textPersonName"-->
+<!--                                                android:singleLine="true"-->
+<!--                                                android:text="H.No.-9577, Library Road, Azad Market,"-->
+<!--                                                android:textColor="#E4EDEDED"-->
+<!--                                                android:textColorHint="#B3EDEDED"-->
+<!--                                                android:textSize="12sp"-->
+<!--                                                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                                                app:layout_constraintStart_toStartOf="@+id/address_full_name3"-->
+<!--                                                app:layout_constraintTop_toBottomOf="@+id/address_full_name3" />-->
 
-                                            <EditText
-                                                android:id="@+id/address_line_2_pincode_ofAdd3"
-                                                android:layout_width="0dp"
-                                                android:layout_height="wrap_content"
-                                                android:layout_gravity="center"
-                                                android:layout_marginTop="3dp"
-                                                android:layout_marginEnd="7dp"
-                                                android:background="#01111111"
-                                                android:ems="10"
-                                                android:hint="Address Line 2, Pincode"
-                                                android:inputType="textPersonName"
-                                                android:singleLine="true"
-                                                android:text="Near Sanatan Dharam Mandir, Delhi-110006"
-                                                android:textColor="#E4EDEDED"
-                                                android:textColorHint="#B3EDEDED"
-                                                android:textSize="12sp"
-                                                app:layout_constraintEnd_toEndOf="parent"
-                                                app:layout_constraintStart_toStartOf="@+id/address_line_1_ofAdd3"
-                                                app:layout_constraintTop_toBottomOf="@+id/address_line_1_ofAdd3" />
-                                        </androidx.constraintlayout.widget.ConstraintLayout>
-                                    </androidx.cardview.widget.CardView>
+<!--                                            <EditText-->
+<!--                                                android:id="@+id/address_line_2_pincode_ofAdd3"-->
+<!--                                                android:layout_width="0dp"-->
+<!--                                                android:layout_height="wrap_content"-->
+<!--                                                android:layout_gravity="center"-->
+<!--                                                android:layout_marginTop="3dp"-->
+<!--                                                android:layout_marginEnd="7dp"-->
+<!--                                                android:background="#01111111"-->
+<!--                                                android:ems="10"-->
+<!--                                                android:hint="Address Line 2, Pincode"-->
+<!--                                                android:inputType="textPersonName"-->
+<!--                                                android:singleLine="true"-->
+<!--                                                android:text="Near Sanatan Dharam Mandir, Delhi-110006"-->
+<!--                                                android:textColor="#E4EDEDED"-->
+<!--                                                android:textColorHint="#B3EDEDED"-->
+<!--                                                android:textSize="12sp"-->
+<!--                                                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                                                app:layout_constraintStart_toStartOf="@+id/address_line_1_ofAdd3"-->
+<!--                                                app:layout_constraintTop_toBottomOf="@+id/address_line_1_ofAdd3" />-->
+<!--                                        </androidx.constraintlayout.widget.ConstraintLayout>-->
+<!--                                    </androidx.cardview.widget.CardView>-->
 
-                                </androidx.constraintlayout.widget.ConstraintLayout>
+<!--                                </androidx.constraintlayout.widget.ConstraintLayout>-->
 
                             </LinearLayout>
 

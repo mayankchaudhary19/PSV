@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -20,8 +19,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.TextUtils;
-import android.text.style.ForegroundColorSpan;
 import android.text.style.RelativeSizeSpan;
 import android.text.style.StyleSpan;
 import android.view.Gravity;
@@ -30,7 +27,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
@@ -44,8 +40,6 @@ import android.widget.Toast;
 import com.example.myapplication.Adapters.ProductDescriptionAdapter;
 import com.example.myapplication.Adapters.ProductImagesAdapter;
 import com.example.myapplication.Adapters.RewardAdapter;
-import com.example.myapplication.Fragments.ProductDescriptionFragment;
-import com.example.myapplication.Fragments.ProductSpecificationFragment;
 import com.example.myapplication.Models.MyCartItemModel;
 import com.example.myapplication.Models.ProductSpecificationModel;
 import com.example.myapplication.Models.RewardModel;
@@ -65,7 +59,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 //import static com.example.myapplication.DBqueries.loadWishlist;
 import static com.example.myapplication.UserSession.UserSessionActivity.registerFrag;
@@ -1035,7 +1028,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.without_cotification_menu, menu);
+        getMenuInflater().inflate(R.menu.without_notification_menu, menu);
         return true;
     }
 

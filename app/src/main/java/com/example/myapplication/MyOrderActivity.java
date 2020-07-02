@@ -67,7 +67,7 @@ public class MyOrderActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.without_cotification_menu, menu);
+        getMenuInflater().inflate(R.menu.without_notification_menu, menu);
         return true;
     }
 

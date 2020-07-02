@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 
+import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -17,9 +18,13 @@ import android.view.View;
 import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.myapplication.Adapters.AddressAdapter;
+import com.example.myapplication.Fragments.AddNewAddressFragment;
 import com.example.myapplication.Models.AddressModel;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +35,10 @@ public class MyAddressActivity extends AppCompatActivity {
 
     private RecyclerView addressRecyclerView;
     private static AddressAdapter addressAdapter;
-    private LinearLayout deliverHereContainer;
+    private LinearLayout deliverHereContainer,addNewAddressBtn;
     private Button deliverHereBtn;
+    private TextView savedAddressNo;
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,14 +55,18 @@ public class MyAddressActivity extends AppCompatActivity {
 
         deliverHereBtn=findViewById(R.id.deliver_here_btn);
         deliverHereContainer=findViewById(R.id.deliverHereContainer);
-
+        addNewAddressBtn=findViewById(R.id.add_new_address_btn);
+        savedAddressNo=findViewById(R.id.address_saved_tv);
         addressRecyclerView=findViewById(R.id.adresses_recycler_view);
+
         LinearLayoutManager layoutManager =new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         addressRecyclerView.setLayoutManager(layoutManager);
 
         List<AddressModel> addressModelList =new ArrayList<>();
-//        addressModelList.add(new AddressModel("Mukesh Chaudhary","9211397674","H.No.-9577, Library Road, Azad Market,","Near Sanatan Dharam Mandir","Delhi","110009",true));
+        addressModelList.add(new AddressModel("Mukesh Chaudhary","9211397674","H.No.-9577, Library Road, Azad Market,","Near Sanatan Dharam Mandir","Delhi","110009","HOME",true));
+        addressModelList.add(new AddressModel("Mukesh Chaudhary","9211397674","H.No.-9577, Library Road, Azad Market,","Near Sanatan Dharam Mandir","Delhi","110009","HOME",false));
+        addressModelList.add(new AddressModel("Mukesh Chaudhary","9211397674","H.No.-9577, Library Road, Azad Market,","Near Sanatan Dharam Mandir","Delhi","110009","HOME",false));
 //        addressModelList.add(new AddressModel("Mukesh Chaudhary","9211397674","H.No.-9577, Library Road, Azad Market,","Near Sanatan Dharam Mandir","Delhi","110009",false));
 //        addressModelList.add(new AddressModel("Mukesh Chaudhary","9211397674","H.No.-9577, Library Road, Azad Market,","Near Sanatan Dharam Mandir","Delhi","110009",false));
 //        addressModelList.add(new AddressModel("Mukesh Chaudhary","9211397674","H.No.-9577, Library Road, Azad Market,","Near Sanatan Dharam Mandir","Delhi","110009",false));
@@ -71,11 +82,28 @@ public class MyAddressActivity extends AppCompatActivity {
             ((SimpleItemAnimator)addressRecyclerView.getItemAnimator()).setSupportsChangeAnimations(true);
             deliverHereContainer.setVisibility(View.GONE);
         }
-        addressAdapter =new AddressAdapter(addressModelList,mode);
+        addressAdapter =new AddressAdapter(addressModelList,mode,context);
         addressRecyclerView.setAdapter(addressAdapter);
         addressAdapter.notifyDataSetChanged();
 
+        if (addressAdapter.getItemCount()==1)
+            savedAddressNo.setText(addressAdapter.getItemCount()+" Saved Address");
+        else if (addressAdapter.getItemCount()>1)
+            savedAddressNo.setText(addressAdapter.getItemCount()+" Saved Addresses");
+        else
+            savedAddressNo.setText("");
 
+
+        addNewAddressBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddNewAddressFragment bottomSheet = new AddNewAddressFragment();
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("showContinueBtn",false);
+                bottomSheet.setArguments(bundle);
+                bottomSheet.show(getSupportFragmentManager(),"TAG");
+            }
+        });
 
     }
 
@@ -83,6 +111,10 @@ public class MyAddressActivity extends AppCompatActivity {
     public static void refreshItem(int notSelected,int selected){
         addressAdapter.notifyItemChanged(notSelected);
         addressAdapter.notifyItemChanged(selected);
+    }
+
+    public Context getContext() {
+        return context;
     }
 
     @Override

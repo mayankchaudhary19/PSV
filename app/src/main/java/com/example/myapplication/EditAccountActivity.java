@@ -59,15 +59,17 @@ public class EditAccountActivity extends AppCompatActivity {
     private static final String TAG ="EditAccountActivity__" ;
     private CircleImageView profileImg;
     private CardView changePassword;
-    private ConstraintLayout updatePersonalDetailsCL,updateCompanyProfileCL, addShippingAddressCL,progress_layout;
-    private Button saveChangesPersonalDetails,saveChangesCompanyProfile,logout,viewAllAddressBtn,addNewAddressBtn;
+    private ConstraintLayout updatePersonalDetailsCL,updateCompanyProfileCL,progress_layout;
+    private Button saveChangesPersonalDetails,saveChangesCompanyProfile,logout;
     private ImageView imgBack,imgLogout,removeCircle,removeCross;
     private TextView email,phone,profileUserName,updatePersonalDetailsText,updateCompanyProfileText,addShippingAddressText;
     private EditText firstName,lastName,secondaryPhoneNumber,postalAddress,companyName,officeAddress,officeContactNumber;
     private Boolean UPDATE_PERSONAL_DETAILS_OPEN=false;
     private Boolean UPDATE_COMPANY_PROFILE_OPEN=false;
-    private Boolean ADD_SHIPPING_ADDRESS_OPEN=false;
+//    private Boolean ADD_SHIPPING_ADDRESS_OPEN=false;
     public static final int MANAGE_ADDRESS=1;
+    public static final int SELECT_ADDRESS=0;
+
 
     private Uri photoUri;
     private String url="";
@@ -107,10 +109,10 @@ public class EditAccountActivity extends AppCompatActivity {
         imgBack=findViewById(R.id.img_back);
         imgLogout=findViewById(R.id.img_logout);
         progress_layout=findViewById(R.id.progress_layout);
-        viewAllAddressBtn=findViewById(R.id.viewAllAddressBtn);
-        addNewAddressBtn =findViewById(R.id.addNewAddressBtn);
+//        viewAllAddressBtn=findViewById(R.id.viewAllAddressBtn);
+//        addNewAddressBtn =findViewById(R.id.addNewAddressBtn);
         addShippingAddressText=findViewById(R.id.addShippingAddressText);
-        addShippingAddressCL=findViewById(R.id.addShippingAddressConstraintLayout);
+//        addShippingAddressCL=findViewById(R.id.addShippingAddressConstraintLayout);
 //        removePhoto=findViewById(R.id.btn_removePhoto);
 
     }
@@ -139,7 +141,7 @@ public class EditAccountActivity extends AppCompatActivity {
         progress_layout.setVisibility(View.VISIBLE);
         updateCompanyProfileCL.setVisibility(View.GONE);
         updatePersonalDetailsCL.setVisibility(View.GONE);
-        addShippingAddressCL.setVisibility(View.GONE);
+//        addShippingAddressCL.setVisibility(View.GONE);
 //////////////updatePersonalDetailsText to open card to edit personal Details
         updatePersonalDetailsText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,15 +183,19 @@ public class EditAccountActivity extends AppCompatActivity {
         addShippingAddressText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ADD_SHIPPING_ADDRESS_OPEN) {
-                    ADD_SHIPPING_ADDRESS_OPEN = false;
-                    addShippingAddressText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_keyboard_arrow_down_black_24dp, 0);
-                    addShippingAddressCL.setVisibility(View.GONE);
-                } else {
-                    ADD_SHIPPING_ADDRESS_OPEN = true;
-                    addShippingAddressText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_keyboard_arrow_up_black_24dp, 0);
-                    addShippingAddressCL.setVisibility(View.VISIBLE);
-                }
+
+                Intent intent= new Intent( EditAccountActivity.this,MyAddressActivity.class);
+                intent.putExtra("MODE",MANAGE_ADDRESS);
+                startActivity(intent);
+//                if (ADD_SHIPPING_ADDRESS_OPEN) {
+//                    ADD_SHIPPING_ADDRESS_OPEN = false;
+//                    addShippingAddressText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_keyboard_arrow_down_black_24dp, 0);
+//                    addShippingAddressCL.setVisibility(View.GONE);
+//                } else {
+//                    ADD_SHIPPING_ADDRESS_OPEN = true;
+//                    addShippingAddressText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_keyboard_arrow_up_black_24dp, 0);
+//                    addShippingAddressCL.setVisibility(View.VISIBLE);
+//                }
 
             }
         });
@@ -491,24 +497,24 @@ public class EditAccountActivity extends AppCompatActivity {
 /////////saveChangesCompanyProfile Button
 
 /////////viewAllAddress Button
-        viewAllAddressBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent= new Intent(EditAccountActivity.this,MyAddressActivity.class);
-                intent.putExtra("MODE",MANAGE_ADDRESS);
-                startActivity(intent);
-            }
-        });
+//        viewAllAddressBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent= new Intent(EditAccountActivity.this,MyAddressActivity.class);
+//                intent.putExtra("MODE",MANAGE_ADDRESS);
+//                startActivity(intent);
+//            }
+//        });
 /////////viewAllAddress Button
 
 /////////AddNewAddress Button
-        addNewAddressBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent= new Intent(EditAccountActivity.this,AddAddressActivity.class);
-                startActivity(intent);
-            }
-        });
+//        addNewAddressBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent= new Intent(EditAccountActivity.this,AddAddressActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 /////////AddNewAddress Button
 
 

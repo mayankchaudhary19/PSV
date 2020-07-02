@@ -38,7 +38,7 @@
         android:layout_marginBottom="15dp"
         android:elevation="4dp"
         android:fontFamily="sans-serif-light"
-        android:text="Shippng Addresses"
+        android:text="Manage Addresses"
         android:textColor="#545353"
         android:textSize="16sp"
         android:textStyle="bold"

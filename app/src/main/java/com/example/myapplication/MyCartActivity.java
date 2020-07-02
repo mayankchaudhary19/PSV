@@ -551,7 +551,7 @@ public class MyCartActivity extends AppCompatActivity  {
                                     if((long) task.getResult().get("addressListSize") == 0){
                                         AddNewAddressFragment bottomSheet = new AddNewAddressFragment();
                                         Bundle bundle = new Bundle();
-                                        bundle.putString("params", totalAmount.getText().toString());
+                                        bundle.putBoolean("showContinueBtn", true);
                                         bottomSheet.setArguments(bundle);
                                         bottomSheet.show(getSupportFragmentManager(),"TAG");
                                     }
