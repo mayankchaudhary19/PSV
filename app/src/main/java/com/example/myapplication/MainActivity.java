@@ -347,7 +347,7 @@ public class MainActivity extends AppCompatActivity {
                     mLastClickTime = SystemClock.elapsedRealtime();
                     drawer.closeDrawer(GravityCompat.START);
                     Intent intent = new Intent(MainActivity.this, EditAccountActivity.class);
-                    intent.putExtra("color", "#F5977A");
+                    intent.putExtra("color", "#");
                     startActivity(intent);
                     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 }

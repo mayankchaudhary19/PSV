@@ -50,6 +50,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.example.myapplication.ProductDetailsActivity.initialRating;
 import static com.example.myapplication.ProductDetailsActivity.productId;
 import static com.example.myapplication.ProductDetailsActivity.setRating;
 import static com.example.myapplication.ProductDetailsActivity.wishlist_btn;
@@ -411,14 +412,11 @@ public class DBqueries {
                         if (cartList.size() > 0) {
 
                             new CountDownTimer(500, 500) {
-
                                 public void onTick(long millisUntilFinished) {
                                 }
-
                                 public void onFinish() {
                                     Animation animation = AnimationUtils.loadAnimation(context, R.anim.fade_in);
                                     MyCartActivity.priceDetailsLL.startAnimation(animation);
-
 
                                     int totalItemPrice = 0;
                                     for (int x = 0; x<MyCartAdapter.myCartItemModelList.size(); x++){
@@ -556,7 +554,7 @@ public class DBqueries {
     }
 
 
-    public static void loadAddress(final Context context, final Dialog loadingDialog){
+    public static void loadAddress(final Context context, final Dialog loadingDialog, final boolean isProductDetailActivity){
 
         addressesModelList.clear();
         firebaseFirestore.collection("Users")
@@ -570,18 +568,35 @@ public class DBqueries {
                         if (task.isSuccessful()){
 
                             if((long) task.getResult().get("addressListSize") == 0){
-                                AddNewAddressFragment bottomSheet = new AddNewAddressFragment();
-                                Bundle bundle = new Bundle();
-                                bundle.putString("params", MyCartActivity.totalAmount.getText().toString());
-                                bottomSheet.setArguments(bundle);
-                                bottomSheet.show(((MyAddressActivity)context).getSupportFragmentManager(),"TAG");
+                                if(EditAccountActivity.manageAddress){
+                                    Intent intent = new Intent(context, MyAddressActivity.class);
+                                    intent.putExtra("MODE",EditAccountActivity.MANAGE_ADDRESS);
+                                    context.startActivity(intent);
+                                    EditAccountActivity.manageAddress=false;
+                                }else{
+                                    AddNewAddressFragment bottomSheet = new AddNewAddressFragment();
+                                    Bundle bundle = new Bundle();
+                                    bundle.putBoolean("showContinueBtn", true);
+                                    bundle.putString("INTENT","deliveryIntent");
+                                    bottomSheet.setArguments(bundle);
+                                    if (isProductDetailActivity)
+                                        bottomSheet.show(((ProductDetailsActivity)context).getSupportFragmentManager(),"TAG");
+                                    else
+                                        bottomSheet.show(((MyCartActivity)context).getSupportFragmentManager(),"TAG");
 
-                                // matlab user ke pass agar koi address nhi h to list size zero hoga
-//                                deliveryIntent = new Intent(context,AddAddressActivity.class);
-                                // to agar size zero h to addressactivity pr bhej dena
-//                                deliveryIntent.putExtra("INTENT","deliveryIntent");
+
+                                }
                             }
-                            else{
+                            else {
+                                Intent intent;
+                                if(EditAccountActivity.manageAddress){
+                                    intent = new Intent(context, MyAddressActivity.class);
+                                    intent.putExtra("MODE",EditAccountActivity.MANAGE_ADDRESS);
+                                    EditAccountActivity.manageAddress=false;
+                                }else{
+                                    intent = new Intent(context, OrderSummaryActivity.class);
+                                    intent.putExtra("MODE",OrderSummaryActivity.SELECT_ADDRESS);
+                                }
                                 for (long x = 1; x< (long) task.getResult().get("addressListSize")+1; x++){
 
                                     addressesModelList.add(new AddressModel(task.getResult().get("fullName"+x).toString(),
@@ -598,10 +613,13 @@ public class DBqueries {
                                         selectedAddress = Integer.parseInt(String.valueOf(x-1));
                                     }
                                 }
+                                context.startActivity(intent);
+
 //                                deliveryIntent = new Intent(context,DeliveryActivity.class);
 
                             }
-//                            context.startActivity(deliveryIntent);
+//                            context.startActivity(intent);
+
                         }
                         else{
                             String error = task.getException().getMessage();

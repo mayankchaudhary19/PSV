@@ -30,7 +30,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <TextView
-        android:id="@+id/order_activity_title"
+        android:id="@+id/myAddressTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="55dp"
@@ -61,7 +61,7 @@
             android:id="@+id/textView70"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="21dp"
             android:layout_weight="1"
             android:drawableStart="@drawable/ic_signs"
             android:drawablePadding="15dp"
@@ -120,13 +120,16 @@
         <Button
             android:id="@+id/deliver_here_btn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="38dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/bg_black_outline_btn"
-            android:text="Deliver Here" />
+            android:background="@drawable/bg_black_thin_outline_btn"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="Deliver Here"
+            android:textAllCaps="true" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

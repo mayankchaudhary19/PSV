@@ -3,6 +3,7 @@ package com.example.myapplication.Fragments;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -29,6 +30,7 @@ import android.widget.Toast;
 
 import com.example.myapplication.AddAddressActivity;
 import com.example.myapplication.DBqueries;
+import com.example.myapplication.EditAccountActivity;
 import com.example.myapplication.Models.AddressModel;
 import com.example.myapplication.MyAddressActivity;
 import com.example.myapplication.MyCartActivity;
@@ -57,8 +59,10 @@ public class AddNewAddressFragment extends BottomSheetDialogFragment {
     private String totalAmt;
     private LinearLayout addressSaveAsContainer;
     private final int initialPosition=0;
-
+    private boolean toShowContinueBtn;
     private String[] saveAsAddressType = new String[1];
+    private int previousAddress;
+
 
     public static final Pattern VALID_MOBILE_NUMBER__REGEX = Pattern.compile("^((?!(0))[0-9]{10})$");
 
@@ -85,9 +89,10 @@ public class AddNewAddressFragment extends BottomSheetDialogFragment {
         addAddressContinueBtn=view.findViewById(R.id.addAddressContinueBtn);
         addressSaveAsContainer=view.findViewById(R.id.addressSaveAsContainer);
 //        additionalInfo=view.findViewById(R.id.additionalInfoAdd);
+        previousAddress = DBqueries.selectedAddress;
 
         Bundle bundle = getArguments();
-        boolean toShowContinueBtn = bundle.getBoolean("showContinueBtn");
+        toShowContinueBtn = bundle.getBoolean("showContinueBtn");
 
         if (toShowContinueBtn){
             addAddressContinueBtn.setVisibility(View.VISIBLE);
@@ -152,12 +157,12 @@ public class AddNewAddressFragment extends BottomSheetDialogFragment {
         view.findViewById(R.id.home_Add).setOnClickListener(clickListener);
         view.findViewById(R.id.office_Add).setOnClickListener(clickListener);
 
-        addressSaveAsContainer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), saveAsAddressType[0], Toast.LENGTH_SHORT).show();
-            }
-        });
+//        addressSaveAsContainer.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(getContext(), saveAsAddressType[0], Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
         saveAddress.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -202,10 +207,15 @@ public class AddNewAddressFragment extends BottomSheetDialogFragment {
                     pincode.setError("Required!");
                     return;
                 }
+                if (pincode.getText().toString().length() !=6 ) {
+                    pincode.setError("Invalid Pincode");
+                    return;
+                }
                 else{
                     addData();
-                    Intent intent =new Intent(getContext(),OrderSummaryActivity.class);
-                    startActivity(intent);
+
+//                    Intent intent =new Intent(getContext(),OrderSummaryActivity.class);
+//                    startActivity(intent);
                 }
 
             }
@@ -255,6 +265,10 @@ public class AddNewAddressFragment extends BottomSheetDialogFragment {
                     pincode.setError("Required!");
                     return;
                 }
+                if (pincode.getText().toString().length() !=6 ) {
+                    pincode.setError("Invalid Pincode");
+                    return;
+                }
                 else { addData();
                 }
 
@@ -272,6 +286,7 @@ public class AddNewAddressFragment extends BottomSheetDialogFragment {
 
 
     private void addData(){
+        final Bundle bundle2 = getArguments();
         loadingDialog.show();
 
 
@@ -284,8 +299,22 @@ public class AddNewAddressFragment extends BottomSheetDialogFragment {
         addAddress.put("state"+String.valueOf((long)DBqueries.addressesModelList.size()+1),state.getText().toString());
         addAddress.put("pincode"+String.valueOf((long)DBqueries.addressesModelList.size()+1),pincode.getText().toString());
         addAddress.put("addressType"+String.valueOf((long)DBqueries.addressesModelList.size()+1),saveAsAddressType[0]);
-//        addAddress.put("additionalInfo"+String.valueOf((long)DBqueries.addressesModelList.size()+1),additionalInfo.getText().toString());
-        addAddress.put("selectedAddress"+String.valueOf((long)DBqueries.addressesModelList.size()+1),true);
+//        addAddress.put("selectedAddress"+String.valueOf((long)DBqueries.addressesModelList.size()+1),true);
+//
+//
+//        if(bundle2.getBoolean("NewAddInManageAddress"))
+            if (DBqueries.addressesModelList.size() == 0)
+                addAddress.put("selectedAddress"+String.valueOf((long)DBqueries.addressesModelList.size()+1),true);
+            else
+                addAddress.put("selectedAddress"+String.valueOf((long)DBqueries.addressesModelList.size()+1),false);
+//        else{
+//            addAddress.put("selectedAddress"+String.valueOf((long)DBqueries.addressesModelList.size()+1),true);
+//
+//            if (DBqueries.addressesModelList.size() > 0) {
+//
+//                addAddress.put("selectedAddress" + (DBqueries.selectedAddress + 1), false);
+//            }
+//        }
 
 
         FirebaseFirestore.getInstance().collection("Users")
@@ -297,27 +326,78 @@ public class AddNewAddressFragment extends BottomSheetDialogFragment {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
-//                            initialPosition = (Integer.parseInt(String.valueOf((long) task.getResult().get("" + x)))) - 1;
-
-//                            if (DBqueries.addressesModelList.size() > 0) {
-//                                DBqueries.addressesModelList.get(DBqueries.selectedAddress).setSelectedAddress(false);
-//                            }
                             DBqueries.addressesModelList.add(new AddressModel(name.getText().toString(),
                                     contactNo.getText().toString(),addressLine1.getText().toString(),
                                     addressLine2.getText().toString(), state.getText().toString(),
-                                    pincode.getText().toString(),saveAsAddressType[0],true));
+                                    pincode.getText().toString(),saveAsAddressType[0],false));
+
+                            if (!toShowContinueBtn)
+                                MyAddressActivity.refreshItem(DBqueries.selectedAddress, DBqueries.addressesModelList.size()-1);
 
 
-//                                if (getIntent().getStringExtra("INTENT").equals("deliveryIntent")) {
-//                                    Intent deliveryIntent = new Intent(AddAddressActivity.this, DeliveryActivity.class);
-//                                    startActivity(deliveryIntent);
+
+
+
+//                            initialPosition = (Integer.parseInt(String.valueOf((long) task.getResult().get("" + x)))) - 1;
+
+
+
+
+
+//                            if(bundle2.getBoolean("NewAddInManageAddress")){
+//                                DBqueries.addressesModelList.add(new AddressModel(name.getText().toString(),
+//                                        contactNo.getText().toString(),addressLine1.getText().toString(),
+//                                        addressLine2.getText().toString(), state.getText().toString(),
+//                                        pincode.getText().toString(),saveAsAddressType[0],false));
+//                            }else {
+//                                Toast.makeText(getContext(), "yes", Toast.LENGTH_SHORT).show();
+//                                if (DBqueries.addressesModelList.size() > 0) {
+//                                    DBqueries.addressesModelList.get(DBqueries.selectedAddress).setSelectedAddress(false);
 //                                }
-//                                else{
-//                                    MyAddressActivity.refreshItem(DBqueries.selectedAddress, DBqueries.addressesModelList.size()-1);
-//                                }
+//
+//                                DBqueries.addressesModelList.add(new AddressModel(name.getText().toString(),
+//                                        contactNo.getText().toString(), addressLine1.getText().toString(),
+//                                        addressLine2.getText().toString(), state.getText().toString(),
+//                                        pincode.getText().toString(), saveAsAddressType[0], true));
+//
 //                                DBqueries.selectedAddress = DBqueries.addressesModelList.size() - 1;
-//                                finish();
+//                            }
+//
+//                            previousAddress = DBqueries.selectedAddress;
+//
+//                            if (!toShowContinueBtn)
+//                                MyAddressActivity.refreshItem(previousAddress, DBqueries.addressesModelList.size() - 1);
+
+
                             dismiss();
+
+
+                            /////////////////////////////////////////////
+//                                if (toShowContinueBtn){
+//                                    dismiss();
+//                                    DBqueries.selectedAddress = DBqueries.addressesModelList.size() - 1;
+//
+//                                }
+//                                else {
+                            /////////////////////////////////////////////
+
+//                                    if (text.equals("deliveryIntent")) {
+//                                        dismiss();
+//
+////   already commented                                      Intent deliveryIntent = new Intent(getContext(), OrderSummaryActivity.class);
+////                                        startActivity(deliveryIntent);
+//                                    } else {
+                            /////////////////////////////////////////////
+
+//                                    MyAddressActivity.refreshItem(DBqueries.selectedAddress, DBqueries.addressesModelList.size() - 1);
+//
+//                                    DBqueries.selectedAddress = DBqueries.addressesModelList.size() - 1;
+//                                    dismiss();
+//
+//                                }
+                            /////////////////////////////////////////////
+
+//                                finish();
 
                         }
                         else{
@@ -328,6 +408,13 @@ public class AddNewAddressFragment extends BottomSheetDialogFragment {
                     }
                 });
 
+    }
+
+
+    @Override
+    public void onDismiss(@NonNull DialogInterface dialog) {
+        super.onDismiss(dialog);
+        dismiss();
     }
 }
 

@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.DBqueries;
 import com.example.myapplication.Fragments.AddNewAddressFragment;
 import com.example.myapplication.Models.AddressModel;
 import com.example.myapplication.MyAddressActivity;
@@ -35,13 +36,15 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
 
     private List<AddressModel> addressModelList;
     private int MODE;
-    private int preSelectedPosition=-1;
+    private int preSelectedPosition;
     private Context context;
 
     public AddressAdapter(List<AddressModel> addressModelList,int MODE,Context context) {
         this.addressModelList = addressModelList;
         this.MODE=MODE;
         this.context=context;
+        preSelectedPosition = DBqueries.selectedAddress;
+
     }
 
     @NonNull
@@ -73,6 +76,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
         private TextView fullName,addressLine1,addressLine2,state,pincode,contactNumber,saveAddressAsTxt,editAdd,selectAdd;
         private LinearLayout selectedPositionLL;
         private ConstraintLayout contactLL;
+        boolean isOpen=false;
 
 //        private ImageView icon;
 //        private View view;
@@ -113,32 +117,36 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
             ////////////////////////////////////// in order Summary / Address (after cart)
 
             if (MODE==SELECT_ADDRESS) {
-                selectAdd.setText("SELECT");
+                selectAdd.setText("SELECTED");
                 editAdd.setText("EDIT");
                 if (selectedAddress) {
                     contactLL.setVisibility(View.VISIBLE);
                     selectedPositionLL.setVisibility(View.VISIBLE);
-                    saveAddressAsTxt.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.bg_address_save_as));
+                    saveAddressAsTxt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFAB91")));
+                    saveAddressAsTxt.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.bg_address_save_as_selected));
+                    preSelectedPosition = position;
 
                 }else{
                     contactLL.setVisibility(View.GONE);
                     selectedPositionLL.setVisibility(View.GONE);
                     saveAddressAsTxt.setTextColor(ColorStateList.valueOf(Color.parseColor("#747474")));
                     saveAddressAsTxt.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.bg_address_save_as_grey));
-                    itemView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (preSelectedPosition != position) {
-                                addressModelList.get(position).setSelectedAddress(true);
-                                addressModelList.get(preSelectedPosition).setSelectedAddress(false);
-                                refreshItem(preSelectedPosition, position);
-                                preSelectedPosition = position;
-                                contactLL.setVisibility(View.VISIBLE);
-                                selectedPositionLL.setVisibility(View.VISIBLE);
-                            }
-                        }
-                    });
                 }
+
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (preSelectedPosition != position) {
+                            addressModelList.get(position).setSelectedAddress(true);
+                            addressModelList.get(preSelectedPosition).setSelectedAddress(false);
+                            contactLL.setVisibility(View.VISIBLE);
+                            selectedPositionLL.setVisibility(View.VISIBLE);
+                            refreshItem(preSelectedPosition, position);
+                            preSelectedPosition = position;
+                            DBqueries.selectedAddress = position;
+                        }
+                    }
+                });
 
             }
             ////////////////////////////////////// in Edit Account
@@ -160,13 +168,9 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
 
 
 
-
-
-
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
 //                        refreshItem(preSelectedPosition,preSelectedPosition);
 //                        preSelectedPosition=-1;
                         if (preSelectedPosition != position){
@@ -174,22 +178,32 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
                             saveAddressAsTxt.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.bg_address_save_as_selected));
                             contactLL.setVisibility(View.VISIBLE);
                             selectedPositionLL.setVisibility(View.VISIBLE);
-
+                            isOpen=true;
                             refreshItem(preSelectedPosition,preSelectedPosition);
                             preSelectedPosition=position;
                         }
                         else {
-                            saveAddressAsTxt.setTextColor(ColorStateList.valueOf(Color.parseColor("#747474")));
-                            saveAddressAsTxt.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.bg_address_save_as_grey));
-                            contactLL.setVisibility(View.GONE);
-                            selectedPositionLL.setVisibility(View.GONE);
-                            refreshItem(preSelectedPosition,preSelectedPosition);
-                            preSelectedPosition=-1;
+                           if (isOpen){
+                           saveAddressAsTxt.setTextColor(ColorStateList.valueOf(Color.parseColor("#747474")));
+                           saveAddressAsTxt.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.bg_address_save_as_grey));
+                           contactLL.setVisibility(View.GONE);
+                           selectedPositionLL.setVisibility(View.GONE);
+
+                               refreshItem(preSelectedPosition,preSelectedPosition);
+                               preSelectedPosition=-1;
+                           }else {
+                               saveAddressAsTxt.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFAB91")));
+                               saveAddressAsTxt.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.bg_address_save_as_selected));
+                               contactLL.setVisibility(View.VISIBLE);
+                               selectedPositionLL.setVisibility(View.VISIBLE);
+                           }
+
 
                         }
 
                     }
                 });
+///select is edit here!!!
 
                 selectAdd.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -197,6 +211,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.ViewHold
                         AddNewAddressFragment bottomSheetDialogFragment = new AddNewAddressFragment();
                         Bundle bundle = new Bundle();
                         bundle.putBoolean("showContinueBtn", false);
+//                        bundle.putString("INTENT","deliveryIntent");
                         bottomSheetDialogFragment.setArguments(bundle);
 //                        bottomSheet.show(((MyCartActivity) context.getApplicationContext()).getSupportFragmentManager(),"TAG");
 

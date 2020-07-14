@@ -90,7 +90,7 @@
         android:id="@+id/contactLL"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="7dp"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="@+id/state"
         app:layout_constraintTop_toBottomOf="@+id/state">
@@ -173,7 +173,7 @@
             android:layout_height="35dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="Select"
+            android:text="SELECTED"
             android:textAllCaps="true"
             android:textColor="#FFAB91"
             android:textSize="14sp"

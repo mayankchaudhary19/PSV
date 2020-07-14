@@ -8,6 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -16,6 +17,7 @@ import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -68,13 +70,15 @@ public class EditAccountActivity extends AppCompatActivity {
     private Boolean UPDATE_COMPANY_PROFILE_OPEN=false;
 //    private Boolean ADD_SHIPPING_ADDRESS_OPEN=false;
     public static final int MANAGE_ADDRESS=1;
-    public static final int SELECT_ADDRESS=0;
+//    public static final int SELECT_ADDRESS=0;
 
+    private Dialog loadingDialog;
 
     private Uri photoUri;
     private String url="";
     private StorageReference storage;
     private FirebaseAuth firebaseAuth;
+    public static boolean manageAddress=false;
 
 
 //    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
@@ -134,6 +138,15 @@ public class EditAccountActivity extends AppCompatActivity {
 
         builder = new AlertDialog.Builder(this);
 
+        //////loadingDialog
+        loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.loading_progress_dialog);
+        loadingDialog.setCancelable(false);
+        loadingDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.slider_background));
+        loadingDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//        loadingDialog.show();
+        //////loadingDialog
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
@@ -183,11 +196,26 @@ public class EditAccountActivity extends AppCompatActivity {
         addShippingAddressText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loadingDialog.show();
+                manageAddress=true;
+                if (DBqueries.addressesModelList.size() == 0) {
+                    DBqueries.loadAddress(EditAccountActivity.this,loadingDialog,false);
+                }
+                else{
+                    loadingDialog.dismiss();
+                    Intent intent= new Intent( EditAccountActivity.this,MyAddressActivity.class);
+                    intent.putExtra("MODE",MANAGE_ADDRESS);
+                    startActivity(intent);
+//                    Intent deliveryIntent = new Intent(MyCartActivity.this, OrderSummaryActivity.class);
+//                    startActivity(deliveryIntent);
+                }
 
-                Intent intent= new Intent( EditAccountActivity.this,MyAddressActivity.class);
-                intent.putExtra("MODE",MANAGE_ADDRESS);
-                startActivity(intent);
-//                if (ADD_SHIPPING_ADDRESS_OPEN) {
+//                Intent intent= new Intent( EditAccountActivity.this,MyAddressActivity.class);
+//                intent.putExtra("MODE",MANAGE_ADDRESS);
+//                startActivity(intent);
+
+
+////                if (ADD_SHIPPING_ADDRESS_OPEN) {
 //                    ADD_SHIPPING_ADDRESS_OPEN = false;
 //                    addShippingAddressText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_keyboard_arrow_down_black_24dp, 0);
 //                    addShippingAddressCL.setVisibility(View.GONE);
@@ -196,7 +224,6 @@ public class EditAccountActivity extends AppCompatActivity {
 //                    addShippingAddressText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_keyboard_arrow_up_black_24dp, 0);
 //                    addShippingAddressCL.setVisibility(View.VISIBLE);
 //                }
-
             }
         });
 
@@ -609,9 +636,8 @@ public class EditAccountActivity extends AppCompatActivity {
 
         if (photoUri != null) {
 
-            final StorageReference ref = storage.child("profiles/" + firebaseAuth.getCurrentUser().getUid() + ".jpg");
+            final StorageReference ref = storage.child("profiles/"+firebaseAuth.getCurrentUser().getUid() + ".jpg");
             UploadTask uploadTask = ref.putFile(photoUri);
-
 
              uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
@@ -659,6 +685,7 @@ public class EditAccountActivity extends AppCompatActivity {
         }
 
     }
+
     private void selectImage() {
         CropImage.activity()
                 .setGuidelines(CropImageView.Guidelines.ON)
@@ -722,7 +749,7 @@ public class EditAccountActivity extends AppCompatActivity {
 
 
 
-//
+
 //    private void updateDetails(){
 //        FirebaseFirestore db = FirebaseFirestore.getInstance();
 //        progress_layout.setVisibility(View.VISIBLE);

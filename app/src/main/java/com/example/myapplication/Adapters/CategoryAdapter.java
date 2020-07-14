@@ -67,7 +67,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         }
 
         private void setCategoryIcon(String iconUrl){
-           // todo: set category names from database
+           //to do:  set category names from database
 //            if (!iconUrl.equals("null"))
                     Glide.with(itemView.getContext()).load(iconUrl).apply(new RequestOptions().placeholder(R.drawable.placeholder)).into(categoryIcon);
         }

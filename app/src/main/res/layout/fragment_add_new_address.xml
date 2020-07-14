@@ -239,6 +239,8 @@
                     android:layout_height="wrap_content"
                     android:hint="Pincode*"
                     android:textColorHint="#A1191919"
+                    android:maxLength="6"
+                    android:inputType="number"
                     android:textCursorDrawable="@null"
                     android:textSize="13sp" />
             </com.google.android.material.textfield.TextInputLayout>
