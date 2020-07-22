@@ -73,7 +73,7 @@ public class OfferZoneFragment extends Fragment {
 ///////// to change the color of status bar to orange and status icons to white
         Window window = ((MainActivity) getActivity()).getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(Color.parseColor("#FA815D"));
+        window.setStatusBarColor(Color.parseColor("#F89B7D"));
         ((MainActivity) getActivity()).getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_LAYOUT_FLAGS);
 ///////// to change the color of status bar to orange and status icons to white
 

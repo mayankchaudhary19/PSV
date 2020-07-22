@@ -40,6 +40,7 @@ import android.widget.Toast;
 import com.example.myapplication.Adapters.ProductDescriptionAdapter;
 import com.example.myapplication.Adapters.ProductImagesAdapter;
 import com.example.myapplication.Adapters.RewardAdapter;
+import com.example.myapplication.Fragments.PaymentModeFragment;
 import com.example.myapplication.Models.MyCartItemModel;
 import com.example.myapplication.Models.ProductSpecificationModel;
 import com.example.myapplication.Models.RewardModel;
@@ -520,6 +521,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                                                 if (DBqueries.wishlistModelList.size()!=0){
                                                     DBqueries.wishlistModelList.add(new WishlistModel(
                                                             productId,
+                                                            (boolean) documentSnapshot.get("inStock"),
                                                             documentSnapshot.get("productImage1").toString(),
                                                             documentSnapshot.get("productTitle").toString(),
                                                             documentSnapshot.get("productSubtitle").toString(),
@@ -728,61 +730,63 @@ public class ProductDetailsActivity extends AppCompatActivity {
          butNowBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (currentUser==null){
-                    registerLoginDialogText.setText("Sorry, we are unable to place your order!");
-                    signInDialog.show();
+                if (!butNowBtn.getText().toString().equals("Out of Stock")){
+                    if (currentUser==null){
+                        registerLoginDialogText.setText("Sorry, we are unable to place your order!");
+                        signInDialog.show();
+                    }
+                    else {
+                        PaymentModeFragment.fromCart=false;
+                        loadingDialog.show();
+                        OrderSummaryActivity.cartItemModelList = new ArrayList<>();
+                        OrderSummaryActivity.cartItemModelList.add(new MyCartItemModel(productId,
+                                (boolean) documentSnapshot.get("inStock"),
+                                documentSnapshot.get("productImage1").toString(),
+                                documentSnapshot.get("productTitle").toString(),
+                                documentSnapshot.get("productSubtitle").toString(),
+                                documentSnapshot.get("productPrice").toString(),
+                                documentSnapshot.get("productInitialPrice").toString(),
+                                (long) 1,
+                                (long) 0,
+                                (long) documentSnapshot.get("freeCoupons")));
+
+
+    //                    OrderSummaryActivity.cartItemModelList.add(new MyCartItemModel(MyCartItemModel.TOTAL_AMOUNT));
+
+                        if (DBqueries.addressesModelList.size() == 0) {
+                            DBqueries.loadAddress(ProductDetailsActivity.this, loadingDialog,true);
+                        }
+                        else{
+                            loadingDialog.dismiss();
+                            Intent deliveryIntent = new Intent(ProductDetailsActivity.this, OrderSummaryActivity.class);
+                            startActivity(deliveryIntent);
+                        }
+
+
+
+
+
+
+    //                count++;
+    //                if (count == 1) {
+    //                    Animation anim_in = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_in);
+    //                    shipping_details_layout_background.startAnimation(anim_in);
+    //                    shipping_details_layout_background.setVisibility(View.VISIBLE);
+    //                    slideUp(shipping_details_layout);
+    //
+    //                }
+    //                else{
+    //                    count=0;
+    //                    shipping_details_layout.setVisibility(View.INVISIBLE);
+    //                    shipping_details_layout_background.setVisibility(View.INVISIBLE);
+    //                    Intent intent=new Intent(ProductDetailsActivity.this,MainActivity.class);
+    //                    startActivity(intent);
+    //                }
+
+    //                onSlideViewButtonClick(shipping_details_layout);
+
                 }
-                else {
-
-
-                    OrderSummaryActivity.cartItemModelList = new ArrayList<>();
-                    OrderSummaryActivity.cartItemModelList.add(new MyCartItemModel(productId,
-                            (boolean) documentSnapshot.get("inStock"),
-                            documentSnapshot.get("productImage1").toString(),
-                            documentSnapshot.get("productTitle").toString(),
-                            documentSnapshot.get("productSubtitle").toString(),
-                            documentSnapshot.get("productPrice").toString(),
-                            documentSnapshot.get("productInitialPrice").toString(),
-                            (long) 1,
-                            (long) 0,
-                            (long) documentSnapshot.get("freeCoupons")));
-
-
-//                    OrderSummaryActivity.cartItemModelList.add(new MyCartItemModel(MyCartItemModel.TOTAL_AMOUNT));
-
-                    if (DBqueries.addressesModelList.size() == 0) {
-                        DBqueries.loadAddress(ProductDetailsActivity.this, loadingDialog,true);
-                    }
-                    else{
-                        loadingDialog.dismiss();
-                        Intent deliveryIntent = new Intent(ProductDetailsActivity.this, OrderSummaryActivity.class);
-                        startActivity(deliveryIntent);
-                    }
-
-
-
-
-
-
-//                count++;
-//                if (count == 1) {
-//                    Animation anim_in = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_in);
-//                    shipping_details_layout_background.startAnimation(anim_in);
-//                    shipping_details_layout_background.setVisibility(View.VISIBLE);
-//                    slideUp(shipping_details_layout);
-//
-//                }
-//                else{
-//                    count=0;
-//                    shipping_details_layout.setVisibility(View.INVISIBLE);
-//                    shipping_details_layout_background.setVisibility(View.INVISIBLE);
-//                    Intent intent=new Intent(ProductDetailsActivity.this,MainActivity.class);
-//                    startActivity(intent);
-//                }
-
-//                onSlideViewButtonClick(shipping_details_layout);
-
-            }
+                }
             }
         });
 

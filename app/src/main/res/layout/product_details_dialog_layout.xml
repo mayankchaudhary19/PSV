@@ -272,12 +272,13 @@
                             android:id="@+id/product_sub_category_one"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
                             android:background="@drawable/bg_product_categories_outline_box"
                             android:text="Household"
                             android:textSize="13sp"
                             android:visibility="visible"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/productSize"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
@@ -290,7 +291,7 @@
                             android:textSize="13sp"
                             android:visibility="visible"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/productSize"
+                            app:layout_constraintStart_toEndOf="@+id/product_sub_category_one"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
@@ -308,12 +309,11 @@
                             android:id="@+id/productSize"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="6dp"
                             android:background="@drawable/bg_product_categories_outline_box"
                             android:text=" Size: 20cm x10cm x 20cm"
                             android:textSize="13sp"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/product_sub_category_one"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>

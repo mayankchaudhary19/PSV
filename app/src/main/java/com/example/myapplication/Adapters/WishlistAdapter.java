@@ -90,13 +90,14 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String productId=wishlistModelList.get(position).getProductId();
+        boolean inStock = wishlistModelList.get(position).isInStock();
         String resource=wishlistModelList.get(position).getProductImage();
         String title=wishlistModelList.get(position).getProductTitle();
         String subtitle=wishlistModelList.get(position).getProductSubtitle();
         String price=wishlistModelList.get(position).getProductPrice();
         String initialPrice=wishlistModelList.get(position).getProductInitialPrice();
 //        String discount=wishlistModelList.get(position).getProductDiscount();
-        holder.setData(productId,resource,title,subtitle,price,initialPrice,position);
+        holder.setData(productId,inStock,resource,title,subtitle,price,initialPrice,position);
 
        if (lastPosition <position) {
         Animation animation = AnimationUtils.loadAnimation(holder.itemView.getContext(), R.anim.fade_in);
@@ -136,7 +137,7 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
 
 
         }
-        private void setData(final String productId, String resource, String title, String subtitle, final String price, String initialPrice, final int index){
+        private void setData(final String productId, final boolean isInStock, String resource, String title, String subtitle, final String price, String initialPrice, final int index){
 //            productImage.setImageResource(resource);
             Glide.with(itemView.getContext()).load(resource).apply(new RequestOptions().placeholder(R.drawable.square_placeholder)).into(productImage);
             productTitle.setText(title);
@@ -165,6 +166,11 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
             }
             else
                 productDiscount.setText(" ");
+
+            if (!isInStock){
+                moveToCart_tv.setText("Out of Stock");
+                moveToCart_tv.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+            }
 
             if(wishlist){
                 deleteFromWishlistBtn.setImageResource(R.drawable.ic_cancel);
@@ -282,7 +288,7 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
             productCategoryDialog=productDetailsDialog.findViewById(R.id.product_category);
             productSubcategory1Dialog=productDetailsDialog.findViewById(R.id.product_sub_category_one);
             productSubcategory2Dialog=productDetailsDialog.findViewById(R.id.product_sub_category_two);
-            sizeCL=productDetailsDialog.findViewById(R.id.size_CL);
+//            sizeCL=productDetailsDialog.findViewById(R.id.size_CL);
             dismissProductDetailsDialog=productDetailsDialog.findViewById(R.id.dismissdialog);
 
 //            weightcategoryCL=productDetailsDialog.findViewById(R.id.weight_category_CL);
@@ -305,7 +311,7 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
             productDetailsDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                 @Override
                 public void onDismiss(DialogInterface dialog) {
-                    sizeCL.setVisibility(View.GONE);
+//                    sizeCL.setVisibility(View.GONE);
                     loadingDialog.dismiss();
 
                 }
@@ -330,13 +336,13 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
                                 productPriceDialog.setText("₹" + documentSnapshot.get("productPrice").toString() + "/pc");
                                 productInitialPriceDialog.setText("₹" + documentSnapshot.get("productInitialPrice").toString());
 
-                                sizeCL.setVisibility(View.GONE);
-                                productDescriptionDialog.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        sizeCL.setVisibility(View.VISIBLE);
-                                    }
-                                });
+//                                sizeCL.setVisibility(View.GONE);
+//                                productDescriptionDialog.setOnClickListener(new View.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(View v) {
+//                                        sizeCL.setVisibility(View.VISIBLE);
+//                                    }
+//                                });
 
                                 productDescriptionDialog.setText(documentSnapshot.get("productDescriptionBody").toString());
 
@@ -390,10 +396,7 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
                                     ProductDetailsActivity.ALREADY_ADDED_TO_CART = false;
                                 }
 
-                                //////////////////// add to cart btn
-                                if ((boolean) documentSnapshot.get("inStock")){
-                                    moveToCart_tv.setText("Move to Cart");
-                                    moveToCart_tv.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_shopping_cart_3, 0, 0, 0);
+                                if (isInStock){
                                     moveToCarBtn.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
@@ -447,11 +450,17 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.ViewHo
                                         }
                                     });
                                 }
-                            //////////////////// add to cart btn
-                            else{
-                                    moveToCart_tv.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-                                    moveToCart_tv.setText("Out of Stock");
-                            }
+//                                //////////////////// add to cart btn
+//                                if ((boolean) documentSnapshot.get("inStock")){
+//                                    moveToCart_tv.setText("Move to Cart");
+//                                    moveToCart_tv.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_shopping_cart_3, 0, 0, 0);
+//
+//                                }
+//                            //////////////////// add to cart btn
+//                            else{
+//                                    moveToCart_tv.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+//                                    moveToCart_tv.setText("Out of Stock");
+//                            }
 //////////////////////////////////move to cart end
                                 loadingDialog.dismiss();
 

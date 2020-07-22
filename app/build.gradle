@@ -63,6 +63,12 @@ dependencies {
 
     implementation 'com.borjabravo:readmoretextview:2.1.0'
 
+
+    implementation('com.paytm:pgplussdk:1.4.4') {
+        transitive = true;
+    }
+    implementation 'com.android.volley:volley:1.1.1'
+
 //    api 'com.google.android.material:material:1.1.0-alpha05'
 
 //    implementation 'com.androidx.support:design:26.1.0'

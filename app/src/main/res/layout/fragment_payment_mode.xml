@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="@style/AppTheme"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bg_bottom_dialog_box"
+    android:orientation="vertical"
+    tools:context=".Fragments.PaymentModeFragment">
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="35dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_buy_now_outline_box"
+        android:backgroundTint="#4D333232"
+        android:backgroundTintMode="src_in" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/textView71"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="22dp"
+            android:layout_marginTop="12dp"
+            android:text="Select Payment Mode"
+            android:textColor="#232323"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RadioGroup
+            android:id="@+id/paymentRadioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginBottom="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView71">
+
+            <RadioButton
+                android:id="@+id/CashOnDelivery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:scaleX="0.8"
+                android:scaleY="0.8"
+                android:buttonTint="@color/black1"
+                android:text="   Cash on Delivery"
+                android:textSize="19sp"
+                android:translationX="-10dp" />
+
+            <RadioButton
+                android:id="@+id/Paytm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:scaleX="0.8"
+                android:scaleY="0.8"
+                android:buttonTint="@color/black1"
+                android:textSize="19sp"
+                android:translationX="-10dp"
+                android:text="   Paytm"/>
+        </RadioGroup>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/continueLL"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:background="@drawable/bg_add_to_cart_andbuy_now_background"
+        android:elevation="10dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="11dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/payment_total_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="₹"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView41"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="1dp"
+                android:text="Total Amount"
+                android:textColor="#C9000000"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/payment_continue_btn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_buy_now_outline_box"
+            android:gravity="center"
+            android:text="Continue"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+</LinearLayout>

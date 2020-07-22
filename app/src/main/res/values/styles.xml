@@ -14,6 +14,21 @@
 
     </style>
 
+    <style name="PaytmTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorAccent">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <!--        <item name="android:statusBarColor">#313131</item>-->
+    </style>
+    <style name="OrderConfirmationTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">#F89B7D</item>
+        <item name="colorAccent">@color/white</item>
+
+    <!--        <item name="android:statusBarColor">#313131</item>-->
+</style>
+
     <style name="MyDenseOutlined" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
 <!--        <item name="materialThemeOverlay">@style/MyThemeOverlayOutlinedDense</item>-->
 

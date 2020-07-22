@@ -45,11 +45,13 @@ public class MyCartAdapter extends RecyclerView.Adapter {
     public static List<MyCartItemModel> myCartItemModelList;
     private int lastPosition = -1;
     Context context;
+    boolean isOrderSummaryActivity;
 
 
-    public MyCartAdapter(List<MyCartItemModel> myCartItemModelList,Context context){
+    public MyCartAdapter(List<MyCartItemModel> myCartItemModelList,Context context,boolean isOrderSummaryActivity){
         this.myCartItemModelList = myCartItemModelList;
         this.context = context;
+        this.isOrderSummaryActivity=isOrderSummaryActivity;
     }
 
 
@@ -98,8 +100,10 @@ public class MyCartAdapter extends RecyclerView.Adapter {
         private TextView productDiscountAmount;
         private TextView offerApplied;
         private TextView couponsApplied,freeCouponsAvailable;
-        private ConstraintLayout couponRedemptionLayout;
-////////////
+        private ConstraintLayout couponRedemptionLayout,saveForLaterAndRemoveLL;
+        private View dividerIP;
+
+        ////////////
         private int mSelectedIndex = 0;
         private int mSelectedIndex2 = 0;
         private int actualPos = 0;
@@ -124,10 +128,10 @@ public class MyCartAdapter extends RecyclerView.Adapter {
             productDiscountAmount=itemView.findViewById(R.id.product_discount);
             offerApplied=itemView.findViewById(R.id.t_v_offer_applied);
             couponsApplied=itemView.findViewById(R.id.t_v_coupon_applied);
-
+            saveForLaterAndRemoveLL=itemView.findViewById(R.id.saveForLaterAndRemoveLL);
             freeCouponsAvailable=itemView.findViewById(R.id.coupon_redemption_txt);
             couponRedemptionLayout = itemView.findViewById(R.id.coupon_redemption_layout);
-
+            dividerIP=itemView.findViewById(R.id.dividerIP);
             spinnerQty = itemView.findViewById(R.id.spinner1);
             spinnerQtyType = itemView.findViewById(R.id.spinner2);
 
@@ -156,40 +160,41 @@ public class MyCartAdapter extends RecyclerView.Adapter {
             }
 
 
+            if (!isOrderSummaryActivity){
+                if (totalItems==1){
+                    MyCartActivity.totalItems.setText("Price ( "+totalItems+" Item )");
+                }else{
+                    MyCartActivity.totalItems.setText("Price ( "+totalItems+" Items )");
+                }
+                MyCartActivity.totalItemsPrice.setText("₹"+discountInitialItemsPrice);
+                MyCartActivity.totalItemsDiscount.setText("₹"+discountItemsPrice);
+                //todo: amount for coupon
+                if (couponAvailable!=0){
+                    MyCartActivity.totalCouponDiscount.setText("Apply Coupon");
+                    MyCartActivity.couponDiscountTxt .setVisibility(View.VISIBLE);
+                    MyCartActivity.totalCouponDiscount.setVisibility(View.VISIBLE);
+                }else{
+                    MyCartActivity.totalCouponDiscount.setText("");
+                    MyCartActivity.couponDiscountTxt .setVisibility(View.GONE);
+                    MyCartActivity.totalCouponDiscount.setVisibility(View.GONE);
+                }
+                //todo: amount for delivery
+                if (totalItemPrice > 20000){
+                    MyCartActivity.shippingCharges.setText("Free");
+                }
+                else{
+                    MyCartActivity.shippingCharges.setText("Extra*");
+                }
+                    MyCartActivity.subTotal.setText("₹"+totalItemPrice);
+                    MyCartActivity.totalAmount.setText("₹"+totalItemPrice);
 
-            if (totalItems==1){
-                MyCartActivity.totalItems.setText("Price ( "+totalItems+" Item )");
-            }else{
-                MyCartActivity.totalItems.setText("Price ( "+totalItems+" Items )");
-            }
-            MyCartActivity.totalItemsPrice.setText("₹"+discountInitialItemsPrice);
-            MyCartActivity.totalItemsDiscount.setText("₹"+discountItemsPrice);
-            //todo: amount for coupon
-            if (couponAvailable!=0){
-                MyCartActivity.totalCouponDiscount.setText("Apply Coupon");
-                MyCartActivity.couponDiscountTxt .setVisibility(View.VISIBLE);
-                MyCartActivity.totalCouponDiscount.setVisibility(View.VISIBLE);
-            }else{
-                MyCartActivity.totalCouponDiscount.setText("");
-                MyCartActivity.couponDiscountTxt .setVisibility(View.GONE);
-                MyCartActivity.totalCouponDiscount.setVisibility(View.GONE);
-            }
-            //todo: amount for delivery
-            if (totalItemPrice > 20000){
-                MyCartActivity.shippingCharges.setText("Free");
-            }
-            else{
-                MyCartActivity.shippingCharges.setText("Extra*");
-            }
-                MyCartActivity.subTotal.setText("₹"+totalItemPrice);
-                MyCartActivity.totalAmount.setText("₹"+totalItemPrice);
-
-            if (totalItemPrice==0){
-                MyCartActivity.priceDetailsLL.setVisibility(View.GONE);
-                MyCartActivity.continueBtnLL.setVisibility(View.GONE);
-            }else {
-                MyCartActivity.priceDetailsLL.setVisibility(View.VISIBLE);
-                MyCartActivity.continueBtnLL.setVisibility(View.VISIBLE);
+                if (totalItemPrice==0){
+                    MyCartActivity.priceDetailsLL.setVisibility(View.GONE);
+                    MyCartActivity.continueBtnLL.setVisibility(View.GONE);
+                }else {
+                    MyCartActivity.priceDetailsLL.setVisibility(View.VISIBLE);
+                    MyCartActivity.continueBtnLL.setVisibility(View.VISIBLE);
+                }
             }
         }
 
@@ -199,6 +204,7 @@ public class MyCartAdapter extends RecyclerView.Adapter {
             productTitle.setText(title);
             productSubtitle.setText(subtitle);
             if (inStock) {
+
                 productPrice.setVisibility(View.VISIBLE);
                 productInitialPrice.setVisibility(View.VISIBLE);
 
@@ -448,8 +454,8 @@ public class MyCartAdapter extends RecyclerView.Adapter {
                     public View getView(int position, View convertView, ViewGroup parent) {
                         View v = super.getView(position, convertView, parent);
                         ((TextView) v).setTextSize(14);
-                        ((TextView) v).setGravity(Gravity.START);
-                        v.setPadding(30,2,0,5);
+                        ((TextView) v).setGravity(Gravity.CENTER);
+                        v.setPadding(0,2,0,5);
                         return v;
                     }
 
@@ -457,7 +463,7 @@ public class MyCartAdapter extends RecyclerView.Adapter {
 
                         View v = super.getDropDownView(position, convertView, parent);
                         ((TextView) v).setGravity(Gravity.START);
-                        v.setPadding(30,0,0,5);
+//                        v.setPadding(30,0,0,5);
 //                        ((TextView) v).setWidth(250);
 //                    ((TextView) v).setHeight(62);
 
@@ -488,6 +494,16 @@ public class MyCartAdapter extends RecyclerView.Adapter {
                 });
 /////////dialog
 
+                if (isOrderSummaryActivity){
+                    productImage.getLayoutParams().height = 190;
+                    productImage.getLayoutParams().width =190;
+                    couponRedemptionLayout.setVisibility(View.GONE);
+                    saveForLaterAndRemoveLL.setVisibility(View.GONE);
+                    productDiscountAmount.setVisibility(View.GONE);
+                    couponsApplied.setVisibility(View.GONE);
+                    offerApplied.setVisibility(View.GONE);
+                }
+
 
             }else{
                 productPrice.setText("OUT OF STOCK");
@@ -501,6 +517,7 @@ public class MyCartAdapter extends RecyclerView.Adapter {
                 productTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
                 productSubtitle.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
                 productInitialPrice.setVisibility(View.INVISIBLE);
+                dividerIP.setVisibility(View.INVISIBLE);
                 productDiscountAmount.setVisibility(View.INVISIBLE);
                 couponsApplied.setVisibility(View.GONE);
                 offerApplied.setVisibility(View.GONE);

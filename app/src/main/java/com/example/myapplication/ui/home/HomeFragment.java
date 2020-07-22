@@ -25,10 +25,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
+import com.example.myapplication.DBqueries;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.Models.GridProductModel;
 import com.example.myapplication.Models.HomePageModel;
 import com.example.myapplication.Models.HorizontalProductScrollModel;
+import com.example.myapplication.Models.MyCartItemModel;
 import com.example.myapplication.Models.SliderModel;
 import com.example.myapplication.Models.ViewAllWithRatingModel;
 import com.example.myapplication.Pojos.Categories;
@@ -410,9 +412,10 @@ public class HomeFragment extends Fragment {
 
     private void reloadPage() {
         networkInfo = connectivityManager.getActiveNetworkInfo();
-        categoryModelList.clear();
-        lists.clear();
-        loadCategoriesNames.clear();
+        DBqueries.clearData();
+//        categoryModelList.clear();
+//        lists.clear();
+//        loadCategoriesNames.clear();
 
         if (networkInfo != null && networkInfo.isConnected() == true) {
 

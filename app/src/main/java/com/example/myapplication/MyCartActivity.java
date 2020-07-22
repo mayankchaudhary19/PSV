@@ -33,6 +33,7 @@ import android.widget.Toast;
 import com.example.myapplication.Adapters.WishlistAdapter;
 import com.example.myapplication.Fragments.AddNewAddressFragment;
 import com.example.myapplication.Fragments.DeliveryFragment;
+import com.example.myapplication.Fragments.PaymentModeFragment;
 import com.example.myapplication.Models.MyCartItemModel;
 import com.example.myapplication.Adapters.MyCartAdapter;
 import com.example.myapplication.Models.WishlistModel;
@@ -48,12 +49,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyCartActivity extends AppCompatActivity  {
+public class
+MyCartActivity extends AppCompatActivity  {
 
     public static TextView cartTitle;
     public static LinearLayout priceDetailsLL,continueBtnLL;
     private Dialog loadingDialog;
-    public static FirebaseFirestore firebaseFirestore= FirebaseFirestore.getInstance();
+//    public static FirebaseFirestore firebaseFirestore= FirebaseFirestore.getInstance();
 
 
     private RecyclerView cartItemRecyclerView ,wishlistCartRecylerView;
@@ -77,6 +79,8 @@ public class MyCartActivity extends AppCompatActivity  {
     private ConstraintLayout wishlistCartLayout;
     private ConstraintLayout activityMyCartLayout;
     private static boolean isSpinnerClosed;
+
+
 
 //    Context  context;
 
@@ -136,12 +140,11 @@ public class MyCartActivity extends AppCompatActivity  {
 
 
 
-        cartAdapter =new MyCartAdapter(DBqueries.cartItemModelList,getApplicationContext());
+        cartAdapter =new MyCartAdapter(DBqueries.cartItemModelList,getApplicationContext(),false);
         cartItemRecyclerView.setAdapter(cartAdapter);
         cartAdapter.notifyDataSetChanged();
 
 
-        TotalAmount();
 //        int totalItemPrice = 0;
 //        for (int x = 0; x<MyCartAdapter.myCartItemModelList.size(); x++){
 //
@@ -175,6 +178,8 @@ public class MyCartActivity extends AppCompatActivity  {
             @Override
             public void onClick(View v) {
                 OrderSummaryActivity.cartItemModelList = new ArrayList<>();
+//                List<MyCartItemModel> saveForLater= new ArrayList<>();
+                PaymentModeFragment.fromCart=true;
 
                 // so dekh abhi kr kya rhe h na yaha pr ki say sabse pehle add krte time user ne 4 products add kiye
                 // but then unme se say 2 out of stock ho gaye h
@@ -182,11 +187,29 @@ public class MyCartActivity extends AppCompatActivity  {
                 // but hum bas unhi producs ko ab ek naye DeliveryActivity ke cartItemModelList me add karenge jo available h....
 
                 for (int x =0 ;x<DBqueries.cartItemModelList.size(); x++){
-
+//                    MyCartItemModel cartItemModel =new MyCartItemModel()
                     MyCartItemModel cartItemModel = DBqueries.cartItemModelList.get(x);
+//                    MyCartItemModel cartItemModel1=new MyCartItemModel(DBqueries.cartItemModelList.get(x).getProductId(),
+//                            DBqueries.cartItemModelList.get(x).isInStock(),
+//                            DBqueries.cartItemModelList.get(x).getProductImage(),
+//                            DBqueries.cartItemModelList.get(x).getProductTitle(),
+//                            DBqueries.cartItemModelList.get(x).getProductSubtitle(),
+//                            DBqueries.cartItemModelList.get(x).getProductPrice(),
+//                            DBqueries.cartItemModelList.get(x).getProductInitialPrice(),
+//                            DBqueries.cartItemModelList.get(x).getProductQuantity(),
+//                            DBqueries.cartItemModelList.get(x).getOffersApplied(),
+//                            DBqueries.cartItemModelList.get(x).getFreeCouponsAvailable());
+
                     if(cartItemModel.isInStock()){
                         OrderSummaryActivity.cartItemModelList.add(cartItemModel);
+//                        Toast.makeText(MyCartActivity.this, "Save for later="+DBqueries.cartList, Toast.LENGTH_LONG).show();
+
                     }
+//                    else if(!cartItemModel.isInStock()){
+////                        saveForLater.add(cartItemModel);
+////                        Toast.makeText(MyCartActivity.this, "Save for later="+saveForLater, Toast.LENGTH_LONG).show();
+//                    }
+
                 }
                 //todo:TotalAmount
 //                OrderSummaryActivity.cartItemModelList.add(new MyCartItemModel(MyCartItemModel.TOTAL_AMOUNT));
@@ -543,7 +566,7 @@ public class MyCartActivity extends AppCompatActivity  {
         MyCartActivity.subTotal.setText("₹"+totalItemPrice);
         MyCartActivity.totalAmount.setText("₹"+totalItemPrice);
 
-        Toast.makeText(this, totalAmount.getText(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, totalAmount.getText(), Toast.LENGTH_SHORT).show();
 
         if (totalItemPrice==0){
             priceDetailsLL.setVisibility(View.GONE);

@@ -19,6 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="left"
+        android:background="#FAFFFFFF"
         android:fitsSystemWindows="false"
         android:theme="@style/NavigationTheme"
         app:headerLayout="@layout/nav_header_main"

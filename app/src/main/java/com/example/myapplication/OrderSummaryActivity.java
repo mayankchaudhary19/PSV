@@ -24,10 +24,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myapplication.Adapters.MyCartAdapter;
+import com.example.myapplication.Fragments.AddNewAddressFragment;
+import com.example.myapplication.Fragments.PaymentModeFragment;
 import com.example.myapplication.Models.MyCartItemModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class OrderSummaryActivity extends AppCompatActivity {
 
@@ -38,12 +46,13 @@ public class OrderSummaryActivity extends AppCompatActivity {
 
     private TextView fullName,addressLine1,addressLine2,state,pincode,contactNumber,saveAddressAsTxt,editAdd,selectAdd;
     public static List <MyCartItemModel>cartItemModelList;
-//    private Dialog loadingDialog;
+    private Dialog loadingDialog;
 
     public static TextView  totalItems,totalItemsPrice,totalItemsDiscount,couponDiscountTxt,totalCouponDiscount,shippingCharges,subTotal;
 
 
     public static final int SELECT_ADDRESS = 0;
+//    public static boolean fromCart;
 
 
     @Override
@@ -85,18 +94,19 @@ public class OrderSummaryActivity extends AppCompatActivity {
         upArrow.setColorFilter(getResources().getColor(R.color.black_overlay2), PorterDuff.Mode.SRC_ATOP);
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
-//        loadingDialog = new Dialog(OrderSummaryActivity.this);
-//        loadingDialog.setContentView(R.layout.loading_progress_dialog);
-//        loadingDialog.setCancelable(false);
-//        loadingDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-//        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
+        //////loadingDialog
+        loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.loading_progress_dialog);
+        loadingDialog.setCancelable(false);
+        loadingDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.slider_background));
+        loadingDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        //////loadingDialog
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         deliveryRecyclerView.setLayoutManager(layoutManager);
 
-        MyCartAdapter cartAdapter = new MyCartAdapter(cartItemModelList, getApplicationContext());
+        MyCartAdapter cartAdapter = new MyCartAdapter(cartItemModelList, getApplicationContext(),true);
         deliveryRecyclerView.setAdapter(cartAdapter);
         cartAdapter.notifyDataSetChanged();
 
@@ -108,14 +118,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
                 startActivity(myAddressesIntent);
             }
         });
-        proceedForPaymentBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                Intent intent = new Intent(OrderSummaryActivity.this,PaymentActivity.class);
-                startActivity(intent);
-            }
-        });
 
         placeOrderOnWhatsAppBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,6 +126,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
 //todo: whatsApp feature
             }
         });
+
 
 
     }
@@ -160,13 +164,29 @@ public class OrderSummaryActivity extends AppCompatActivity {
             }
         }
 
+//        Toast.makeText(this, tot+"", Toast.LENGTH_SHORT).show();
+//        final int finalTotalItemPrice = totalItemPrice;
+        final int finalTotalItemPrice = totalItemPrice;
+        proceedForPaymentBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(OrderSummaryActivity.this, ""+OrderSummaryActivity.cartItemModelList, Toast.LENGTH_SHORT).show();
+                PaymentModeFragment paymentBottomSheet = new PaymentModeFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("amount",  "₹"+ finalTotalItemPrice);
+                paymentBottomSheet.setArguments(bundle);
+                paymentBottomSheet.show(getSupportFragmentManager(),"TAG");
+
+//                Intent intent = new Intent(OrderSummaryActivity.this,PaymentActivity.class);
+//                startActivity(intent);
+            }
+        });
 //
 //        Bundle bundle = new Bundle();
 //        bundle.putString("params", "₹"+totalItemPrice);
 //// set MyFragment Arguments
 //        AddNewAddressFragment myObj = new AddNewAddressFragment();
 //        myObj.setArguments(bundle);
-
         if (totalItems==1){
             OrderSummaryActivity.totalItems.setText("Price ( "+totalItems+" Item )");
         }else{
@@ -226,3 +246,42 @@ public class OrderSummaryActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
+
+
+//        if (fromCart){
+//            loadingDialog.show();
+//            Map<String,Object> updateCartList = new HashMap<>();
+//            long cartListSize=0;
+//            final List<Integer> indexList =new ArrayList<>();
+//            for(int x=0; x<DBqueries.cartList.size();x++){
+//                if (!cartItemModelList.get(x).isInStock()){
+//                    updateCartList.put("productId"+cartListSize,cartItemModelList.get(x).getProductId());
+//                    cartListSize++;
+//                }else {
+//                    indexList.add(x);
+//                }
+//            }
+//            updateCartList.put("cartListSize", cartListSize);
+//
+//            FirebaseFirestore.getInstance().collection("Users")
+//                    .document(FirebaseAuth.getInstance().getUid())
+//                    .collection("UserData")
+//                    .document("Cart")
+//                    .set(updateCartList).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                @Override
+//                public void onComplete(@NonNull Task<Void> task) {
+//                    if (task.isSuccessful()){
+//                        for (int x=0;x<indexList.size();x++){
+//                            DBqueries.cartList.remove(indexList.get(x).intValue());
+//                            DBqueries.cartItemModelList.remove(indexList.get(x).intValue());
+//                            priceDetailsLL.setVisibility(View.GONE);
+//                        }
+//
+//                    }else {
+//                        String error = task.getException().getMessage();
+//                        Toast.makeText(OrderSummaryActivity.this, error, Toast.LENGTH_SHORT).show();
+//                    }
+//                    loadingDialog.dismiss();
+//                }
+//            });
+//        }

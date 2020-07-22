@@ -48,7 +48,7 @@
             android:id="@+id/toolbar_offer"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#FA815D"
+            android:background="#F89B7D"
             android:elevation="0dp">
 
         </androidx.appcompat.widget.Toolbar>
@@ -74,7 +74,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="330dp"
-                android:background="@drawable/redem_gradient">
+                android:background="@drawable/bg_order_confirmation">
 
                 <TextView
                     android:id="@+id/textView73"
@@ -87,7 +87,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-
                 <TextView
                     android:id="@+id/textView77"
                     android:layout_width="wrap_content"
@@ -106,8 +105,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="19dp"
-                    android:layout_marginEnd="4dp"
-                    android:background="#FB8F6D"
+                    android:layout_marginEnd="5dp"
+                    android:background="#FBA485"
                     android:fontFamily="@font/kaushan_script"
                     android:gravity="center|top"
                     android:textColor="#F6F6F6"
@@ -122,7 +121,7 @@
                     android:id="@+id/textView81"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="23dp"
+                    android:layout_marginTop="20dp"
                     android:elevation="0.1dp"
                     android:fontFamily="@font/miniver"
                     android:letterSpacing="0.7"
@@ -139,7 +138,7 @@
                     android:id="@+id/textView83"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="23dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="7dp"
                     android:fontFamily="@font/miniver"
                     android:letterSpacing="0.7"
@@ -159,7 +158,8 @@
                     android:layout_marginTop="180dp"
                     android:rotation="-80"
                     android:tint="#FFFFFF"
-                    android:translationX="-20dp"
+                    android:translationX="-10dp"
+                    app:layout_constraintEnd_toStartOf="@+id/imageView44"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_commerce" />
@@ -168,27 +168,27 @@
                     android:id="@+id/imageView43"
                     android:layout_width="155dp"
                     android:layout_height="171dp"
-                    android:layout_marginTop="178dp"
                     android:layout_marginEnd="8dp"
                     android:tint="#FFFFFF"
+                    android:translationY="23dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintHorizontal_bias="0.875"
+                    app:layout_constraintStart_toEndOf="@+id/imageView44"
                     app:srcCompat="@drawable/ic_commerce_and_shopping" />
 
                 <ImageView
                     android:id="@+id/imageView44"
-                    android:layout_width="0dp"
-                    android:layout_height="95dp"
-                    android:layout_marginStart="120dp"
-                    android:layout_marginEnd="155dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_width="120dp"
+                    android:layout_height="185dp"
+                    android:layout_marginEnd="32dp"
                     android:tint="#FFFFFF"
-                    android:translationX="-10dp"
-                    android:translationY="20dp"
+                    android:translationX="-6dp"
+                    android:translationY="45dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="@+id/imageView42"
+                    app:layout_constraintHorizontal_bias="0.478"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:srcCompat="@drawable/ic_shopping_cart_2" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 

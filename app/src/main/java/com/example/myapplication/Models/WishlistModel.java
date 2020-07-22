@@ -1,11 +1,13 @@
 package com.example.myapplication.Models;
 
 public class WishlistModel {
+    private boolean inStock;
     private String productImage,productId;
     private String productTitle,productSubtitle,productPrice,productInitialPrice;
 
-    public WishlistModel(String productId,String productImage, String productTitle, String productSubtitle, String productPrice, String productInitialPrice) {
+    public WishlistModel(String productId, boolean inStock,String productImage, String productTitle, String productSubtitle, String productPrice, String productInitialPrice) {
         this.productId=productId;
+        this.inStock = inStock;
         this.productImage = productImage;
         this.productTitle = productTitle;
         this.productSubtitle = productSubtitle;
@@ -20,6 +22,14 @@ public class WishlistModel {
 
     public void setProductId(String productId) {
         this.productId = productId;
+    }
+
+    public boolean isInStock() {
+        return inStock;
+    }
+
+    public void setInStock(boolean inStock) {
+        this.inStock = inStock;
     }
 
     public String getProductImage() {

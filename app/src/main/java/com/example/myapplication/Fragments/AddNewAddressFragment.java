@@ -56,12 +56,12 @@ public class AddNewAddressFragment extends BottomSheetDialogFragment {
     private TextView saveAddress,addAddressContinueBtn,addressType;
     private TextInputEditText name,contactNo,addressLine1,addressLine2,state,pincode;
     private Dialog loadingDialog;
-    private String totalAmt;
+//    private String totalAmt;
     private LinearLayout addressSaveAsContainer;
-    private final int initialPosition=0;
+//    private final int initialPosition=0;
     private boolean toShowContinueBtn;
     private String[] saveAsAddressType = new String[1];
-    private int previousAddress;
+//    private int previousAddress;
 
 
     public static final Pattern VALID_MOBILE_NUMBER__REGEX = Pattern.compile("^((?!(0))[0-9]{10})$");
@@ -89,7 +89,7 @@ public class AddNewAddressFragment extends BottomSheetDialogFragment {
         addAddressContinueBtn=view.findViewById(R.id.addAddressContinueBtn);
         addressSaveAsContainer=view.findViewById(R.id.addressSaveAsContainer);
 //        additionalInfo=view.findViewById(R.id.additionalInfoAdd);
-        previousAddress = DBqueries.selectedAddress;
+//        previousAddress = DBqueries.selectedAddress;
 
         Bundle bundle = getArguments();
         toShowContinueBtn = bundle.getBoolean("showContinueBtn");
@@ -212,7 +212,7 @@ public class AddNewAddressFragment extends BottomSheetDialogFragment {
                     return;
                 }
                 else{
-                    addData();
+                    addData(false);
 
 //                    Intent intent =new Intent(getContext(),OrderSummaryActivity.class);
 //                    startActivity(intent);
@@ -269,7 +269,9 @@ public class AddNewAddressFragment extends BottomSheetDialogFragment {
                     pincode.setError("Invalid Pincode");
                     return;
                 }
-                else { addData();
+                else {
+                    addData(true);
+
                 }
 
             }
@@ -285,7 +287,7 @@ public class AddNewAddressFragment extends BottomSheetDialogFragment {
     }
 
 
-    private void addData(){
+    private void addData(final boolean orderSummaryIntent){
         final Bundle bundle2 = getArguments();
         loadingDialog.show();
 
@@ -326,16 +328,25 @@ public class AddNewAddressFragment extends BottomSheetDialogFragment {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
-                            DBqueries.addressesModelList.add(new AddressModel(name.getText().toString(),
-                                    contactNo.getText().toString(),addressLine1.getText().toString(),
-                                    addressLine2.getText().toString(), state.getText().toString(),
-                                    pincode.getText().toString(),saveAsAddressType[0],false));
-
+                            if (DBqueries.addressesModelList.size() == 0) {
+                                DBqueries.addressesModelList.add(new AddressModel(name.getText().toString(),
+                                        contactNo.getText().toString(), addressLine1.getText().toString(),
+                                        addressLine2.getText().toString(), state.getText().toString(),
+                                        pincode.getText().toString(), saveAsAddressType[0], true));
+                                DBqueries.selectedAddress =DBqueries.addressesModelList.size() - 1;
+                            }else {
+                                DBqueries.addressesModelList.add(new AddressModel(name.getText().toString(),
+                                        contactNo.getText().toString(), addressLine1.getText().toString(),
+                                        addressLine2.getText().toString(), state.getText().toString(),
+                                        pincode.getText().toString(), saveAsAddressType[0], false));
+                            }
                             if (!toShowContinueBtn)
                                 MyAddressActivity.refreshItem(DBqueries.selectedAddress, DBqueries.addressesModelList.size()-1);
 
-
-
+                            if (orderSummaryIntent){
+                                Intent intent =new Intent(getContext(),OrderSummaryActivity.class);
+                                startActivity(intent);
+                            }
 
 
 //                            initialPosition = (Integer.parseInt(String.valueOf((long) task.getResult().get("" + x)))) - 1;

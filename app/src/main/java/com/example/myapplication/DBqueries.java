@@ -215,6 +215,7 @@ public class DBqueries {
                                     if (task.isSuccessful()) {
                                         wishlistModelList.add(new WishlistModel(
                                                 productId,
+                                                (boolean) task.getResult().get("inStock"),
                                                 task.getResult().get("productImage1").toString(),
                                                 task.getResult().get("productTitle").toString(),
                                                 task.getResult().get("productSubtitle").toString(),
@@ -584,7 +585,6 @@ public class DBqueries {
                                     else
                                         bottomSheet.show(((MyCartActivity)context).getSupportFragmentManager(),"TAG");
 
-
                                 }
                             }
                             else {
@@ -642,6 +642,6 @@ public class DBqueries {
         myRating.clear();
         cartList.clear();
         cartItemModelList.clear();
-
+        addressesModelList.clear();
     }
 }
