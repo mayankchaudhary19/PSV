@@ -18,6 +18,6 @@ Customers using this app have the features such as :
 NOTE-
 Inspired designs are modified for better user experience. 
 This project is currently in Test Mode, there are many other features as well that will be added in future. 
-
+PS- I am the only contributor to this project. The contribution added by garvitchaudhary9 is added by me using different laptop. 
 >Download Screen Recording:
 ![Output sample](https://github.com/mayankchaudhary19/PSV/blob/master/PSV%20App%20Screen%20Recording/Screen%20Recording%20PSV%20App%20.mov)
